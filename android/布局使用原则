@@ -1,0 +1,7 @@
+1、性能排序：FrameLayout > LinearLayout > RelativeLayout > 2层布局
+2、需要使用LinearLayout嵌套实现的布局，使用RelativeLayout代替，以减少层数，优化性能
+3、LinearLayout使用weight时会measure两次
+4、RelativeLayout会measure两次
+5、布局嵌套会使measure指数增长，例如，RelativeLayout嵌套会测量2^2次
+6、使用ConstraintLayout代替一切，原理嵌套
+
