@@ -12,7 +12,9 @@
 * 第一次启动Jenkins需要输入初始密码，在`/Users/guoxiaodong/.jenkins/secrets/initialAdminPassword`文件中
 * 安装如下插件:
 	* Gradle Plugin
-	* xxx
+	* Ant Plugin
+	* Build Name Setter
+	* 
 * 配置环境变量：进入Jenkins，左侧选择`系统管理`，右侧选择`系统设置`，在右侧`全局属性`下勾选`环境变量`，键输入`ANDROID_SDK_ROOT`，值输入`/Users/guoxiaodong/Library/Android/sdk`
 * 新建任务：左侧选择`新建任务`，输入人物名称，选择`构建一个自由风格的软件项目`
 
