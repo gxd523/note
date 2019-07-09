@@ -12,3 +12,4 @@
 -i    为指定的jar文件创建索引文件
 -C 表示转到相应的目录下执行jar命令,相当于cd到那个目录，然后不带-C执行jar命令
 
+> gradle-->other-->jar/assembleAar
