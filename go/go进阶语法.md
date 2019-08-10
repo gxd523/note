@@ -118,3 +118,7 @@ for {// 方法二
 * 多个`case`同时满足条件时，`select`会随机执行其中的一个
 * 末尾加上`default`，当没有能够成功发送或接收的`case`时，则执行`default`，而不是阻塞当前`goroutine`
 
+### 指针类型使用原则
+* 如果`receiver`是较大的`struct`或者`array`，使用指针则更加高效。
+* 如果`receiver`会被函数修改，则只能使用指针。
+
