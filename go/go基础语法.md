@@ -5,13 +5,35 @@
 * 严格语法
 	* 不使用的变量、引用会报错
 	* 花括号不能换行
+	
 * 优化语法
 	* 先写变量名再写变量类型
 	* 省写分号、表达式括号
 	* `import`、`var`、`const`等多个的时候可以用括号括起来
+	
 * 函数式编程语言
 * 没有过分花哨的写法，平衡可读性与编程效率
-* 不支持继承、指针运算、引用传递等影响灵活性或容易出错的
+* 不支持指针运算
+* 内建类型和自建类型都是值传递，没有引用传递
+* 没有类、继承、多态、重载
+	
+	> go语言有不同的世界观，面向接口编程、函数式编程，而不是面向对象，用组合替代继承，Duck Typing的接口定义思想
+	
+* 没有try/catch/finally
+	
+	> 太多的错误被当做异常。错误是意料之中的，应该去处理；异常是意料之外的，才应该try/catch，go语言有`defer`、`recover()`替代
+
+* 不支持泛型
+
+	> 泛型作为模板类型：go语言的Dock Typing思想替代；泛型约束参数类型：。
+
+* 没有构造函数/析构函数
+
+	> 大型项目很少使用构造函数，多使用工厂函数(依赖注入)。go语言有垃圾回收器，所以不需要析构函数
+
+* 操作符重载
+* 没有static
+* 不支持assert
 
 ### 基础类型(8种)
 类型 | 长度 | 范围
@@ -28,7 +50,7 @@ string | 128位 |
 ### 常量
 * `const`
 * 常量可以不指定类型
-* 指针、切片、channel的默认值都是`nil`
+* 指针、切片、map、channel、接口的默认值都是`nil`
 
 ### if
 * if条件没有括号
@@ -173,8 +195,9 @@ PATH=$PATH:$GOPATH/bin
 * 注意：配置好后会到GOPATH下的`src`里面找，项目的根目录要是`src`
 
 ### Go命令
-* 安装gopm：
-	* `go get -v -u github.com/gpmgo/gopm`
+* `env GOOS=linux GOARCH=386 go build -o /Users/guoxiaodong/Desktop/crawler go/src/crawler/main.go`
+* `go build -o /Users/guoxiaodong/Desktop/aaa frontend/main.go`
+* 安装`gopm`：`go get -v -u github.com/gpmgo/gopm`
 * 安装go import：
 	* `gopm get -g -v -u golang.org/x/tools/cmd/goimports`
 * `go install golang.org/x/tools/cmd/goimports`：先build，再放入GOPATH下的bin文件夹
@@ -226,15 +249,15 @@ func ExampleQueue_PoP() {
 ```
 
 ### 格式占位符
-占位符 | 说明 | 输出
---- | --- | ---
+占位符 | 说明 | 输出 | 其他
+--- | --- | --- | ---
 %T | type(类型) | main.Tree
-%v | value(值) | {}
+%v | value(值) | {} | %+v:带字段打印
 %p | pointer(地址) | 0xffe00011ee
 %s | string(字符串) | abc
 %q | quote(带引号的字符串) | "abc"
 %c | char(unicode字符) | 呀
-%d | 十进制 | 18
+%d | 十进制 | 18 | %-05d：左对齐最小宽度5，不够补0
 %t | 布尔 | true
 %b | 二进制 | 101
 %o | 八进制 | 12
@@ -244,3 +267,4 @@ func ExampleQueue_PoP() {
 * `Help`下，选择`Edit Custom VM Options`，末尾添加`-javaagent:/Users/guoxiaodng/jetbrains-agent.jar`
 * 重启GoLand(如果无法重启则删除`~/Library/Preferences/GoLand2019.1`目录)，`Help`下`Register`，选择`License Server`，点击`Discover Server`或输入`http://jetbrains-license-server`，最后点击`Active`
 * 右下角显示`You Copy is Licensed to guoxiaodong`，表示激活成功！
+

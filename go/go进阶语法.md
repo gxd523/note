@@ -57,7 +57,24 @@ func (node treeNode) print() {
 * 接口变量同样是值传递，但由于内部包含指针，所以几乎不需要定义接口指针
 * 查看接口类型(类似强转)：`Type Assertion`、`Type Switch`
 * `interface{}`：表示任何类型
-* `变量.(类型)`：表示强转，例如`a.(int)`
+* `type assertion`：表示强转，例如`a.(int)`
+  ```go
+  name := "123"
+
+  var b interface{}
+  b = name
+
+  if s, ok := b.(string); ok {
+    fmt.Println(s)
+  }
+
+  switch b.(type) {
+  case string:
+    fmt.Printf("string->%s\n", b)
+  case int:
+    fmt.Printf("int->%d\n", b)
+  }
+  ```
 * 接口可以组合
 ```go
 type GetAndPost interface {
@@ -86,10 +103,14 @@ type GetAndPost interface {
 > 不要通过共享内存去通信，而是通过通信去共享内存。
 
 * channel用于协程间通信
+* channel的发送、接收都是阻塞式的(block)，直到发送的消息被接收、接收到发送的消息
+* channel作为参数一般不用写成指针，内部包含指针
+* channel默认值为`nil`
 * `chan<- int`：发送数据类型，不能接收数据
 * `chan-> int`：接收数据类型，不能发送数据
 * `close(c)`：发送方关闭channel
 * `make(chan int, 3)`：缓存3个channel
+* 注意不要向未初始化的channel发送、接收数据
 * 判断是否发完，搭配`close(c)`一起用，否则一直循环或ok不会返回false：
 ```go
 for n := range inChannel {// 方法一
@@ -106,19 +127,16 @@ for {// 方法二
 }	
 ```
 * Channel基于CSP模型(Communication Sequential Process)
-* channel的发送、接收都是阻塞式的(block)，直到有人接收，有人发送
-* channel作为参数一般不用写成指针，内部包含指针
-* channel默认值为`nil`
 
 ### Select调度器
 > `select`语句是一种仅能用于`channl`发送和接收消息的专用语句，此语句运行期间是阻塞的。
 
 * `select`会判断每一个`case`能否成功发送或接收消息，当没有`case`满足条件时，阻塞当前`goroutine`，直到有`case`能够发送或接收消息。
-* `case`中的channel如果为`nil`，则此`case`不能发送或接收消息，不会抛异常。
+* `case`中的channel如果为`nil`，则此`case`不能发送或接收消息，也不会抛异常。
 * 多个`case`同时满足条件时，`select`会随机执行其中的一个
 * 末尾加上`default`，当没有能够成功发送或接收的`case`时，则执行`default`，而不是阻塞当前`goroutine`
 
 ### 指针类型使用原则
 * 如果`receiver`是较大的`struct`或者`array`，使用指针则更加高效。
 * 如果`receiver`会被函数修改，则只能使用指针。
-
+* slice、channel、map一般不用定义成指针，内部包含指针
