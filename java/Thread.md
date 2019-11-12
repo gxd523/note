@@ -100,52 +100,50 @@ interrupted | 静态方法 | Thread.interrupted() | 判断当前线程是否处�
 ### Synchronized死锁
 > 死锁引起的原因是由于两个线程之间，相互持有对象的锁和相互等待对象释放锁。在使用Synchronized的时候不允许出现死锁的情况。
 ```java
-    public static void main(String[] args) {
-        final Object lock1 = new Object();
-        final Object lock2 = new Object();
-        Thread thread1 = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                synchronized (lock1) {
-                    System.out.println("Thread1 get lock1");
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    synchronized (lock2) {
-                        System.out.println("Thread1 get lock2");
-                    }
-                }
+Object lock1 = new Object();
+Object lock2 = new Object();
+Thread thread1 = new Thread(new Runnable() {
+    @Override
+    public void run() {
+        synchronized (lock1) {
+            System.out.println("Thread-1 get lock1");
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-        });
-        Thread thread2 = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                synchronized (lock2) {
-                    System.out.println("Thread2 get lock2");
-                    try {
-                        Thread.sleep(2000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    synchronized (lock1) {
-                        System.out.println("Thread2 get lock1");
-                    }
-                }
+            synchronized (lock2) {
+                System.out.println("Thread-1 get lock2");
             }
-        });
-        thread1.start();
-        thread2.start();
-        
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         }
-        System.out.println(thread1.getName() + "-->" + thread1.getState());
-        System.out.println(thread2.getName() + "-->" + thread2.getState());
     }
+});
+
+Thread thread2 = new Thread(new Runnable() {
+    @Override
+    public void run() {
+        synchronized (lock2) {
+            System.out.println("Thread-2 get lock2");
+            synchronized (lock1) {
+                System.out.println("Thread-2 get lock1");
+            }
+        }
+    }
+});
+
+thread1.setName("Thread-1");
+thread2.setName("Thread-2");
+thread1.start();
+thread2.start();
+
+try {
+    Thread.sleep(2000);
+} catch (InterruptedException e) {
+    e.printStackTrace();
+}
+
+System.out.println(thread1.getName() + "..." + thread1.getState());
+System.out.println(thread2.getName() + "..." + thread2.getState());
 ```
 
 ### volatile

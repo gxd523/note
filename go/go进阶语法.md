@@ -91,6 +91,7 @@ type GetAndPost interface {
 	* go语言有自己的调度器
 	* 多个协程可以在一个或多个线程上运行
 	* 函数前面只需加上go就能给调度器运行
+	* 在交出控制权的点上，go语言调度器可以进行优化，减少goroutine所要保存的状态的数量，减小开销
 * goroutine可能的切换点：
 	* I/O,select
 	* channel

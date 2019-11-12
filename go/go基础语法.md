@@ -2,18 +2,20 @@
 
 ## 基础
 ### go语言特性
-* 严格语法
+* 编译型静态、强类型语言	
+* 面向接口，函数式编程语言
+* 并发编程语言
+* 没有过分花哨的写法，平衡可读性与编程效率
+* 严格语法	
 	* 不使用的变量、引用会报错
 	* 花括号不能换行
-	
 * 优化语法
 	* 先写变量名再写变量类型
 	* 省写分号、表达式括号
 	* `import`、`var`、`const`等多个的时候可以用括号括起来
-	
-* 函数式编程语言
-* 没有过分花哨的写法，平衡可读性与编程效率
-* 不支持指针运算
+
+### 与其他语言对比
+* 与C++相比不支持指针运算
 * 内建类型和自建类型都是值传递，没有引用传递
 * 没有类、继承、多态、重载
 	
@@ -33,6 +35,7 @@
 
 * 操作符重载
 * 没有static
+* 没有访问修饰符，结构体、方法、变量一律首字母大写公有，否则私有
 * 不支持assert
 
 ### 基础类型(8种)
@@ -82,6 +85,7 @@ var pa *int = &a
 *pa = 3
 fmt.Println(a)
 ```
+* p := new(Person)
 * `*int`：指针的类型为`*int`
 * `&a`：取变量`a`在内存中的地址
 * `*pa`：内存地址指向的变量，相当于变量a
@@ -267,4 +271,7 @@ func ExampleQueue_PoP() {
 * `Help`下，选择`Edit Custom VM Options`，末尾添加`-javaagent:/Users/guoxiaodng/jetbrains-agent.jar`
 * 重启GoLand(如果无法重启则删除`~/Library/Preferences/GoLand2019.1`目录)，`Help`下`Register`，选择`License Server`，点击`Discover Server`或输入`http://jetbrains-license-server`，最后点击`Active`
 * 右下角显示`You Copy is Licensed to guoxiaodong`，表示激活成功！
+
+### import、const、var、init()执行顺序
+![](../pic/go_execute_order.png)
 
