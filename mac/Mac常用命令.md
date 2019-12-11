@@ -48,3 +48,8 @@ export PATH
 6. source .bash_profile
 7. java -version
 
+### option(⌥)的隐藏彩蛋
+* `⌘+⌥+ESC`：强制退出框
+* 文件右键弹出菜单时按住⌥键：拷贝文件绝对路径、始终以此方式打开
+* `⌥+Space`：全屏预览
+* 多选文件，⌘+⌥+i：多个文件大小

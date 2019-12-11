@@ -160,7 +160,7 @@ System.out.println(thread2.getName() + "..." + thread2.getState());
     * 对volatile修饰的变量的操作不依赖变量本身，如i++这种复合操作不具有原子性。
     * 确保只有一个线程修改变量的值的情况。
 * volatile适用场景
-	* 禁止系统重排序的情况
+	* 禁止系统重排序的情况，就是new变量分3步，详情见懒汉单例模式
 	* 只有一个线程写，多个线程读的情况。
 
 ### ThreadLocal
