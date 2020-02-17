@@ -1,0 +1,4 @@
+1、sudo rm -rf /Library/Internet\ Plug-Ins/JavaAppletPlugin.plugin
+2、sudo rm -rf /Library/PreferencePanes/JavaControlPanel.prefPane
+3、sudo rm -rf ~/Library/Application\ Support/Oracle/Java
+4、sudo rm -rf /Library/Java/JavaVirtualMachines/jdk1.8.0_221.jdk

@@ -1,3 +1,14 @@
+capability	能力(ability)
+capacity	容量
+offset		偏移
+particular	特定(specific)
+optical		光学
+experience	经验
+experiment	实验
+strength	强度
+represent 	代表
+identifier	识别码
+architecture	建筑、架构
 appearance	出现、外貌
 attachment 	附件
 revert 		还原
@@ -9,7 +20,6 @@ effect 		影响、效果
 effective 	有效的
 efficient 	高效的
 lossless 	无损
-individual 	各自
 sequence 	序列
 extend/extension 	扩展
 compose 	组成
@@ -17,8 +27,6 @@ component	组件
 consumer 	消费者
 customer 	顾客
 etc 		等等
-terminology 	术语
-represent 	代表
 resemble 	似乎
 via 		通过
 concurrent 	同时、并发
@@ -40,12 +48,10 @@ model		模型、型号
 board		木板
 manufacturer	制造商
 radio		无线电、基带
-identifier	识别码
-architecture	建筑、架构
 instruction	指令
 current		电流
 discharging	放电
 voltage		电压
-strength	强度
 shutter		快门
-optical		光学
+individual 	各自
+terminology 	术语

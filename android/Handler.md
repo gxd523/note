@@ -1,3 +1,30 @@
+
+[TOC]
+
+### Handler
+* 重要对象：looper、messageQueue
+#### sendMessageDelayed()
+#### dispatchMessage()
+#### handleMessage()
+
+### Looper
+#### threadLocal
+> 每个线程独立的存储空间，可以看成Map<Thread,Looper>。
+
+#### messageQueue
+> 存储消息的队列
+
+#### prepare()
+> 实例化Looper，messageQueue是在Looper构造函数中实例化的。
+
+#### looper()
+> 无限for循环中，从messageQueue.next()中取msg，调用msg.target.dispatchMessage()分发消息
+
+### MessageQueue
+* 重要对象：delayQueue
+* 重要方法：enqueueMessage()、next()
+### Message
+
 * 在CPU看来进程或线程无非就是一段可执行的代码，当可执行代码执行完成后，线程就会结束退出
 * 为了保证程序不退出，简单做法就是执行死循环代码，让程序无法执行完。
 * 死循环带来两个问题，一个是占用CPU资源，另一个是处理其他任务

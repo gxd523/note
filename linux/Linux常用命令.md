@@ -34,4 +34,5 @@
 * 上传文件到服务器：`scp /Users/guoxiaodong/Desktop/docker-19.03.1.tgz root@118.24.27.110:~/docker-19.03.1.tgz`
 * 查看内存：`free -h`
 * 查看网络：`netstat -antup | grep`
+* grep：`adb shell pm list packages | grep play`
 

@@ -8,3 +8,4 @@
 1. 输入命令`brew install android-platform-tools`，安装adb
 2. 输入命令`adb reboot recovery/bootloader`，重启进入刷机模式
 3. 
+

@@ -52,6 +52,22 @@
 * 加快请求响应
 * 异步化
 
+### 多线程为什么会有并发问题
+> 为什么多线程同时访问（读写）同个变量，会有并发问题？
+
+* Java 内存模型规定了所有的变量都存储在主内存中，每条线程有自己的工作内存。
+* 线程的工作内存中保存了该线程中用到的变量的主内存副本拷贝，线程对变量的所有操作都必须在工作内存中进行，而不能直接读写主内存。
+* 线程访问一个变量，首先将变量从主内存拷贝到工作内存，对变量的写操作，不会马上同步到主内存。
+* 不同的线程之间也无法直接访问对方工作内存中的变量，线程间变量的传递均需要自己的工作内存和主存之间进行数据同步进行。
+
+### 并发3要素
+##### 原子性
+> 在一个操作中，CPU 不可以在中途暂停然后再调度，即不被中断操作，要么执行完成，要么就不执行。
+##### 可见性
+> 多个线程访问同一个变量时，一个线程修改了这个变量的值，其他线程能够立即看得到修改的值。
+##### 有序性
+> 程序执行的顺序按照代码的先后顺序执行。
+
 ### 多线程带来的问题
 * 设计更复杂
   * 线程之间是共享进程资源，存在资源冲突。
@@ -147,6 +163,14 @@ System.out.println(thread2.getName() + "..." + thread2.getState());
 ```
 
 ### volatile
+* 当写一个volatile变量时，JVM会把本地内存的变量强制刷新到主内存中
+* 这个写操作导致其他线程中的缓存无效，其他线程读，会从主内存读。volatile的写操作对其它线程实时可见。
+
+> 在JVM底层volatile是采用内存屏障来实现的，内存屏障会提供3个功能：
+* 它确保指令重排序时不会把其后面的指令排到内存屏障之前的位置，也不会把前面的指令排到内存屏障的后面；即在执行到内存屏障这句指令时，在它前面的操作已经全部完成；
+* 它会强制将缓存的修改操作立即写到主内存
+* 写操作会导致其它CPU中的缓存行失效，写之后，其它线程的读操作会从主内存读。
+
 > volatile是JAVA中提供的一种轻量级的同步机制。而这种轻量级的同步机制是通过线程之间的通讯来保证。而不是通过锁的机制进行处理。因此不会对执行的线程造成阻塞。
 
 ![thread_volatile](../pic/thread_volatile.png)
@@ -178,3 +202,21 @@ Thread.sleep() | 静态 | 不释放 | 占用系统资源 | 在哪个线程中调
 Object.wait() | 非静态 | 释放 | 
 
 > Thread.Sleep(0)的作用是“触发操作系统立刻重新进行一次CPU竞争”。
+
+### ScheduledExecutorService
+```java
+ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(2);
+final ScheduledFuture<?> schedule = scheduledExecutorService.scheduleWithFixedDelay(new Runnable() {
+    @Override
+    public void run() {
+        Log.d("gxd", "ScheduledExecutorService.run-->" + Thread.currentThread().getName());
+    }
+}, 0, 5, TimeUnit.SECONDS);
+
+scheduledExecutorService.schedule(new Runnable() {
+    @Override
+    public void run() {
+        schedule.cancel(true);
+    }
+}, 30, TimeUnit.SECONDS);
+```
