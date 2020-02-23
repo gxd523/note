@@ -154,3 +154,4 @@ public class RxLifecycleActivity extends Activity {
 * Observer的onSubscribe()执行的线程跟Observable执行的线程相同，不收subscribeOn()的影响
 * dispose() 能够取消事件发射，并阻止subscribe()，也就是订阅，onSubscribe()中调用则可以都阻止
 * 背压subscribeOn()、observableOn()要在两个不同的线程
+* observeOn()只能指定下游的线程，subscribeOn()只有第一次指定的线程有效，且是从被观察者开始往下游，直到有observeOn()

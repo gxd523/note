@@ -1,3 +1,4 @@
+promote		提升
 capability	能力(ability)
 capacity	容量
 offset		偏移
