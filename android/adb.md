@@ -7,7 +7,7 @@
 * Root：`adb root`
 * 卸载：`adb shell pm uninstall --user 0 <包名>`
 * 获取包列表：`adb shell pm list package`
-* 获取包名对应apk所在路径：`adb shell pm path <包名>`
+* 获取包名对应apk所在路径：`adb shell pm list packages -f | grep com.xiaomi`
 * 导出文件：`adb pull <已安装apk路径> <导出路径>`
 * 启动Activity：`adb shell am start -n <包名>/<Activity全名>`
 * 导入文件：`adb push <电脑上的文件路径> <设备里的目录>`

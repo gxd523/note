@@ -1,3 +1,4 @@
+explicit	明确的
 promote		提升
 capability	能力(ability)
 capacity	容量

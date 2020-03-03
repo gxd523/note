@@ -17,6 +17,72 @@
 * 5种被观察者可以通过：toObservable()、toFlowable()、toSingle()、toCompletable()、toMaybe()互转
 * Single、Completable、Maybe可以看做是Observable的简化版，Flowable是Observable背压加强版
 
+### Rxjava绑定生命周期
+* Github地址： https://github.com/trello/RxLifecycle
+* 引用：
+```
+implementation 'com.trello.rxlifecycle3:rxlifecycle:3.1.0'
+
+// If you want to bind to Android-specific lifecycles
+implementation 'com.trello.rxlifecycle3:rxlifecycle-android:3.1.0'
+
+// If you want pre-written Activities and Fragments you can subclass as providers
+implementation 'com.trello.rxlifecycle3:rxlifecycle-components:3.1.0'
+```
+
+* 原理：
+```java
+public class RxLifecycleActivity extends Activity {
+    private Subject<ActivityEvent> subject;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_lifecycle);
+
+        subject = BehaviorSubject.create();
+        subject.onNext(ActivityEvent.CREATE);
+
+        final Disposable disposable = Observable.interval(0, 1, TimeUnit.SECONDS)
+                .compose(this.<Long>bindUntilEvent(ActivityEvent.PAUSE))
+                .subscribe(new Consumer<Long>() {
+                    @Override
+                    public void accept(Long aLong) {
+                        Log.d("gxd", "onNext-->" + aLong);
+                    }
+                });
+    }
+
+    private <T> ObservableTransformer<T, T> bindUntilEvent(final ActivityEvent event) {
+        return new ObservableTransformer<T, T>() {
+            @Override
+            public ObservableSource<T> apply(Observable<T> upstream) {
+                return upstream.takeUntil(
+                        subject.filter(new Predicate<ActivityEvent>() {
+                                           @Override
+                                           public boolean test(ActivityEvent event1) {
+                                               return event1 == event;
+                                           }
+                                       }
+                        )
+                );
+            }
+        };
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        subject.onNext(ActivityEvent.PAUSE);
+    }
+
+    private enum ActivityEvent {
+        CREATE,
+        PAUSE
+    }
+}
+```
+
 ### 线程切换原理
 ```java
 class ObservableObserveOn {
