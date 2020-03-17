@@ -1,4 +1,4 @@
-![](../pic/service_lifecycle.png)
+![](../../pic/service_lifecycle.png)
 
 ### Service两种启动方式
 #### starService()启动方式

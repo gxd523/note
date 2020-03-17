@@ -1,9 +1,9 @@
 [TOC]
 ### Android系统架构图
-![](../pic/android_system_structure.png)
+![](../../pic/android_system_structure.png)
 
 ### Android系统启动流程图
-![](../pic/android_system_launch_process.png)
+![](../../pic/android_system_launch_process.png)
 
 * init进程是Native世界的第一个进程
 
@@ -16,3 +16,4 @@
 
 #### ServiceManager
 > ServiceManager在init进程启动之后启动，用来管理系统中的service
+
