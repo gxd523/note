@@ -53,3 +53,7 @@ export PATH
 * 文件右键弹出菜单时按住⌥键：拷贝文件绝对路径、始终以此方式打开
 * `⌥+Space`：全屏预览
 * 多选文件，⌘+⌥+i：多个文件大小
+
+### MD5、SHA1、SHA256
+* sha1：`shasum -a 1 a.txt`
+* sha256：`shasum -a 256 a.txt`
