@@ -57,3 +57,6 @@ export PATH
 ### MD5、SHA1、SHA256
 * sha1：`shasum -a 1 a.txt`
 * sha256：`shasum -a 256 a.txt`
+
+### 查看连接设备传输速率
+* 命令行输入：`system_profiler SPUSBDataType`

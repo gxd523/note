@@ -1,3 +1,14 @@
+* `layout_constrainedWidth`：当控件宽度被约束且使用`wrap_content`时，如果控件内容超过了约束的最大宽度，约束将失效。此属性设置为true将使约束仍然生效，但会导致渲染变慢一丢丢。
+
+##### Chains
+![](../../pic/constraint_chains.png)
+* `layout_constraintHorizontal_chainStyle`：链上的控件必须设置了双向约束
+* `layout_constraintHorizontal_bias`：设置水平偏移比例
+* 在约束布局中宽高的维度`match_parent`被`0dp`代替，默认生成的大小占所有的可用空间。
+* `layout_constraintDimensionRatio`：设置宽高比
+* `layout_goneMarginTop`：上面的控件`GONE`时产生上边距
+* `layout_constraintWidth_percent`：按屏幕百分比设置宽度
+
 宽高不超过约束,防止约束失效
 layout_constrainedWidth
 layout_constrainedHeight

@@ -1,9 +1,12 @@
+[TOC]
+
 ### ADB(Android Debug Bridge)
 > adb就是连接Android手机与PC端的桥梁，可以让用户在电脑上对手机进行全面的操作。
 
 * 查看前台Activity：`adb shell dumpsys activity activities | grep mFocusedActivity`
 * 启动adb server：`adb -P <端口> start-server`
 * 停止adb server：`adb kill-server`
+* 重启：`adb restart-server`
 * adb版本：`adb version`
 * Root：`adb root`
 * 卸载：`adb shell pm uninstall --user 0 <包名>`
@@ -84,7 +87,13 @@ keycode | 含义
 * 查看设备电池状况：`adb shell dumpsys battery`
 * dumpsys：`adb shell dumpsys <activity|package|cpuinfo|meminfo|battery|window> -p <包名>`
 * 查看任务栈：`adb shell dumpsys activity activities | sed -En -e '/Running activities/,/Run #0/p'`
+* 查看apk信息：`adb shell dumpsys package <包名>`
 * 帮助：`adb shell dumpsys package -h`
+
+### 安装&卸载
+* `-r`：覆盖安装、保留数据和缓存文件
+* `-s`：指定安装位置
+* `-k`：保留配置和缓存文件
 
 ### adb常见错误
 输出 | 含义 | 解决办法

@@ -188,11 +188,11 @@ getSaveCount | 获取栈中内容的数量(即保存次数)
 
 | 逻辑名称           | 类比 | 说明                                   | 示意图                                                       |
 | ------------------ | ---- | -------------------------------------- | ------------------------------------------------------------ |
-| DIFFERENCE         | 差集 | Path1中减去Path2后剩下的部分           | ![img](../pic/DIFFERENCE.jpeg) |
-| REVERSE_DIFFERENCE | 差集 | Path2中减去Path1后剩下的部分           | ![img](../pic/REVERSE_DIFFERENCE.jpeg) |
-| INTERSECT          | 交集 | Path1与Path2相交的部分                 |![img](../pic/INTERSECT.jpeg) |
-| UNION              | 并集 | 包含全部Path1和Path2                   |![img](../pic/UNION.jpeg) |
-| XOR                | 异或 | 包含Path1与Path2但不包括两者相交的部分 |![img](../pic/XOR.jpeg) |
+| DIFFERENCE         | 差集 | Path1中减去Path2后剩下的部分           | ![img](../../pic/DIFFERENCE.jpeg) |
+| REVERSE_DIFFERENCE | 差集 | Path2中减去Path1后剩下的部分           | ![img](../../pic/REVERSE_DIFFERENCE.jpeg) |
+| INTERSECT          | 交集 | Path1与Path2相交的部分                 |![img](../../pic/INTERSECT.jpeg) |
+| UNION              | 并集 | 包含全部Path1和Path2                   |![img](../../pic/UNION.jpeg) |
+| XOR                | 异或 | 包含Path1与Path2但不包括两者相交的部分 |![img](../../pic/XOR.jpeg) |
 
 ### Paint
 

@@ -6,9 +6,9 @@
 * 删除目录`rm -rf /var/tmp/testFolder`
 * 查看目录下所有文件及文件夹`ls /etc`
 * 查看文件内容`cat ~/.bash_profile`
-* 目录及目录下的所有文件目录设置读写执行权限：`chmod -R a=rwx /opt/abc`
+* 目录及目录下的所有文件目录设置读写执行权限：`chmod -R u=rwx /opt/abc`
 * 当前用户：`whoami`
-* 几种用户，`u`：用户、`g`：用户组、`o`：其他、`a`：以上所有
+* 几种用户，`u`：用户(guoxiaodong)、`g`：用户组、`o`：其他、`a`：以上所有
 * 查看文件权限：`ls -l a.txt`
 * 解压：`tar xvzf android-sdk_r24.4.1-linux.tgz`
 * `tar -C /usr/local -xzf go1.8.1.linux-amd64.tar.gz `
