@@ -9,6 +9,9 @@
 * `layout_goneMarginTop`：上面的控件`GONE`时产生上边距
 * `layout_constraintWidth_percent`：按屏幕百分比设置宽度
 
+#### 约束布局负Margin替代方案
+* 核心是使用一个占位控件`Space`
+
 宽高不超过约束,防止约束失效
 layout_constrainedWidth
 layout_constrainedHeight
