@@ -64,6 +64,7 @@ inJustDecodeBounds | 设置为true则不返回Bitmap，用于获取图片宽高�
 inSampleSize | 缩放倍数(整数)
 inDensity | 位图使用的像素密度，配合inScaled使用，inDensity / 屏幕dpi = inSampleSize
 inTargetDesity |  设备的屏幕密度
+inDither | 是否采用抖动解码，降低图片颜色模式位数时，为防止色彩断带，采用随机噪声色来填充，缓解断带情况
 
 ### Bitmap.createBitmap()
 方法名 | 用法说明
@@ -73,6 +74,11 @@ createBitmap(Bitmap src,int x ,int y,int w,int h) | 从源位图src的指定坐�
 createScaledBitmap(Bitmap src,int w ,int h,boolean filter) | 对源位图src缩放成宽为w，高为h的新位图
 createBitmap(int w ,int h,Bitmap.Config config) | 创建一个宽w，高h的新位图（config为位图的内部配置枚举类）
 createBitmap(Bitmap src,int x ,int y,int w,int h,Matrix m,boolean filter) | 从源位图src的指定坐标(x,y)开始，截取宽w，高h的部分，按照Matrix变换创建新的位图对象
+
+### jpg与png
+* 区别：jpg没有alpha通道，所以只有jpg图片，设置inPreferConfig为RGB_565才可能生效
+* 色彩丰富的用jpg，色彩单一的用png
+* jpg是有损压缩，解压更耗时一点
 
 ### 转换Bitmap颜色格式
 #### 方式一
@@ -146,6 +152,21 @@ paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
 canvas.drawBitmap(bitmap, rect, rect, paint);
 ```
 
+#### 大图小用用采样，小图大用用矩阵
+```java
+Matrix matrix = new Matrix();
+matrix.preScale(2, 2, 0f, 0f);
+// 如果使用直接替换矩阵的话，在Nexus6 5.1.1上必须关闭硬件加速
+// setMatrix方法可能会有绘制问题
+canvas.concat(matrix);
+canvas.drawBitmap(bitmap, 0,0, paint);
+```
+```java
+Matrix matrix = new Matrix();
+matrix.preScale(2, 2, 0, 0);
+canvas.drawBitmap(bitmap, matrix, paint);
+```
+
 #### 缩放
 ```java
 int newWidth = 960;
@@ -181,3 +202,4 @@ private int calculateInSampleSize(BitmapFactory.Options justDecodeBoundsOptions,
     return inSampleSize;
 }
 ```
+
