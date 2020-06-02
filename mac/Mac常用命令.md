@@ -33,7 +33,7 @@ open Library/Android/sdk/
 ## 配置jdk
 1. cd ~
 2. sudo su
-3. open .bash_profile(touch .bash_profile)
+3. open .bash_profile(touch .bash_profile)，新的是`.zprofile`
 4. 粘贴一下:
 
 ```
