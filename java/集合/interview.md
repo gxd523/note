@@ -11,6 +11,12 @@
 #### hashCode()相同如何获取对象
 > 这种情况说明，此hashCode()对应数组元素的链表或红黑树又多个元素，它们的hashCode()相同，通过比较equals()来获取
 
+#### 解决hash冲突的办法
+* 扩容数组
+* 优化算法
+* 链表
+* 红黑树
+
 #### HashMap&HashTable区别
 * HashMap 是线程不安全的，HashTable 是线程安全的。
 * HashMap 的键需要重新计算对象的 hash 值，而 HashTable 直接使用对象的 hashCode

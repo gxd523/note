@@ -2,7 +2,7 @@
 ### 坐标
 > 由于移动设备一般定义屏幕左上角为坐标原点，向右为x轴增大方向，向下为y轴增大方向， 所以在手机屏幕上的坐标系与数学中常见的坐标系是稍微有点差别的
 
-![coordinate](../pic/coordinate.jpeg)
+![coordinate](../../pic/coordinate.jpeg)
 
 * View相对于父控件的坐标getLeft()、getTop()、getRight()、getBottom()
 * MotionEvent中，getX()表示以父控件为坐标系，getRawX()表示以屏幕为坐标系
@@ -80,8 +80,8 @@ XOR | [Sa + Da - 2 * Sa * Da, Sc * (1 - Da) + (1 - Sa) * Dc]
 模式 | 二进制数值 | 描述
 --- | --- | ---
 UNSPECIFIED | 00 | 默认值，父控件没有给子view任何限制，子View可以设置为任意大小。
-EXACTLY | 01 | 表示父控件已经确切的指定了子View的大小。
-AT_MOST | 10 | 表示子View具体大小没有尺寸限制，但是存在上限，上限一般为父View大小。
+EXACTLY | 01 | 表示父控件已经确切的指定了子View的大小(match_parent或具体的值) 
+AT_MOST | 10 | 表示子View具体大小没有尺寸限制，但是存在上限，上限一般为父View大小(wrap_parent) 
 > 在int类型的32位二进制位中，31-30这两位表示测量模式,29~0这三十位表示宽和高的实际值。
 
 > **如果对View的宽高进行修改了，不要调用 super.onMeasure( widthMeasureSpec, heightMeasureSpec); 要调用 setMeasuredDimension( widthsize, heightsize); 这个函数。**
@@ -152,7 +152,7 @@ Matrix(矩阵) | getMatrix, setMatrix, concat | 实际上画布的位移，缩�
 ```canvas.drawRoundRect(rectF,30,30,mPaint);```
 > 这里圆角矩形的角实际上不是一个正圆的圆弧，而是椭圆的圆弧，这里的两个参数实际上是椭圆的两个半径
 
-![](../pic/round_rect.jpeg)
+![](../../pic/round_rect.jpeg)
 
 #### 快照(save)和回滚(restore)
 相关API | 简介

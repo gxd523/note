@@ -1,21 +1,22 @@
 #### 包装类型&基础类型
 ```java
-Integer i1 = 3;
-Integer i2 = new Integer(3);
-Integer i3 = 3;
-int i4 = 3;
-System.out.println(i1 == i2); // false，new会重新在堆内存中创建
-System.out.println(i1 == i3); // true，引用地址相同
-System.out.println(i1 == i4); // true，i1会先拆箱成int，在和i3比较
-```
+Integer a = 127;
+Integer b = 127;
+Integer c = new Integer(127);
+System.out.println(a == b);
+System.out.println(a == c);// new会创建新地址
 
-```java
-Integer f1 = 100;
-Integer f2 = 100;
-Integer f3 = 150;
-Integer f4 = 150;
-System.out.println(f1 == f2);   // true，当int在[-128,127]内时，结果会缓存起来
-System.out.println(f3 == f4);   // false，属于两个对象
+Integer d = 128;
+Integer e = 128;
+int f = 128;
+System.out.println(d == e);// 和String类似的缓存，数字类型只有-128~127
+System.out.println(d == f);// d会先拆箱成基本类型
+
+String s1 = "a";
+String s2 = "a";
+String s3 = new String("a");
+System.out.println(s1 == s2);
+System.out.println(s1 == s3);
 ```
 
 ### Java如何跳出多层循环
@@ -70,3 +71,6 @@ for (int i = 0; i < 10 && myLabel; i++) {
 * Constructor.newInstance()
 * clone(不需要调构造函数)
 * 反序列化(不需要调构造函数)
+
+#### 为什么使用 Long 时，大家推荐多使用 valueOf 方法，少使用 parseLong 方法
+> 因为Long缓存了-128~127，valueOf()从缓存中拿，parseLong()没这机制
