@@ -1,3 +1,5 @@
+[TOC]
+
 ![](../../pic/view_flow_chat.png)
 
 * 自己调用requestLayout()后，只会执行measure、layout，不会执行draw
@@ -14,3 +16,10 @@
 * 在onMeasure()中调用
 ### Layout
 ### Draw
+#### 绘制步骤
+* 绘制背景：`drawBackground(canvas)`
+* If necessary, save the canvas' layers to prepare for fading
+* 绘制内容：`onDraw(canvas)`
+* 绘制子控件：`dispatchDraw(canvas)`
+* If necessary, draw the fading edges and restore layers
+* Draw decorations (scrollbars for instance)：`onDrawForeground(canvas)`

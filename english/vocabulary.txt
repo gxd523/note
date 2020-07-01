@@ -39,6 +39,7 @@ dashboard	仪表盘、面板
 graphic		图像
 vendor		供应商
 resolution	分辨率、
+resolve		解析
 density		密度
 rate		速率
 ratio		比

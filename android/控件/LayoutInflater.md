@@ -3,14 +3,22 @@
 ### LayoutInflater的创建
 > LayoutInflater是一个抽象类，它的创建，并不是交由App层处理的，而是调用了from()的静态函数，经由系统服务LAYOUT_INFLATER_SERVICE，最终创建了一个LayoutInflater的子类对象--PhoneLayoutInflater
 
-##### LayoutInflater耗时点
+### inflate()的使用
+root | attachToRoot | return | 说明
+:---: | :---: | :---: | ---
+parentLayout | true | parentLayout | 布局已被绑到parent上，无需额外addView()，否则会报错
+parentLayout | false | inflateRoot | 布局未绑定到parent上，需额外addView()，此时添加parent是为了解析被填充布局根元素的参数，使其在addView()时生效
+null | false |inflateRoot | 不正确写法，导致被填充布局的根元素的参数无法解析
+null | true |inflateRoot | 此时true无效，等同于false
+
+### LayoutInflater耗时点
 > LayoutInflater将xml文件实例化为一个view对象的流程，其中有两个部分是耗时的主要来源
 
 * XmlResourseParser对xml的遍历
 * 反射创建View对象导致的耗时(反射比直接创建对象要慢3倍，iReader的x2c框架就是基于这一点去做的优化)
 
-##### inflate流程
-###### inflate(resource, root, attachToRoot)
+### inflate流程
+#### inflate(resource, root, attachToRoot)
 ```java
 View inflate(int resource, ViewGroup root, boolean attachToRoot) {
     final Resources res = getContext().getResources();
@@ -22,7 +30,7 @@ View inflate(int resource, ViewGroup root, boolean attachToRoot) {
     }
 }
 ```
-###### inflate(parser, root, attachToRoot)
+#### inflate(parser, root, attachToRoot)
 ```java
 View inflate(XmlPullParser parser, ViewGroup root, boolean attachToRoot){
     final AttributeSet attrs = Xml.asAttributeSet(parser);
@@ -74,7 +82,7 @@ View inflate(XmlPullParser parser, ViewGroup root, boolean attachToRoot){
     return result;
 }
 ```
-###### rInflate(parser, parent, context, attrs, finishInflate)
+#### rInflate(parser, parent, context, attrs, finishInflate)
 ```java
 void rInflate(XmlPullParser parser, View parent, Context context, AttributeSet attrs, boolean finishInflate) {
     final int depth = parser.getDepth();
@@ -117,7 +125,7 @@ void rInflate(XmlPullParser parser, View parent, Context context, AttributeSet a
     }
 }
 ```
-###### createViewFromTag(parent, name, context, attrs)
+#### createViewFromTag(parent, name, context, attrs)
 ```java
 View createViewFromTag(View parent, String name, Context context, AttributeSet attrs) {
     if (name.equals("view")) {
@@ -148,7 +156,7 @@ View createViewFromTag(View parent, String name, Context context, AttributeSet a
     return view;
 }
 ```
-###### createView(name, prefix, attrs)
+#### createView(name, prefix, attrs)
 ```java
 View createView(String name, String prefix, AttributeSet attrs) {
     Constructor<? extends View> constructor = sConstructorMap.get(name);
@@ -207,10 +215,7 @@ View createView(String name, String prefix, AttributeSet attrs) {
 4. LayoutInflater.Factory.onCreateView()
 5. 如果没有Factory，则LayoutInflater.createView()(`反射创建View`)
 
-##### LayoutInflater.inflate(resource, root, attachToRoot)返回值问题
-* 如果root为null或者attachToRoot为false，则返回inflate布局的根view，否则返回root
-
-##### BlinkLayout
+### BlinkLayout
 > 一个隔0.5秒闪烁一次的布局
 ```xml
 <blink
