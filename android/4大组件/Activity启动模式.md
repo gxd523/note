@@ -17,14 +17,19 @@
 ### singleInstance
 单例模式。这是一种加强的singleTask模式。除了singleTask模式所有特性外，它只能单独在一个任务栈中，跟其他Activity不能同时存在一个任务栈，整个Application也只有一个实例。
 
-### Intent的Flag
+### Flags
+#### FLAG_ACTIVITY_SINGLE_TOP(singleTop)
 
-#### FLAG_ACTIVITY_BROUGHT_TO_FRONT
-这个标志一般不是由程序代码设置的，如在launchMode中设置singleTask模式时系统帮你设定。
-#### FLAG_ACTIVITY_CLEAR_TASK
-此Activity将变成一个新Task中新的最底端的Activity，所有的之前此Activity实例和包含该实例的Task都会被关闭，这个标识仅仅和FLAG_ACTIVITY_NEW_TASK联合起来才能使用。
+#### FLAG_ACTIVITY_CLEAR_TOP(singleTask)
+
+#### FLAG_ACTIVITY_NO_HISTORY
+> 使用该模式来启动Activity，当该Activity启动其他Activity后，其他Activity销毁时，该Activity也被同时销毁，不会保留在任务栈中。如A以这种模式启动B，B再启动C，C退出时B也会销毁，则任务栈只有A。
+
+#### FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS
+> 使用该标识位启动的Activity不添加到最近应用列表，也即我们从最近应用里面查看不到我们启动的这个activity。与属性android:excludeFromRecents=”true”效果相同。
 
 #### FLAG_ACTIVITY_NEW_TASK
+> 该标志位表示使用一个新的Task来启动一个Activity，相当于在清单文件中给Activity指定“singleTask”启动模式。通常我们在Service启动Activity时，由于Service中并没有Activity任务栈，所以必须使用该Flag来创建一个新的Task。
 
 * 当我们使用ApplicationContext去启动Activity的时候，因为默认是standard模式会报错：
 
@@ -34,33 +39,17 @@
 
 * 设置此状态，首先会查找是否存在和被启动的Activity具有相同的亲和性的任务栈（即taskAffinity，注意同一个应用程序中的activity的亲和性一样），如果有，则直接把这个栈整体移动到前台，并保持栈中的状态不变，即栈中的activity顺序不变，如果没有，则新建一个栈来存放被启动的activity。
 
-#### FLAG_ACTIVITY_CLEAR_TOP
+#### FLAG_ACTIVITY_BROUGHT_TO_FRONT
+这个标志一般不是由程序代码设置的，如在launchMode中设置singleTask模式时系统帮你设定。
 
-清除包含此Activity的Task中位于该Activity实例之上的其他Activity实例。这种行为的 launchMode 属性没有对应的值，只能通过代码设置。
-
-> 单独使用的情况：ABCD 启动 B ，会销毁B和B以上的实例 变成 AB ，B 重新执行onCreate -> onStart
-> 配合FLAG_ACTIVITY_SINGLE_TOP使用，则 B 不会销毁只销毁B以上实例，然后B 执行onNewIntent -> onStart
-
-#### FLAG_ACTIVITY_SINGLE_TOP==singleTop
-
-与launchMode="singleTop"一样的效果。
-
-#### FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS
-
-设置了的话该Activity则不出现在最近使用的列表中。
+#### FLAG_ACTIVITY_CLEAR_TASK
+此Activity将变成一个新Task中新的最底端的Activity，所有的之前此Activity实例和包含该实例的Task都会被关闭，这个标识仅仅和FLAG_ACTIVITY_NEW_TASK联合起来才能使用。
 
 #### FLAG_ACTIVITY_FORWARD_RESULT
 
 如果A需要onActivityResult中获取返回结果，startActivityForResult B，而B只是过渡页，启动C之后就finish掉了，需要在 C 中setResult返回给A就可以用到这个标志。
 
 > A -> B -> XXXXX(无论多少个过渡页) 设置 FLAG_ACTIVITY_FORWARD_RESULT 来启动 C ，之后该XXX过渡页finish - > C ，那么C的结果返回给A
-
-#### FLAG_ACTIVITY_NO_HISTORY
-
-如果设置，新的Activity将不再历史stack中保留。用户一离开它，这个Activity就关闭了。
-例如A启动B的时候，给B设置了FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY，那么：
-
-> A -> B -> C ，启动C 就算 B没有自行finish ，也会变为 AC
 
 #### FLAG_ACTIVITY_NO_ANIMATION
 
@@ -159,7 +148,7 @@ Uri 权限授予任何原始授权URI前缀匹配的URI。如果没有这个标�
 
 这个标识用来创建一个新的task栈，并且在里面启动新的activity（所有情况，不管系统中存在不存在该activity实例），经常和FLAG_ACTIVITY_NEW_DOCUMENT或者FLAG_ACTIVITY_NEW_TASK一起使用。这上面两种使用场景下，如果没有带上FLAG_ACTIVITY_MULTIPLE_TASK标识，他们都会使系统搜索存在的task栈，去寻找匹配intent的一个activity，如果没有找到就会去新建一个task栈；但是当和FLAG_ACTIVITY_MULTIPLE_TASK一起使用的时候，这两种场景都会跳过搜索这步操作无条件的创建一个新的task。和FLAG_ACTIVITY_NEW_TASK一起使用需要注意，尽量不要使用该组合除非你完成了自己的顶部应用启动器，他们的组合使用会禁用已经存在的task栈回到前台的功能。
 
-## taskAffinity 和 allowTaskReparenting
+### taskAffinity 和 allowTaskReparenting
 
 taskAffinity用于指定当前Activity所关联的Task，allowTaskReparenting用于配置是否允许该Activity可以更换从属Task，通常情况二者连在一起使用，用于实现把一个应用程序的Activity移到另一个应用程序的Task中。
 allowTaskReparenting用来标记Activity能否从启动的Task移动到taskAffinity指定的Task，默认是继承至application中的allowTaskReparenting=false，如果为true，则表示可以更换；false表示不可以。

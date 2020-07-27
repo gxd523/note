@@ -23,7 +23,7 @@
 * SharedPreferences 可靠性下降
 * Application 被创建多次
 
-#### AIDL(Android Interface Definition Language)
+### AIDL(Android Interface Definition Language)
 ##### AIDL支持的数据类型
 * 8种基本数据类型：byte、char、short、int、long、float、double、boolean
 * String、CharSequence
@@ -37,11 +37,16 @@
 
 ##### 定向tag
 * 定向Tag表示在跨进程通信中数据的流向，用于标注方法的参数值，分为 in、out、inout 三种。
-* in 表示数据只能由客户端流向服务端，服务端对数据的修改不会影响到客户端
-* out 表示数据只能由服务端流向客户端，即使客户端向方法接口传入了一个对象，该对象中的属性值也是为空的，即不包含任何数据，服务端获取到该对象后，对该对象的任何操作，就会同步到客户端这边
-* inout 则表示数据可在服务端与客户端之间双向流通
+* in表示输入型参数（Server可以获取到Client传递过去的数据，但是不能对Client端的数据进行修改）
+* out表示输出型参数（Server获取不到Client传递过去的数据，但是能对Client端的数据进行修改）
+* inout表示输入输出型参数（Server可以获取到Client传递过去的数据，但是能对Client端的数据进行修改）
 * 如果AIDL方法接口的参数值类型是：基本数据类型、String、CharSequence或者其他AIDL文件定义的方法接口，那么这些参数值的定向 Tag 默认是且只能是 in，所以除了这些类型外，其他参数值都需要明确标注使用哪种定向Tag
 * 在AIDL文件中需要明确标明引用到的数据类型所在的包名，即使两个文件处在同个包名下
 
-### Messenger
+![](ipc-aidl.jpg)
+
+#### AIDL的经典实现：Messenger
+> Messenger可以翻译为信使，顾名思义，通过它可以在不同进程中传递Message对象，在Message中放入我们需要传递的数据，就可以轻松地实现数据的进程间传递了。Messenger是一种轻量级的IPC方案，它是AIDL在Android中的一种经典实践。
+
 * Messenger 是以串行的方式处理客户端发送的消息，即使有大量的消息同时到达服务端，服务端也只能一个个处理，所以 Messenger 不适合用于处理大量的并发请求，此时就还是需要考虑使用 AIDL 了，因为 AIDL 支持并发通信
+

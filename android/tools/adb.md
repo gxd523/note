@@ -81,6 +81,7 @@ keycode | 含义
 > 获得连接设备的所有系统服务的诊断输出
 
 * 查看前台Activity：`adb shell dumpsys activity activities | grep mFocusedActivity`
+* 查看任务栈：`adb -s 2fb0054d shell dumpsys activity activities | grep Activities | grep <包名>`
 * 查看可与 dumpsys 配合使用的系统服务的完整列表：`adb shell dumpsys -l`
 * 查看系统网络情况：`adb shell dumpsys netstats detail`
 * 查看内存：`adb shell dumpsys meminfo <包名>`
@@ -149,3 +150,4 @@ protocol failure | 设备已断开连接 | 先将设备与 adb 连接成功
 Unknown option: -s | Android 2.2 以下不支持安装到 sdcard | 不使用 -s 参数
 No space left on devicerm | 空间不足 | 清理空间
 Permission denied ... sdcard ... | sdcard 不可用
+

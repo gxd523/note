@@ -1,0 +1,4 @@
+* ContentProvider的onCreate()在Application的attach()之后，onCreate()之前执行
+* ContentProvider拥有context
+* InstallRun3.0正是利用ContentProvider这一特性，InstantRunContentProvider
+* 使用ContentProvider初始化sdk的缺点，减慢启动速度，多个ContentProvider无法保证执行顺序

@@ -1,4 +1,3 @@
-### 启动Activity过程
 * startActivityForResult()
 * startActivityFromChild()
 * Instrumentation.execStartActivity()
@@ -12,10 +11,14 @@
 * ActivityStarter.startActivity()
 * WindowManagerGlobal.addView()
 * ViewRootImpl初始化时，new View.AttachInfo()
-### ActivityThread
-* performLaunchActivity()：通过Instrumentation.newActivity()创建Activity实例，并调用Activity.attach()
 
-### Instrumentation
+
+startActivityMayWait
+`startActivity()`：调用ActivityStackSupervisor.startActivityMayWait()？？？
+
+### Activity
+* attach()：在ActivityThread.performLaunchActivity()中被调用，初始化mWindow
+
 ### PhoneWindow
 * 在Activity.attach()里创建实例
 * mContentParent：id为content的FrameLayout
