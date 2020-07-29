@@ -3,12 +3,12 @@
 ### 启动app过程
 ![](pic/launch_app.png)
 
-* 点击桌面APP图标时，Launcher的startActivity()方法，通过Binder通信，调用system_server进程中AMS服务的startActivity方法，发起启动请求
-* system_server进程接收到请求后，向Zygote进程发送创建进程的请求
+* 点击桌面APP图标时，Launcher的startActivity()方法，通过Binder通信，调用`system_server`进程中AMS服务的`startActivity()`，发起启动请求
+* `system_server`进程接收到请求后，通过Socket通信，向Zygote进程发送创建进程的请求
 * Zygote进程fork出App进程，并执行`ActivityThread.main()`，创建ActivityThread线程，初始化MainLooper，主线程Handler，同时初始化ApplicationThread用于和AMS通信交互
-* App进程，通过Binder向sytem_server进程发起attachApplication请求，这里实际上就是APP进程通过Binder调用sytem_server进程中AMS的attachApplication方法，上面我们已经分析过，AMS的attachApplication方法的作用是将ApplicationThread对象与AMS绑定
-* system_server进程在收到attachApplication的请求，进行一些准备工作后，再通过binder IPC向App进程发送handleBindApplication请求（初始化Application并调用onCreate方法）和scheduleLaunchActivity请求（创建启动Activity）
-* App进程的binder线程（ApplicationThread）在收到请求后，通过handler向主线程发送BIND_APPLICATION和LAUNCH_ACTIVITY消息，这里注意的是AMS和主线程并不直接通信，而是AMS和主线程的内部类ApplicationThread通过Binder通信，ApplicationThread再和主线程通过Handler消息交互。 ( 这里猜测这样的设计意图可能是为了统一管理主线程与AMS的通信，并且不向AMS暴露主线程中的其他公开方法，大神可以来解析下)
+* App进程，通过Binder向`sytem_server`进程发起attachApplication请求，这里实际上就是APP进程通过Binder调用`sytem_server`进程中AMS的`attachApplication()`，将ApplicationThread对象与AMS绑定
+* `system_server`进程在收到attachApplication的请求，进行一些准备工作后，再通过binder IPC向App进程发送`ApplicationThread.bindApplication()`请求（初始化Application并调用onCreate方法）和`ApplicationThread.scheduleLaunchActivity()`请求（创建启动Activity）
+* App进程的binder线程（ApplicationThread）在收到请求后，通过handler向主线程发送`BIND_APPLICATION`和`LAUNCH_ACTIVITY`消息，这里注意的是AMS和主线程并不直接通信，而是AMS和主线程的内部类ApplicationThread通过Binder通信，ApplicationThread再和主线程通过Handler消息交互。 
 * 主线程在收到Message后，创建Application并调用onCreate方法，再通过反射机制创建目标Activity，并回调Activity.onCreate()等方法
 * 到此，App便正式启动，开始进入Activity生命周期，执行完onCreate/onStart/onResume方法，UI渲染后显示APP主界面
 
@@ -18,7 +18,7 @@
 > 代表UI线程/主线程，但没有继承或实现任何类或接口，它的main()方法是APP的真正入口
 
 * `main()`：创建`ActivityThread`实例，并调用`attach()`，其次是创建并执行`loop()`
-* `attach()`：调用`ActivityManagerService.attachApplication(applicationThread)`，将成员变量`ApplicationThread`绑定到`ActivityManagerService`
+* `attach()`：调用`ActivityManagerService.attachApplication(applicationThread)`
 * `handleLaunchActivity()`：调用`performLaunchActivity()`
 * `performLaunchActivity()`：通过`Instrumentation.newActivity()`创建`Activity`实例，并调用`Activity.attach()`,最后还调用了`Instrumentation.callActivityOnCreate()`
 
@@ -37,7 +37,7 @@
 * `IActivityManager`：aidl接口
 * `ActivityManager`：内部方法均是由ActivityManagerNative.getDefault()，获得`IActivityManager`，调用`IActivityManager`相应的方法代理实现的
 * `attachApplication()`：调用了`attachApplicationLocked()`
-* `attachApplicationLocked()`：调用了`ApplicationThread.bindApplication()`，其次是调用`ActivityStackSupervisor.attachApplicationLocked()`去创建`Activity` 
+* `attachApplicationLocked()`：将传入的`ApplicationThread`实例绑定到`ActivityManagerService`，调用了`ApplicationThread.bindApplication()`，其次是调用`ActivityStackSupervisor.attachApplicationLocked()`去创建`Activity` 
 
 ### ActivityStackSupervisor
 * `ActivityManagerService`的成员变量
