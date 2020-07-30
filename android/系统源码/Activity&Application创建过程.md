@@ -30,6 +30,14 @@
 * `scheduleLaunchActivity()`：通过向mH发送`LAUNCH_ACTIVITY`消息，调用`ActivityThread.handleLaunchActivity()`
 * `bindApplication()`：通过向`mH`发送`BIND_APPLICATION`消息，调用`ActivityThread.handleBindApplication()`
 
+#### Instrumentation
+* `ActivityThread`的成员变量，可以理解为`ActivityThread`的一个工具类，一个进程只存在一个Instrumentation对象
+* 在每个Activity初始化时，会通过Activity的`attach()`将该引用传递给Activity。Activity所有生命周期的方法都由该类来执行
+* `newActivity()`：`classLoader.loadClass(activityClassName).newInstance()`创建Activity实例
+* `callActivityOnCreate()`：调用`Activity.performCreate()`
+* `newApplication()`：`classLoader.loadClass(activityClassName).newInstance()`创建`Application`，并调用`Application.attach()`，里面再调用`Application.attachBaseContext()`
+* `callApplicationOnCreate()`：里面就是调用`Application.onCreate()`
+
 ### ActivityManagerService
 > 即AMS，是一个服务端对象，负责所有的Activity的生命周期，AMS通过Binder与Activity通信，而AMS与Zygote之间是通过Socket通信
 
@@ -39,18 +47,10 @@
 * `attachApplication()`：调用了`attachApplicationLocked()`
 * `attachApplicationLocked()`：将传入的`ApplicationThread`实例绑定到`ActivityManagerService`，调用了`ApplicationThread.bindApplication()`，其次是调用`ActivityStackSupervisor.attachApplicationLocked()`去创建`Activity` 
 
-### ActivityStackSupervisor
+#### ActivityStackSupervisor
 * `ActivityManagerService`的成员变量
 * `attachApplicationLocked()`：调用了`realStartActivityLocked()`
 * `realStartActivityLocked()`：调用了`ActivityThread.ApplicationThread.scheduleLaunchActivity()`
-
-### Instrumentation
-> 可以理解为`ActivityThread`的一个工具类，在`ActivityThread`中初始化，一个进程只存在一个Instrumentation对象，在每个Activity初始化时，会通过Activity的`attach()`将该引用传递给Activity。Activity所有生命周期的方法都由该类来执行。
-
-* `newActivity()`：`classLoader.loadClass(activityClassName).newInstance()`创建Activity实例
-* `callActivityOnCreate()`：调用`Activity.performCreate()`
-* `newApplication()`：`classLoader.loadClass(activityClassName).newInstance()`创建`Application`，并调用`Application.attach()`，里面再调用`Application.attachBaseContext()`
-* `callApplicationOnCreate()`：里面就是调用`Application.onCreate()`
 
 ### 注意
 * APP中有几个进程，Application会被创建几次
