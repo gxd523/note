@@ -1,23 +1,15 @@
-* startActivityForResult()
-* startActivityFromChild()
-* Instrumentation.execStartActivity()
-* ActivityTaskManager.getService().startActivity()
-* ActivityManager.startActivity()
-* Instrumentation.execStartActivityFromAppTask()
-* IAppTask.startActivity()
-* ActivityManagerService.getActivityStartController()
-* ActivityStartController.obtainStarter()
-* ActivityStarter.execute()
-* ActivityStarter.startActivity()
-* WindowManagerGlobal.addView()
-* ViewRootImpl初始化时，new View.AttachInfo()
-
-
-startActivityMayWait
-`startActivity()`：调用ActivityStackSupervisor.startActivityMayWait()？？？
+[TOC]
 
 ### Activity
 * attach()：在ActivityThread.performLaunchActivity()中被调用，初始化mWindow
+
+### PolicyManager
+* `makeNewWindow()`：调用`Policy.makeNewWindow()`
+* `makeNewLayoutInflater()`：调用`Policy.makeNewLayoutInflater()`
+
+### Policy
+* `makeNewWindow()`：`new PhoneWindow(context)`，5.1中window的唯一初始化方式
+* `makeNewLayoutInflater()`：`new PhoneLayoutInflater(context)`，5.1中layoutInflater唯二初始化地方
 
 ### PhoneWindow
 * 在Activity.attach()里创建实例
