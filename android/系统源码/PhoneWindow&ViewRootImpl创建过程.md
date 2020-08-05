@@ -1,20 +1,23 @@
 [TOC]
 
+![](pic/setContentView.png)
+
+### PhoneWindow
+* 在`Activity.attach()`里创建实例
+* `mContentParent`：id为content的FrameLayout
+* `mContentRoot`：`DecorView`的子View
+
 ### Activity
-* attach()：在ActivityThread.performLaunchActivity()中被调用，初始化mWindow
+* `attach()`：在ActivityThread.performLaunchActivity()中被调用，初始化mWindow
 
 ### PolicyManager
 * `makeNewWindow()`：调用`Policy.makeNewWindow()`
 * `makeNewLayoutInflater()`：调用`Policy.makeNewLayoutInflater()`
 
 ### Policy
-* `makeNewWindow()`：`new PhoneWindow(context)`，5.1中window的唯一初始化方式
-* `makeNewLayoutInflater()`：`new PhoneLayoutInflater(context)`，5.1中layoutInflater唯二初始化地方
+`makeNewWindow()`：`new PhoneWindow(context)`，5.1中window的唯一初始化方式
 
-### PhoneWindow
-* 在Activity.attach()里创建实例
-* mContentParent：id为content的FrameLayout
-* setContentView()中创建DecorView实例
+* `makeNewLayoutInflater()`：`new PhoneLayoutInflater(context)`，5.1中layoutInflater唯二初始化地方
 
 ### WindowManagerImpl&WindowManagerGlobal
 `WindowManagerImpl`为`WindowManager`的实现类，而`WindowManager`又是`ViewManager`的实现接口。`WindowManagerImpl`内部方法实现都是由代理类`WindowManagerGlobal`完成，而`WindowManagerGlobal`是一个单例，也就是一个进程中只有一个`WindowManagerGlobal`对象服务于所有页面的View。
@@ -31,6 +34,10 @@ public final class WindowManagerGlobal {
 ```
 
 ### ViewRootImpl
+> ViewRoot是GUI管理系统与GUI呈现系统之间的桥梁。
+
+<img src="pic/ViewRootImpl.png" style="zoom: 200%;" />
+
 `ViewRootImpl`是`View`中的最高层级，属于所有`View`的根（但`ViewRootImpl`不是`View`，只是实现了`ViewParent`接口），实现了`View`和`WindowManager`之间的通信协议，实现的具体细节在`WindowManagerGlobal`这个类当中。通过`ViewRootImpl`来更新界面并完成`Window`的添加过程。
 
 ##### ViewRootImpl的初始化
@@ -41,3 +48,4 @@ public final class WindowManagerGlobal {
 * 
 
 ### DecorView
+> 界面的根View，PhoneWindow的内部类。

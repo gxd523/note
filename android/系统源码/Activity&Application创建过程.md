@@ -12,7 +12,7 @@
 * 主线程在收到Message后，创建Application并调用onCreate方法，再通过反射机制创建目标Activity，并回调Activity.onCreate()等方法
 * 到此，App便正式启动，开始进入Activity生命周期，执行完onCreate/onStart/onResume方法，UI渲染后显示APP主界面
 
-![](pic/activity_start_process.png)
+![](pic/ActivityLaunchProcess.png)
 
 ### ActivityThread
 > 代表UI线程/主线程，但没有继承或实现任何类或接口，它的main()方法是APP的真正入口
