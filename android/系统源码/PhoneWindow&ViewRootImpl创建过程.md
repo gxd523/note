@@ -36,7 +36,7 @@ public final class WindowManagerGlobal {
 ### ViewRootImpl
 > ViewRoot是GUI管理系统与GUI呈现系统之间的桥梁。
 
-<img src="https://github.com/gxd523/note/blob/master/android/系统源码/pic/ActivityLaunchProcess.png" style="zoom: 200%;" />
+<img src="pic/ViewRootImpl.png" style="zoom: 200%;" />
 
 `ViewRootImpl`是`View`中的最高层级，属于所有`View`的根（但`ViewRootImpl`不是`View`，只是实现了`ViewParent`接口），实现了`View`和`WindowManager`之间的通信协议，实现的具体细节在`WindowManagerGlobal`这个类当中。通过`ViewRootImpl`来更新界面并完成`Window`的添加过程。
 
