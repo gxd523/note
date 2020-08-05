@@ -55,3 +55,10 @@
 ### 注意
 * APP中有几个进程，Application会被创建几次
 * 新进程中所有变量和单例会失效，因为新进程有一块新的内存区域
+
+### 最后
+* [Activity中的Window的setContentView](http://dandanlove.com/2017/11/10/activity-setcontentview/)
+* [遇见LayoutInflater和Factory](http://dandanlove.com/2017/11/15/layoutinflater-factory/)
+* [ViewRootImpl的独白，我不是一个View](http://dandanlove.com/2017/12/11/viewrootimpl-activity/)
+* [Dialog、Toast的Window和ViewRootImpl](http://dandanlove.com/2017/12/11/viewrootimpl-dialog-toast/)
+
