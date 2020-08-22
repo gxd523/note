@@ -8,17 +8,38 @@
 #### Writer
 
 ### 常用类总结
-各种操作 | 类
---- | ---
-文件 | `FileInputStream`、`FileOutputStream`、`FileReader`、`FileWriter`
-管道 | `PipedInputStream`、`PipedOutputStream`、`PipedReader`、`PipedWriter`
-数组 | `ByteArrayInputStream`、`ByteArrayOutputStream`、`CharArrayReader`、`CharArrayWriter`
-缓冲 | `BufferedInputStream`、`BufferedOutputStream`、`BufferedReader`、`BufferedWriter`
-字节/字符互转 | `ReaderInputStream`、`WriterInputStream`、`InputStreamReader`、`InputStreamWriter`
-打印 | `PrintStream`、`PrintWriter`
-控制台 | `System.in`、`System.out`
-对象序列化 | `ObjectInputStream`、`ObjectOutputStream`、`ObjectReader`、`ObjectWriter`
-基本数据类型 | `DataInputStream`、`DataOutputStream`
+#### 文件
+* `FileInputStream`、`FileOutputStream`
+* `FileReader`、`FileWriter`
+
+#### 数组
+* `ByteArrayInputStream`、`ByteArrayOutputStream`
+* `CharArrayReader`、`CharArrayWriter`
+
+#### 缓冲
+* `BufferedInputStream`、`BufferedOutputStream`
+* `BufferedReader`、`BufferedWriter`
+
+#### 字节/字符互转
+`ReaderInputStream`、`WriterInputStream`、`InputStreamReader`、`InputStreamWriter`
+
+#### 对象序列化
+`ObjectInputStream`、`ObjectOutputStream`、`ObjectReader`、`ObjectWriter`
+
+#### 基本数据类型
+`DataInputStream`、`DataOutputStream`
+
+#### 管道
+`PipedInputStream`、`PipedOutputStream`、`PipedReader`、`PipedWriter`
+
+#### 打印
+`PrintStream`、`PrintWriter`
+
+#### 控制台
+`System.in`、`System.out`
+
+### try-with-resources
+不用手动close()
 
 ### BufferedWriter对比PrintWriter
 Socket编程中,尽量用PrintWriter取代BufferedWriter，下面是PrintWriter的优点：
