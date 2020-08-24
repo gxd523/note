@@ -2,7 +2,7 @@
 ### 坐标
 > 由于移动设备一般定义屏幕左上角为坐标原点，向右为x轴增大方向，向下为y轴增大方向， 所以在手机屏幕上的坐标系与数学中常见的坐标系是稍微有点差别的
 
-![coordinate](../../pic/coordinate.jpeg)
+![coordinate](https://github.com/part5/note/raw/master/pic/coordinate.jpeg)
 
 * View相对于父控件的坐标getLeft()、getTop()、getRight()、getBottom()
 * MotionEvent中，getX()表示以父控件为坐标系，getRawX()表示以屏幕为坐标系
