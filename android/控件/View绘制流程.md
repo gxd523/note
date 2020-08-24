@@ -1,6 +1,6 @@
 [TOC]
 
-![](../../pic/view_flow_chat.png)
+![](https://github.com/part5/note/raw/master/pic/view_flow_chat.png)
 
 * 自己调用requestLayout()后，只会执行measure、layout，不会执行draw
 * 没有设置图片或颜色就不会走draw()、onDraw()
