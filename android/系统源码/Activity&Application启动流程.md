@@ -1,7 +1,7 @@
 [TOC]
 
 ### 启动app过程
-![](pic/launch_app.png)
+![](https://github.com/part5/note/raw/master/pic/launch_app.png)
 
 * 点击桌面APP图标时，Launcher的startActivity()方法，通过Binder通信，调用`system_server`进程中AMS服务的`startActivity()`，发起启动请求
 * `system_server`进程接收到请求后，通过Socket通信，向Zygote进程发送创建进程的请求
@@ -12,7 +12,7 @@
 * 主线程在收到Message后，创建Application并调用onCreate方法，再通过反射机制创建目标Activity，并回调Activity.onCreate()等方法
 * 到此，App便正式启动，开始进入Activity生命周期，执行完onCreate/onStart/onResume方法，UI渲染后显示APP主界面
 
-![](pic/ActivityLaunchProcess.png)
+![](https://github.com/part5/note/raw/master/pic/ActivityLaunchProcess.png)
 
 ### ActivityThread
 > 代表UI线程/主线程，但没有继承或实现任何类或接口，它的main()方法是APP的真正入口
@@ -85,7 +85,7 @@ public final class WindowManagerGlobal {
 ### ViewRootImpl
 > ViewRoot是GUI管理系统与GUI呈现系统之间的桥梁。
 
-<img src="pic/ViewRootImpl.png" style="zoom: 200%;" />
+<img src="https://github.com/part5/note/raw/master/pic/ViewRootImpl.png" style="zoom: 200%;" />
 
 `ViewRootImpl`是`View`中的最高层级，属于所有`View`的根（但`ViewRootImpl`不是`View`，只是实现了`ViewParent`接口），实现了`View`和`WindowManager`之间的通信协议，实现的具体细节在`WindowManagerGlobal`这个类当中。通过`ViewRootImpl`来更新界面并完成`Window`的添加过程。
 
