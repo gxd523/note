@@ -1,6 +1,6 @@
 [TOC]
 
-### IPC方式
+## IPC方式
 > Android系统是基于Linux开发的，Linux中包含以下几种IPC:
 
 * **管道(PIPE)**：在创建时分配一个page大小的内存，缓存区大小比较有限；
@@ -10,18 +10,25 @@
 * **信号量**：常作为一种锁机制，防止某进程正在访问共享资源时，其他进程也访问该资源。因此，主要作为进程间以及同一进程内不同线程之间的同步手段。
 * **信号**: 不适用于信息交换，更适用于进程中断控制，比如非法内存访问，杀死某个进程等；
 
-### Android中的IPC方式
+## Android中的IPC方式
 * ContentProvider
 * Broadcast
-* AIDL
+* Binder
 * Socket
 * Messager
 
-#### 开启多进程的影响
+### 开启多进程的影响
 * 静态成员与单例模式失效
 * 线程同步机制失效
 * SharedPreferences 可靠性下降
 * Application 被创建多次
+
+## Binder IPC原理
+> Binder通信采用c/s架构，从组件视角来说，包含Client、Server、ServiceManager以及binder驱动，其中ServiceManager用于管理系统中的各种服务。
+
+![](https://github.com/part5/note/raw/master/pic/IPC-Binder.jpg)
+* 用户空间进程间不能共享，内核空间可以
+* 
 
 ### AIDL(Android Interface Definition Language)
 ##### AIDL支持的数据类型
