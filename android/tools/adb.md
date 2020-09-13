@@ -28,6 +28,7 @@
 * 重启Recovery：`adb reboot recovery`
 * 重启到Fastboot：`adb reboot bootloader`
 * 查看进程：`adb shell ps`
+* 查看像素密度：`adb shell getprop ro.sf.lcd_density`
 * 查看实时资源占用情况：`adb shell top`
 列名 | 含义
 --- | ---
