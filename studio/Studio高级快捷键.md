@@ -1,5 +1,10 @@
 名称 | 操作 | 备注
---- | --- | ---
+--- | :---: | :---:
+Add Selection for Next Occurrence | ⌃G| 修改所有与选中项相同的
+Quick Documentation | ⌃J | 
+Compare With | ⌘D| 
+Type Info | ⌃⇧P| 
+Context Info | ⌃⇧Q | 
 Conditional Breakpoints | 断点上右键填写表达式 | 条件断点
 Breakpoints Log | 断点上右键填写表达式 | 断点日志
 Call Hierarchy | 光标在方法上⌃⌥H | 方法被调用情况 
