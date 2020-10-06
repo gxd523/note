@@ -2,7 +2,7 @@
 ### 坐标
 > 由于移动设备一般定义屏幕左上角为坐标原点，向右为x轴增大方向，向下为y轴增大方向， 所以在手机屏幕上的坐标系与数学中常见的坐标系是稍微有点差别的
 
-![coordinate](https://github.com/part5/note/raw/master/pic/coordinate.jpeg)
+![coordinate](https://github.com/gxd523/note/raw/master/pic/coordinate.jpeg)
 
 * View相对于父控件的坐标getLeft()、getTop()、getRight()、getBottom()
 * MotionEvent中，getX()表示以父控件为坐标系，getRawX()表示以屏幕为坐标系
@@ -188,11 +188,11 @@ getSaveCount | 获取栈中内容的数量(即保存次数)
 
 | 逻辑名称           | 类比 | 说明                                   | 示意图                                                       |
 | ------------------ | ---- | -------------------------------------- | ------------------------------------------------------------ |
-| DIFFERENCE         | 差集 | Path1中减去Path2后剩下的部分           | ![img](https://github.com/part5/note/raw/master/pic/DIFFERENCE.jpeg) |
-| REVERSE_DIFFERENCE | 差集 | Path2中减去Path1后剩下的部分           | ![img](https://github.com/part5/note/raw/master/pic/REVERSE_DIFFERENCE.jpeg) |
-| INTERSECT          | 交集 | Path1与Path2相交的部分                 |![img](https://github.com/part5/note/raw/master/pic/INTERSECT.jpeg) |
-| UNION              | 并集 | 包含全部Path1和Path2                   |![img](https://github.com/part5/note/raw/master/pic/UNION.jpeg) |
-| XOR                | 异或 | 包含Path1与Path2但不包括两者相交的部分 |![img](https://github.com/part5/note/raw/master/pic/XOR.jpeg) |
+| DIFFERENCE         | 差集 | Path1中减去Path2后剩下的部分           | ![img](https://github.com/gxd523/note/raw/master/pic/DIFFERENCE.jpeg) |
+| REVERSE_DIFFERENCE | 差集 | Path2中减去Path1后剩下的部分           | ![img](https://github.com/gxd523/note/raw/master/pic/REVERSE_DIFFERENCE.jpeg) |
+| INTERSECT          | 交集 | Path1与Path2相交的部分                 |![img](https://github.com/gxd523/note/raw/master/pic/INTERSECT.jpeg) |
+| UNION              | 并集 | 包含全部Path1和Path2                   |![img](https://github.com/gxd523/note/raw/master/pic/UNION.jpeg) |
+| XOR                | 异或 | 包含Path1与Path2但不包括两者相交的部分 |![img](https://github.com/gxd523/note/raw/master/pic/XOR.jpeg) |
 
 ### Paint
 

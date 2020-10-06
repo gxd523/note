@@ -7,7 +7,7 @@
 
 ### 功能
 * 获取请求数据
-	* 请求行数据![](../pic/request_header_row.png)
+	* 请求行数据![](https://github.com/gxd523/note/raw/master/pic/request_header_row.png)
 		* getMethod()：GET
 		* getContextPath()：/javaweb
 		* getServletPath()：/simplehttp

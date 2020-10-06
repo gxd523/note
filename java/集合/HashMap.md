@@ -1,7 +1,7 @@
 [TOC]
 
 ## 概述
-![](https://github.com/part5/note/raw/master/pic/hash_map.png)
+![](https://github.com/gxd523/note/raw/master/pic/hash_map.png)
 
 * `HashMap`是`数组+单链表/红黑树`的数据结构
 * 数组元素超过一个会转成链表，>=8(并且数组长度大于64)个会转成红黑树，<=6个会转回链表

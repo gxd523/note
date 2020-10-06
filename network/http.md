@@ -7,10 +7,10 @@
 * `无状态`：每次请求之间相互独立，不能交互数据
 
 ### Http通信过程
-![](../pic/http.png)
+![](https://github.com/gxd523/note/raw/master/pic/http.png)
 
 ## 请求报文
-![](../pic/request_message.png)
+![](https://github.com/gxd523/note/raw/master/pic/request_message.png)
 
 ### 请求行
 #### 请求方式
@@ -58,7 +58,7 @@ multipart/form-data | POST专用：用以支持向服务器发送二进制数据
 * `POST`请求才有貌似
 
 ## 响应报文
-![](../pic/response_message.png)
+![](https://github.com/gxd523/note/raw/master/pic/response_message.png)
 
 ### 响应行
 #### 状态码
