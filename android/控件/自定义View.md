@@ -58,11 +58,11 @@ SRC_OVER | [Sa + (1 - Sa)Da, Rc = Sc + (1 - Sa)Dc]
 XOR | [Sa + Da - 2 * Sa * Da, Sc * (1 - Da) + (1 - Sa) * Dc]
 
 用示例图来查看使用不同模式时的混合效果如下（src表示输入的图，dst表示原Canvas上的内容）：
-![](https://github.com/part5/note/raw/master/pic/mix_effect.jpeg)
+![](https://github.com/gxd523/note/raw/master/pic/mix_effect.jpeg)
 
 ### View绘制流程
 
-![](https://github.com/part5/note/raw/master/pic/draw_process.jpeg)
+![](https://github.com/gxd523/note/raw/master/pic/draw_process.jpeg)
 
 步骤 | 关键字 | 作用
 --- |--- | ---
@@ -152,7 +152,7 @@ Matrix(矩阵) | getMatrix, setMatrix, concat | 实际上画布的位移，缩�
 ```canvas.drawRoundRect(rectF,30,30,mPaint);```
 > 这里圆角矩形的角实际上不是一个正圆的圆弧，而是椭圆的圆弧，这里的两个参数实际上是椭圆的两个半径
 
-![](https://github.com/part5/note/raw/master/pic/round_rect.jpeg)
+![](https://github.com/gxd523/note/raw/master/pic/round_rect.jpeg)
 
 #### 快照(save)和回滚(restore)
 相关API | 简介

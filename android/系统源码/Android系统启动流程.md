@@ -1,9 +1,9 @@
 [TOC]
 ### Android系统架构图
-![](https://github.com/part5/note/raw/master/pic/android_system_structure.png)
+![](https://github.com/gxd523/note/raw/master/pic/android_system_structure.png)
 
 ### Android系统启动流程图
-![](https://github.com/part5/note/raw/master/pic/android_system_launch_process.png)
+![](https://github.com/gxd523/note/raw/master/pic/android_system_launch_process.png)
 
 * init进程是Native世界的第一个进程
 

@@ -26,7 +26,7 @@
 ## Binder IPC原理
 > Binder通信采用c/s架构，从组件视角来说，包含Client、Server、ServiceManager以及binder驱动，其中ServiceManager用于管理系统中的各种服务。
 
-![](https://github.com/part5/note/raw/master/pic/IPC-Binder.jpg)
+![](https://github.com/gxd523/note/raw/master/pic/IPC-Binder.jpg)
 * 用户空间进程间不能共享，内核空间可以
 * 
 
@@ -50,9 +50,9 @@
 * 如果AIDL方法接口的参数值类型是：基本数据类型、String、CharSequence或者其他AIDL文件定义的方法接口，那么这些参数值的定向 Tag 默认是且只能是 in，所以除了这些类型外，其他参数值都需要明确标注使用哪种定向Tag
 * 在AIDL文件中需要明确标明引用到的数据类型所在的包名，即使两个文件处在同个包名下
 
-![](https://github.com/part5/note/raw/master/pic/aidl.png)
+![](https://github.com/gxd523/note/raw/master/pic/aidl.png)
 
-![](https://github.com/part5/note/raw/master/pic/ipc-aidl.jpg)
+![](https://github.com/gxd523/note/raw/master/pic/ipc-aidl.jpg)
 
 #### AIDL的经典实现：Messenger
 > Messenger可以翻译为信使，顾名思义，通过它可以在不同进程中传递Message对象，在Message中放入我们需要传递的数据，就可以轻松地实现数据的进程间传递了。Messenger是一种轻量级的IPC方案，它是AIDL在Android中的一种经典实践。
