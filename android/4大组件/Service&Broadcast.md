@@ -1,4 +1,4 @@
-![](https://github.com/gxd523/note/raw/master/pic/service_lifecycle.png)
+![](https://gitee.com/hysbtr/pic/raw/master/service_lifecycle.png)
 
 ### Service两种启动方式
 #### starService()启动方式

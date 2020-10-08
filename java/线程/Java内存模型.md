@@ -3,7 +3,7 @@
 ### JVM内存结构
 > 与Java虚拟机的运行时区域有关(3室2厅)
 
-![](https://github.com/gxd523/note/raw/master/pic/JMS.png)
+![](https://gitee.com/hysbtr/pic/raw/master/JMS.png)
 
 区域 | 存储内容 | 特点
 :---: | :---: | :---:
@@ -31,7 +31,7 @@ native方法栈 | native方法|
 * 线程间通过主存进行通信，有一定的延迟，不能同步更新
 * 线程间对于共享变量的可见性问题不是由多核引起的，而是由多级缓存引起的，多级缓存导致对变量的修改需要一级级缓存进行同步，而同步不是实时的，就导致了可见性问题
 
-![](https://github.com/gxd523/note/raw/master/pic/visibility.png)
+![](https://gitee.com/hysbtr/pic/raw/master/visibility.png)
 
 ##### 本地缓存(local cache)
 > 每个线程自己的缓存，也可叫本地内存或工作内存，是一个抽象概念，可以对应于上图的寄存器到2级缓存，但不同处理器有所不同
@@ -87,7 +87,7 @@ native方法栈 | native方法|
 ### Java对象模型
 > Java对象在Java虚拟机的表现形式
 
-![](https://github.com/gxd523/note/raw/master/pic/JOM.png)
+![](https://gitee.com/hysbtr/pic/raw/master/JOM.png)
 
 * 字节码文件是跨平台的，每个平台的JVM会将字节码文件“翻译”成对应平台的机器指令
 * 

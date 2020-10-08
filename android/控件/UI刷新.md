@@ -1,4 +1,4 @@
-![](https://github.com/gxd523/note/raw/master/pic/ui_refresh.png)
+![](https://gitee.com/hysbtr/pic/raw/master/ui_refresh.png)
 
 #### 我们都知道Android的刷新频率是60帧/秒，这是不是意味着每隔16ms就会调用一次onDraw方法？
 > 这里60帧/秒是屏幕刷新频率，但是是否会调用onDraw()方法要看应用是否调用requestLayout()进行注册监听。

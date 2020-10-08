@@ -1,6 +1,6 @@
 [TOC]
 
-![](https://github.com/gxd523/note/raw/master/pic/setContentView.png)
+![](https://gitee.com/hysbtr/pic/raw/master/setContentView.png)
 
 ### LayoutInflater的创建
 > LayoutInflater是一个抽象类，它的创建，并不是交由App层处理的，而是调用了from()的静态函数，经由系统服务LAYOUT_INFLATER_SERVICE，最终创建了一个LayoutInflater的子类对象--PhoneLayoutInflater
