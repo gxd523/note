@@ -12,16 +12,18 @@ decodeStream(InputStream in) | 把输入流解析成位图
 ## BitmapFactory.options
 > BitmapFactory.Options类是BitmapFactory对图片进行解码时使用的一个配置参数类
 
-* `inTargetDensity`：资源图片为设备像素密度，否则为0
-* `inDensity`：资源图片为对应dpi目录，否则为0或160
-* `inScreenDensity`：默认为0，貌似用不到
-* `inScaled`：是否缩放，true：outDensity取inDensity，否则取inTargetDensity
-* inPreferredConfig：颜色格式，只有JPG可能会生效，RGB_565、ALPHA_8、ARGB_8888 
-* inJustDecodeBounds：设置为true则不返回Bitmap，用于获取图片宽高等信息，但不加载图片
-* inSampleSize：缩放倍数(整数)
-* inBitmap：复用Bitmap，配合inMutable使用 
-* inMutable：true才能使用inBitmap
-* inDither | 是否采用抖动解码，降低图片颜色模式位数时，为防止色彩断带，采用随机噪声色来填充，缓解断带情况
+option | 备注
+:---: | :---:
+inJustDecodeBounds | 设置为true则不返回Bitmap，用于获取图片宽高等信息，但不加载图片
+inSampleSize | 缩放倍数(整数)
+inTargetDensity | 设备像素密度 
+inDensity | 图片像素密度(资源图片才有) 
+inScreenDensity | 默认为0，貌似用不到
+inScaled | 默认为true，表示缩放，bitmap.density取目标设备像素密度(inTargetDensity)，false为不缩放，bitmap.density取图片像素密度(inDensity) 
+inPreferredConfig | 颜色格式，RGB_565(有透明度图片无效)、ARGB_8888 
+inBitmap | 复用Bitmap，配合inMutable使用
+inMutable | true才能使用inBitmap
+inDither | 是否采用抖动解码，降低图片颜色模式位数时，为防止色彩断带，采用随机噪声色来填充，缓解断带情况
 
 ## Bitmap.createBitmap()
 方法名 | 用法说明
