@@ -67,3 +67,75 @@ public static void main(String[] args) {
 ```
 
 ### Android中为什么主线程不会因为Looper.loop()里的死循环卡死？
+
+## 进阶
+### 消息分类
+#### 同步消息(普通消息)
+#### 同步屏障(屏障消息)
+* 在消息队列中插入一个屏障，阻挡后面的普通消息分发，保证异步消息的优先级
+* 和普通消息一样可以根据时间插入到队列的任意位置
+* 没有target，因为不需要分发
+
+#### 异步消息
+* 通过隐藏的Handler构造函数创建的Handler可发送异步消息，或者`message.setAsynchronous()`直接设置消息为异步消息
+
+```java
+HandlerThread handlerThread = new HandlerThread("test");
+handlerThread.start();
+handler = new Handler(handlerThread.getLooper()) {
+    @Override
+    public void handleMessage(@NonNull Message msg) {
+        Log.d("gxd", "收到..." + msg.obj);
+    }
+};
+
+/**
+ * 往消息队列插入同步屏障
+ */
+public void sendSyncBarrier(View view) throws Exception {
+    Log.d("gxd", "插入同步屏障");
+    MessageQueue queue = handler.getLooper().getQueue();
+    Method method = MessageQueue.class.getDeclaredMethod("postSyncBarrier");
+    method.setAccessible(true);
+    token = (int) method.invoke(queue);
+}
+
+/**
+ * 移除同步屏障
+ */
+public void removeSyncBarrier(View view) throws Exception {
+    Log.d("gxd", "移除屏障");
+    MessageQueue queue = handler.getLooper().getQueue();
+    Method method = MessageQueue.class.getDeclaredMethod("removeSyncBarrier", int.class);
+    method.setAccessible(true);
+    method.invoke(queue, token);
+}
+
+/**
+ * 往消息队列插入普通消息
+ */
+public void sendSyncMessage(View view) {
+    Log.d("gxd", "插入普通消息");
+    Message message = Message.obtain();
+    message.obj = "同步消息";
+    handler.sendMessageDelayed(message, 1000);
+}
+
+/**
+ * 往消息队列插入异步消息
+ */
+public void sendAsyncMessage(View view) {
+    Log.d("gxd", "插入异步消息");
+    Message message = Message.obtain();
+    message.obj = "异步消息";
+    message.setAsynchronous(true);
+    handler.sendMessageDelayed(message, 1000);
+}
+```
+
+### IdleHandler
+* 通过`MessageQueue.addIdleHandler()`添加
+* 在`MessageQueue.next()`中，如果没有消息，或者下一个消息延迟执行，就会回调IdleHandler
+* 可用来获取View宽高，MessageQueue空闲时，说明ViewRootImpl的MLD已经走完了
+* 不要在里面执行耗时操作，因为在主线程
+* 在`OnResume()`里面调用获取到MainActivity的绘制完成的时机

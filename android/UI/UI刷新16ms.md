@@ -14,3 +14,18 @@
 
 #### 如果在屏幕快要刷新的时候才去OnDraw()绘制，会丢帧吗？
 > 这个没有太大关系，因为Vsync信号是周期的，我们什么时候发起onDraw()不会影响界面刷新；
+
+### Frame Buffer
+> GPU的一块缓存区，是一个数组，数组中的元素代表像素点的颜色。手机逻辑电路会定期显示Frame Buffer里面的数据，例如60Hz，就是每16.7ms刷新一次。
+
+### Back Buffer
+> GPU的另一个缓存区，CPU将显示数据写入Back Buffer里，GPU定期对Back Buffer进行栅格化处理，也就是转换成Frame Buffer。
+
+### VSYNC(Vertical Synchronization)
+> 定时中断
+
+### Triple Buffer
+> 添加第三个Buffer，防止前两个Buffer分别被Display、GPU占用，导致CPU没有Buffer处理
+
+### Choreographer
+

@@ -1,5 +1,8 @@
 * okhttp是基于HttpURLConnection设计的
-* 
+* 连接池减少请求延迟
+* 支持http2，同一host可共享socket
+* GZIP透明传输减少下载体积
+* Response缓存避免重复请求
 
 ### 简单异步请求过程
 * 创建realCall：client.newCall(request)

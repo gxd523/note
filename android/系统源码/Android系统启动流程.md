@@ -17,3 +17,8 @@
 ### SystemServer
 > SystemServer进程是系统进程，很多系统服务，例如ActivityManagerService、PackageManagerService、WindowManagerService…都是存在该进程被创建后启动
 
+### ServiceManager
+> Binder基于C/S架构的通讯模型，其中定义了4个角色：Client、Server、Binder驱动和ServiceManager。
+
+* Binder驱动类似路由器，负责将Client的请求转发到具体的Server中执行，并将Server返回的数据传回给Client。
+* 类似网络通信中的DNS服务器，负责将Client请求的Binder描述符转化为具体的Server地址，以便Binder驱动能够转发给具体的Server。Server如需提供Binder服务，需要向ServiceManager注册。

@@ -77,11 +77,7 @@ XOR | [Sa + Da - 2 * Sa * Da, Sc * (1 - Da) + (1 - Sa) * Dc]
 
 ##### onMeasure()
 > View的大小不仅由自身所决定，同时也会受到父控件的影响，为了我们的控件能更好的适应各种情况，一般会自己进行测量。
-模式 | 二进制数值 | 描述
---- | --- | ---
-UNSPECIFIED | 00 | 默认值，父控件没有给子view任何限制，子View可以设置为任意大小。
-EXACTLY | 01 | 表示父控件已经确切的指定了子View的大小(match_parent或具体的值) 
-AT_MOST | 10 | 表示子View具体大小没有尺寸限制，但是存在上限，上限一般为父View大小(wrap_parent) 
+
 > 在int类型的32位二进制位中，31-30这两位表示测量模式,29~0这三十位表示宽和高的实际值。
 
 > **如果对View的宽高进行修改了，不要调用 super.onMeasure( widthMeasureSpec, heightMeasureSpec); 要调用 setMeasuredDimension( widthsize, heightsize); 这个函数。**
