@@ -9,3 +9,8 @@ RecyclerView.Recycler | 负责处理View的缓存
 
 https://blog.csdn.net/weixin_43130724/article/details/90068112
 
+## 缓存
+* Scrap：屏幕内的ViewHolder，对应源码`Recycler.mAttachedScrap`
+* Cache：刚移出屏幕的ViewHolder，默认2个，根据position获取，复用时不用走`onBindViewHolder`，对应源码`Recycler.mCachedViews`
+* ViewCacheExtension：留给开发者自定义缓存，对应源码`Recycler.mViewCacheExtension`
+* RecycledViewPool：Cache满了后，根据FIFO，移入`RecycledViewPool`，默认5个，ViewHolder数据会被重置，根据`itemType`获取，复用时要走`onBindViewHolder`，对应源码`Recycler.mRecyclerPool`
