@@ -236,3 +236,5 @@ View createView(String name, String prefix, AttributeSet attrs) {
 </blink>
 ```
 
+### LayoutParams
+* 会在inflate过程反射出View后，通过`parent.addView()`添加到父View时通过`parent.generateLayoutParams()`从父View获得LayoutParams

@@ -60,47 +60,6 @@ XOR | [Sa + Da - 2 * Sa * Da, Sc * (1 - Da) + (1 - Sa) * Dc]
 用示例图来查看使用不同模式时的混合效果如下（src表示输入的图，dst表示原Canvas上的内容）：
 ![](https://gitee.com/hysbtr/pic/raw/master/mix_effect.jpeg)
 
-### View绘制流程
-
-![](https://gitee.com/hysbtr/pic/raw/master/draw_process.jpeg)
-
-步骤 | 关键字 | 作用
---- |--- | ---
-1 | 构造函数 | View初始化(初始化画笔Paint) 
-2 | onMeasure | 测量View大小
-3 | onSizeChanged | 确定View大小(记录当前View的宽高) 
-4 | onLayout | 确定子View布局(自定义View包含子View时有用)
-5 | onDraw | 实际绘制内容
-6 | 提供接口 | 控制View或监听View某些状态。
-
-> 有三个参数的构造函数中第三个参数是默认的Style，这里的默认的Style是指它在当前Application或Activity所用的Theme中的默认Style，且只有在明确调用的时候才会生效。**注意：这个style指的不是View中的Style属性**
-
-##### onMeasure()
-> View的大小不仅由自身所决定，同时也会受到父控件的影响，为了我们的控件能更好的适应各种情况，一般会自己进行测量。
-
-> 在int类型的32位二进制位中，31-30这两位表示测量模式,29~0这三十位表示宽和高的实际值。
-
-> **如果对View的宽高进行修改了，不要调用 super.onMeasure( widthMeasureSpec, heightMeasureSpec); 要调用 setMeasuredDimension( widthsize, heightsize); 这个函数。**
-
-##### onSizeChanged()
-
-> 这个函数在视图大小发生改变时调用。
-
-Q: 在测量完View并使用setMeasuredDimension函数之后View的大小基本上已经确定了，那么为什么还要再次确定View的大小呢？
-
-A: 这是因为View的大小不仅由View本身控制，而且受父控件的影响，所以我们在确定View大小的时候最好使用系统提供的onSizeChanged回调函数。
-
-这个函数比较简单，我们只需关注 宽度(w), 高度(h) 即可，这两个参数就是View最终的大小。
-##### onLayout()
-> 确定布局的函数是onLayout，它用于确定子View的位置，在自定义ViewGroup中会用到，他调用的是子View的layout函数。
-
-在自定义ViewGroup中，onLayout一般是循环取出子View，然后经过计算得出各个子View位置的坐标值，然后用以下函数设置子View位置。
-```
-child.layout(l, t, r, b);
-```
-##### onDraw()
-> onDraw是实际绘制的部分，也就是我们真正关心的部分，使用的是Canvas绘图。
-
 ### Canvas
 Canvas的常用操作速查表
 操作类型 | 相关API | 备注
@@ -197,3 +156,4 @@ getSaveCount | 获取栈中内容的数量(即保存次数)
 STROKE | 描边
 FILL | 填充
 FILL_AND_STROKE | 描边+填充
+

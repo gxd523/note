@@ -1,25 +1,46 @@
 [TOC]
 
+## 绘制流程
 ![](https://gitee.com/hysbtr/pic/raw/master/view_flow_chat.png)
 
-* 自己调用requestLayout()后，只会执行measure、layout，不会执行draw
-* 没有设置图片或颜色就不会走draw()、onDraw()
+## Measure
+* 测量View大小，最终需调用`setMeasuredDimension()`设置宽高
+* 如果是ViewGroup，还需调用`measureChildren()`或`measureChild()`
+* measureChildren()：测量所有子View
+* measureChild()：测量指定View
+* getWidth()：在`layout()`后，设置了`mRight`、`mLeft`才有值的
+* getMeasureWidth()：在`measure()`后，调用了`setMeasuredDimension()`，也就是设置了`mMeasuredWidth`，才值了
 
-### Measure
-#### ViewGroup.LayoutParams
-#### MeasureSpecs
-* UNSPECIFIED：父容器没有对当前View有任何限制，当前View可以任意取尺寸。比如 ListView、 ScrollView，一般自定义 View 中用不到
-* EXACTLY：当前的尺寸就是当前View应该取的尺寸，match_parent或具体的值，可通过getSize()获得具体尺寸
-* AT_MOST：当前尺寸是当前View能取的最大尺寸，wrap_parent，无法通过getSize()获得具体尺寸
+### MeasureSpecs
+模式 | 二进制 | 描述
+:---: | :---: | :---:
+UNSPECIFIED | 00 | 表示父容器不对View有任何限制，一般用于系统内部，表示一种测量状态 
+EXACTLY | 01 | 父容器已经检测出view所需的精确大小，相当于match_parent或指定具体数值 
+AT_MOST | 10 | 表示子View不超过父View大小，相当于wrap_parent 
 
-#### setMeasuredDimension()
-* 在onMeasure()中调用
-### Layout
-### Draw
-#### 绘制步骤
-* 绘制背景：`drawBackground(canvas)`
-* If necessary, save the canvas' layers to prepare for fading
-* 绘制内容：`onDraw(canvas)`
-* 绘制子控件：`dispatchDraw(canvas)`
-* If necessary, draw the fading edges and restore layers
-* Draw decorations (scrollbars for instance)：`onDrawForeground(canvas)`
+## Layout
+* 摆放View，通常由ViewGroup实现，View不需要
+* onSizeChanged()：在`layout()`中调用`setFrame()`在调用`sizeChange()`
+
+## Draw
+* dispatchDraw()：`onDraw()`后调用，里面调用了子View的`draw()`
+* ViewGroup默认不执行`onDraw()`，如果复写，需调用`setWillNotDraw(false)`清楚不需要绘制的标记
+
+### 绘制过程
+1. 对View的背景进行绘制：`drawBackground(canvas)`
+2. 保存当前的图层信息(可跳过)
+3. 绘制View的内容：`onDraw(canvas)`
+4. 对View的子View进行绘制：`dispatchDraw(canvas)`
+5. 绘制View的褪色的边缘，类似于阴影效果(可跳过)
+6. 绘制View的装饰（例如：滚动条）
+
+## invalidate()
+* 调用`parent.invalidateChild()`逐级向上传递
+* 接着调用`parent.invalidateChildInParent()`逐级向上直到`ViewRootImpl.invalidateChildInParent()`，并计算出自身需要重绘的区域
+* 最后执行`performTraversals()`，`mLayoutRequestede`为false，所以不会触发`measure`与`layout`，只会触发`draw`
+* postInvalidate()：一般在非UI线程调用，用Handler发送异步消息，`handleMessage()`中调用`invalidate()`
+
+## requestLayout()
+* 责任链模式逐级向上传递直到`ViewRootImpl.performTraversals()`
+* `mLayoutRequestede`为true，会触发`measure`与`layout`，不一定
+会触发`draw`
