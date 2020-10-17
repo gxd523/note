@@ -34,33 +34,58 @@ Alpha8 | 仅有透明通道(8位)
 
 使用这种方式的混合，就会造成后绘制的内容以半透明的方式叠在上面的视觉效果。
 
+## 混合模式
 其实还可以有不同的混合模式供我们选择，用Paint.setXfermode，指定不同的PorterDuff.Mode。
 
 下表是各个PorterDuff模式的混合计算公式：（D指原本在Canvas上的内容dst，S指绘制输入的内容src，a指alpha通道，c指RGB各个通道）
 混合模式 | 计算公式
---- | ---
+:---: | :---: 
 ADD | Saturate(S + D)
-CLEAR | [0, 0]
-DARKEN | [Sa + Da - SaDa, Sc(1 - Da) + Dc*(1 - Sa) + min(Sc, Dc)]
-DST | [Da, Dc]
-DST_ATOP | [Sa, Sa * Dc + Sc * (1 - Da)]
-DST_IN | [Sa * Da, Sa * Dc]
-DST_OUT | [Da * (1 - Sa), Dc * (1 - Sa)]
-DST_OVER | [Sa + (1 - Sa)Da, Rc = Dc + (1 - Da)Sc]
-LIGHTEN | [Sa + Da - SaDa, Sc(1 - Da) + Dc*(1 - Sa) + max(Sc, Dc)]
-MULTIPLY | [Sa * Da, Sc * Dc]
-SCREEN | [Sa + Da - Sa * Da, Sc + Dc - Sc * Dc]
-SRC | [Sa, Sc]
-SRC_ATOP | [Da, Sc * Da + (1 - Sa) * Dc]
-SRC_IN | [Sa * Da, Sc * Da]
-SRC_OUT | [Sa * (1 - Da), Sc * (1 - Da)]
-SRC_OVER | [Sa + (1 - Sa)Da, Rc = Sc + (1 - Sa)Dc]
-XOR | [Sa + Da - 2 * Sa * Da, Sc * (1 - Da) + (1 - Sa) * Dc]
+CLEAR | 所绘制不会提交到画布上 
+DARKEN | - 
+DST | 显示下层绘制图片 
+DST_ATOP | 取上层非交集部分与下层交集部分 
+DST_IN | 取两层绘制交集。显示下层。 
+DST_OUT | 取下层绘制非交集部分。 
+DST_OVER | 上下层都显示。下层居上显示。 
+LIGHTEN | - 
+MULTIPLY | - 
+SCREEN | - 
+SRC | 显示上层绘制图片 
+SRC_ATOP | 取下层非交集部分与上层交集部分 
+SRC_IN | 取两层绘制交集。显示上层。 
+SRC_OUT | 取上层绘制非交集部分。 
+SRC_OVER | 正常绘制显示，上下层绘制叠盖。 
+XOR | 现实非交集部分 
 
 用示例图来查看使用不同模式时的混合效果如下（src表示输入的图，dst表示原Canvas上的内容）：
 ![](https://gitee.com/hysbtr/pic/raw/master/mix_effect.jpeg)
 
-### Canvas
+### 使用实例
+* Bitmap转圆角
+```java
+Bitmap dst = Bitmap.createBitmap(mWidth, mHeight, Bitmap.Config.ARGB_8888);
+Canvas canvas1 = new Canvas(dst);
+canvas1.drawRoundRect(0, 0, mWidth, mHeight, 20, 20, mPaint);
+mPaint.setAntiAlias(true);
+mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+Bitmap src = BitmapFactory.decodeResource(getResources(), R.drawable.a);
+canvas1.drawBitmap(src, new Rect(0, 0, src.getWidth(), src.getHeight()), new Rect(0, 0, mWidth, mHeight), mPaint);
+
+mPaint.setXfermode(null);
+canvas.drawBitmap(dst, 0, 0, mPaint);
+```
+
+* 控件圆角
+```java
+canvas.saveLayer(rect, null, Canvas.ALL_SAVE_FLAG);
+super.draw(canvas);
+mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
+path.addRoundRect(rect, 125, 125, Path.Direction.CCW);
+canvas.drawPath(path, mPaint);
+```
+
+## Canvas
 Canvas的常用操作速查表
 操作类型 | 相关API | 备注
 --- | --- | ---
@@ -75,16 +100,19 @@ Canvas的常用操作速查表
 画布变换 | translate, scale, rotate, skew | 依次为 位移、缩放、 旋转、错切
 Matrix(矩阵) | getMatrix, setMatrix, concat | 实际上画布的位移，缩放等操作的都是图像矩阵Matrix， 只不过Matrix比较难以理解和使用，故封装了一些常用的方法。
 
-> 为什么会有Rect和RectF两种？两者最大的区别就是精度不同，Rect是int(整形)的，而RectF是float(单精度浮点型)的。
+### Canvas变换
+* 所有的画布操作都只影响后续的绘制，对之前已经绘制过的内容没有影响
 
-> **所有的画布操作都只影响后续的绘制，对之前已经绘制过的内容没有影响**
+#### clip(重要)
+* 确定画布范围
+* 至少需要2次`canvas.clip`才有结果
+* Clip无法抗锯齿
 
-* 请注意，位移是基于当前位置移动，而不是每次基于屏幕左上角的(0,0)点移动
-* 
+#### translate
+* translate是坐标系的移动，可以为图形绘制选择一个合适的坐标系。
+* 位移是基于当前位置移动，而不是每次基于屏幕左上角的(0,0)点移动
 
-##### 位移(translate)
-* translate是坐标系的移动，可以为图形绘制选择一个合适的坐标系。 请注意，位移是基于当前位置移动，而不是每次基于屏幕左上角的(0,0)点移动
-##### 缩放比例(sx,sy)取值范围详解：
+#### scale
 取值范围(n) | 说明
 --- | ---
 (-∞, -1) | 先根据缩放中心放大n倍，再根据中心轴进行翻转
@@ -95,13 +123,20 @@ Matrix(矩阵) | getMatrix, setMatrix, concat | 实际上画布的位移，缩�
 1 | 没有变化
 (1, +∞) | 根据缩放中心放大n倍
 
-> 坐标原点移到(px,py)-->进行缩放-->进行翻转(坐标取反)
+#### rotate
 
-##### drawPicture
-> 使用Picture前请关闭硬件加速，以免引起不必要的问题！
+### save&restore
+相关API | 简介
+--- | ---
+save() | 把当前的画布的状态(`translate`、`scale`、`rotate`、`clip`)进行保存，然后放入特定的栈中 
+saveLayer() | 新建一个图层，并放入特定的栈中
+restore() | 把栈中最顶层的画布状态取出来，并按照这个状态恢复当前的画布
+restoreToCount | 弹出指定位置及其以上所有的状态，并按照指定位置的状态进行恢复
+getSaveCount | 获取栈中内容的数量(即保存次数)
 
-#### Rect、RectF区别
-> 两者最大的区别就是精度不同，Rect是int(整形)的，而RectF是float(单精度浮点型)的。
+### 其他
+* drawPicture()：使用Picture前请关闭硬件加速，以免引起不必要的问题！
+* Rect、RectF区别：两者最大的区别就是精度不同，Rect是int(整形)的，而RectF是float(单精度浮点型)的。
 
 #### 圆角矩形
 ```canvas.drawRoundRect(rectF,30,30,mPaint);```
@@ -109,16 +144,7 @@ Matrix(矩阵) | getMatrix, setMatrix, concat | 实际上画布的位移，缩�
 
 ![](https://gitee.com/hysbtr/pic/raw/master/round_rect.jpeg)
 
-#### 快照(save)和回滚(restore)
-相关API | 简介
---- | ---
-save | 把当前的画布的状态进行保存，然后放入特定的栈中
-saveLayerXxx | 新建一个图层，并放入特定的栈中
-restore | 把栈中最顶层的画布状态取出来，并按照这个状态恢复当前的画布
-restoreToCount | 弹出指定位置及其以上所有的状态，并按照指定位置的状态进行恢复
-getSaveCount | 获取栈中内容的数量(即保存次数)
-
-### Path
+## Path
 > Path封装了由直线和曲线(二次，三次贝塞尔曲线)构成的几何路径。你能用Canvas中的drawPath来把这条路径画出来(同样支持Paint的不同绘制模式)，也可以用于剪裁画布和根据路径绘制文字。
 
 | 作用            | 相关方法                                                     | 备注                                                         |
@@ -149,7 +175,7 @@ getSaveCount | 获取栈中内容的数量(即保存次数)
 | UNION              | 并集 | 包含全部Path1和Path2                   |![img](https://gitee.com/hysbtr/pic/raw/master/UNION.jpeg) |
 | XOR                | 异或 | 包含Path1与Path2但不包括两者相交的部分 |![img](https://gitee.com/hysbtr/pic/raw/master/XOR.jpeg) |
 
-### Paint
+## Paint
 
 模式 | 说明
 --- | ---
@@ -157,3 +183,5 @@ STROKE | 描边
 FILL | 填充
 FILL_AND_STROKE | 描边+填充
 
+## 其他
+> 为什么会有Rect和RectF两种？两者最大的区别就是精度不同，Rect是int(整形)的，而RectF是float(单精度浮点型)的。
