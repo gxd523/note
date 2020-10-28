@@ -38,3 +38,6 @@ check regexp | Alt + Enter → check regexp | String.regex()
 Refactor This | ⌃T | 重构 
 Return to the Editor | ⎋/⇧⎋ | 光标回到编辑器/+关闭面板
 
+## 查看类&方法&调用的继承结构
+* Type Hierarchy
+* 
