@@ -6,6 +6,7 @@
 * A跳转B时的执行顺序：`A.onPause()`、`B.onCreate()`、`B.onStart()`、`B.onResume()`、`A.onStop()`、`A.onSaveInstanceState()`
 * A跳转B，B返回时的执行顺序：`B.onPause()`、`A.onRestart()`、`A.onStart()`、`A.onResume()`、`B.onStop()`、`B.onDestroy()`
 * 注意：B透明时，A跳转B，A不会执行`onStop()`，因为A仍然可见
+* 注意：B透明是指B的Theme为Translucent，此时即使B的布局背景颜色完全盖住也仍算透明
 * Activity上覆盖全屏的Dialog，不会让Activity生命周期发生变化，仍然是前台进程，因为Dialog是Activity内的一部分，所以即便完全遮盖Activity，显示的也是Activity里的Dialog，要被其他Activity遮挡才会导致声明周期变化
 
 #### A跳转B生命周期执行顺序

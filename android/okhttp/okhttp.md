@@ -94,53 +94,6 @@
 * 取响应信息，包含：Protocol、code、message、Headers、ResponseBody，还有Request
 * ResponseBody：响应体
 
-## 连接机制
-### StreamAllocation
-* 用来控制Connections与Streams的资源分配与释放
-* 相当于是个管理类，维护了`Connections`、`Streams`和`Calls`之间的管理，该类初始化一个Socket连接对象，获取输入/输出流对象
-* 在`RetryAndFollowUpInterceptor.intercept()`中实例化
-
-### RealConnection
-* 真正建立连接的对象，利用Socket建立连接
-
-### HttpCodec
-
-### ConnectionPool
-* 连接池，用来管理和复用连接
-
-### RouteSelector
-* 选择路线与自动重连
-
-### RouteDatabase
-* 记录连接失败的Route黑名单
-
-### 建立连接过程
-#### 获取RealConnection
-* 从`StreamAllocation.findConnection()`
-* 先用已存在的，再从`ConnectionPool`拿，最后才new新的
-* `releaseIfNoNewStreams()`：已存在的`RealConenction`如果被限制无法创建新的`Stream`，则release()并关闭socket
-* 如果没有已存在connection或已在上一步被销毁，则从`ConnectionPool.get()`拿
-* `RouteSelection`这块还没看懂
-* 最后如果拿到了就返回，还没拿到就new一个
-* 如果connection是new出来的，先调用`RealConnection.connect()`，开始TCP以及TLS握手操作
-* 然后放进`ConnectionPool`，并去重，最后返回
-
-#### 创建HttpCodec
-* 拿到`RealConnection`实例后，调用`newCodec()`，如果是http2，创建返回`Http2Codec`实例，否则创建返回`Http1Codec`实例
-
-#### RealConnection.connect()
-1. 线路选择
-2. 进行socket连接，`connectSocket()`
-	1. 根据代理类型创建socket
-	2. 建立socket连接
-	3. 用`Okio`获取rawSocket的输入输出流
-3. 建立https连接，`establishProtocol()`
-
-#### 等待
-* `StreamAllocation.newStream()`
-* `StreamAllocation.findConnection()`
-* 查看是否有完整连接可用：Socket没有关闭、输入流没有关闭、输出流没有关闭、Http2连接没有关闭
-
 ## 缓存机制
 ### CacheStrategy
 
@@ -164,6 +117,12 @@
 * executeOn()中将asyncCall执行，也就是执行了asyncCall的run()调用的execute()
 * execute()中：调用了realCall的getResponseWithInterceptorChain()方法获取response
 
+## WebSocket
+* Http是半双工的，同一时刻只能是请求、接收中的一个，且服务端必须等待客户端请求才能返回数据，不能主动向客户端发送数据
+* WebSocket 是真正意义上的全双工模式
+* WebSocket是基于TCP的应用层协议
+* WebSocket的scheme：`ws`、`wss`对用`http`、`https`
+* 
 
 ## Https
 ### X509TrustManager
