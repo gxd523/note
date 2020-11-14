@@ -1,3 +1,5 @@
+recursive	递归
+retrieve	找回
 acquire		获得
 restrict	限制
 strict		严格

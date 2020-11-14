@@ -33,3 +33,14 @@
 
 #### onNewIntent()
 > 在singleTop、singleTask、singleInstance模式中如果Activity已在任务栈，就会复用(只回调onPause()、onResume())，就会执行onNewIntent()
+
+## startActivityForResult回调
+* com.bennyhuo.tieguanyin:tieguanyin-runtime
+* 当`startActivityForResult()`写成回调形式时，若启动B后，A被销毁重建变成A1，Callback匿名内部类持有的仍然是A的引用
+* 首先要在重建的Fragment里面拿回单例持有的Callback实例
+* 接着反射Callback实例，拿到外部引用实例Field
+* 反射设置为重建Fragment对应Activity也就是A1
+* 在Fragment的onActivityResult中回调Callback实例的方法
+* 外部引用除了Activity，还有可能是局部变量之类的多个，注意不是Activity的成员变量，处理方法如下：
+	* 对于Callback外部引用View，可以通过保存id在新的Activity中寻找，并替换Callback中的旧的
+	* 对于Callback外部引用Fragment，可以通过保存Fragment的mWho，在新的Activity中寻找，并替换Callback中的旧的
