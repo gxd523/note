@@ -1,7 +1,45 @@
 [TOC]
 
-### standard
+## 查看任务栈命令
+`adb shell dumpsys activity | grep 'Running activities' -A 5`
 
+## 重点
+* `任务视图`是根据所有应用的页面所在`任务栈`的`taskAffinity`进行划分的
+* 任务栈的`taskAffinity`是第一个入栈的`Activity`的`taskAffinity`
+* `singleTask`的`Activity`要求放入的`Task`的`taskAffinity`与`Activity`的相同，否则新建`Task`
+* 从一个任务栈启动页面进到另一个任务栈，任务栈之间会产生关联，按Home键、多任务键，又会取消关联
+
+## taskAffinity
+* `taskAffinity`对应手机任务列表的一个`任务视图`
+* 一个`任务视图`包含一个或多个`Task`
+* 每个`Activity`都有`taskAffinity`，默认为`Application`的`taskAffinity`，而`Application`的默认为包名
+* 每一个`Task`的`taskAffinity`，取栈底的`Activity`的`taskAffinity`
+* 一个`任务视图`包含多个`Task`情况是包含一个`singleInstance`的`Activity`的`Task`的`taskAffinity`与另一个包含非`singleInstance`的`Activity`的`Task`的`taskAffinity`相同
+* 一个应用对应多个`任务视图`情况是，两个`Activity`的`taskAffinity`不同，且其中一个`Activity`是`singleTask`
+* `singleTask`的`Activity`要求放入的`Task`的`taskAffinity`与`Activity`的相同，否则新建`Task`
+
+## Standard跨应用
+* 页面b为standard时，A应用打开B应用的页面b，b会被放到A的任务栈中，此时在桌面启动B应用，会在B的任务栈中创建页面b，也就是A、B的任务栈中各有一个页面b的实例
+
+## SingleTask高级
+* 页面b为singleTask时，A应用打开B应用的页面b，b会被放到B的任务栈中，此时在桌面启动B应用，打开的仍是刚才的b页面，也就是只有B的任务栈有页面b的实例
+* 此时会有两个`任务视图`，且b页面返回后，会打开A应用的`任务视图`，因为是从A应用跳转B应用的页面，所以A、B`任务视图`产生了关联
+* 当Task由前台进入到后台时，两个任务视图的关联会取消，也就是b页面返回直接到桌面
+* 任务栈由前台进入后台的情况有两种：
+	* 按Home键返回桌面
+	* 按多任务键，显示多任务列表时
+
+## SingleInstance高级
+* 页面b为singleInstance时，启动B应用打开b1页面，启动A应用，并跳转B应用的页面b，b会在B中创建一个不同于b1的新任务栈，并将新任务栈放在A任务栈上面，此时在桌面启动B应用，打开的仍是刚才的b1页面，b页面还活着，但却找不到了。。。
+* b页面被藏起来的原因是，他们的taskAffinity冲突了，错错错
+* 真正的原因是，按了Home键或多任务键，导致b1和b的`Task`之间的联系被断开了，所以没有进入b1或者b的入口了
+
+## allowTaskReparenting
+* 页面b的allowTaskReparenting设置为true，A应用打开B应用的页面b，b会被放到A的任务栈中，但此时如果按Home键，再打开B应用，原先放在A任务栈的页面b会被挪到B任务栈的顶端，此时切回应用A，页面b也确实没了
+* 但这个属性在Android9、10上是失效的
+
+
+### standard
 * 标准模式。这是系统默认的模式，每次启动Activity都会重新创建一个新的Activity实例，也就是onCreate，onStart，onResume流程走一遍，并且一个任务栈里允许存在多个实例。
 
 ### singleTop
@@ -9,7 +47,6 @@
 * 栈顶复用模式。在同一个任务栈中栈顶如果有此Activity的实例，那么不会重新创建一个新实例，而是调用此Activity的onNewIntent，此时onCreate、onStart不会被调用。但如果此Activity在同一个任务栈但不在栈顶或之前用standard模式启动的，就会重新创建。
 
 ### singleTask
-
 * 栈内复用模式。在同一个任务栈（注意：不一定是栈顶了）中如果有此Activity的实例，那么不会重新创建一个新实例，而是调用此Activity的onNewIntent，此时onCreate、onStart不会被调用。并且自带FLAG_ACTIVITY_CLEAR_TOP效果。
 * 同一个栈内。如ADBC（要启动D，则把D挪到栈顶，BC由于clearTop而被移除栈，剩下AD）。
 * 如果D指定栈为S2，android:taskAffinity="S2"，而启动它的Activity栈为S1，则先创建S2栈然后再new D放到S2中。

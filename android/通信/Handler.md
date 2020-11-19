@@ -23,6 +23,7 @@
 ### MessageQueue
 * 重要对象：delayQueue
 * 重要方法：enqueueMessage()、next()
+* 采用单链表数据结构，Message持有下一个Message的引用
 ### Message
 
 * 在CPU看来进程或线程无非就是一段可执行的代码，当可执行代码执行完成后，线程就会结束退出
@@ -66,7 +67,15 @@ public static void main(String[] args) {
 }
 ```
 
-### Android中为什么主线程不会因为Looper.loop()里的死循环卡死？
+## Looper.loop()的死循环会导致应用卡死吗？
+* 线程任务执行完，线程便会结束，死循环可以不让UI线程在没有Message时就结束
+* Android是基于事件驱动的，所有操作都是Message，所以当用户触摸屏幕时，就会向Handler发送消息，没有消息时，会进入休眠状态
+
+## Looper.loop()的死循环会不会很耗CPU资源
+* 没有消息时，会阻塞在`MessageQueue.next()`里的Native方法`nativePollOnce()`中
+* `nativePollOnce()`里涉及到Linux的`pipe/epoll`机制，是一种`IO多路复用机制`
+* `nativePollOnce()`后主线程会释放CPU资源进入休眠状态
+* 调用`Message.enqueueMessage()`时，会往`pipe管道`写端写入数据，唤醒主线程
 
 ## 进阶
 ### 消息分类
