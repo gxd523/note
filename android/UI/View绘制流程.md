@@ -18,6 +18,12 @@ UNSPECIFIED | 00 | 表示父容器不对View有任何限制，一般用于系统
 EXACTLY | 01 | 父容器已经检测出view所需的精确大小，相当于match_parent或指定具体数值 
 AT_MOST | 10 | 表示子View不超过父View大小，相当于wrap_parent 
 
+### ViewGroup.getChildMeasureSpec()
+* 根据父View来确定子View尺寸
+* 如果子View设置为`WRAP_CONTENT`，子View尺寸：父View尺寸+AT_MOST
+* 如果父View为`WRAP_CONTENT`，子View为`MATCH_PARENT`，子View尺寸：父View尺寸+AT_MOST
+* 但子View如果是ImageView这样，有内容可包裹的(src图片)，情况又会不一样
+
 ## Layout
 * 摆放View，通常由ViewGroup实现，View不需要
 * onSizeChanged()：在`layout()`中调用`setFrame()`在调用`sizeChange()`
