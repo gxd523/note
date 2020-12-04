@@ -148,3 +148,10 @@ public void sendAsyncMessage(View view) {
 * 可用来获取View宽高，MessageQueue空闲时，说明ViewRootImpl的MLD已经走完了
 * 不要在里面执行耗时操作，因为在主线程
 * 在`OnResume()`里面调用获取到MainActivity的绘制完成的时机
+
+## View.post()&Handler.post()
+* `View.post()`通过`attachInfo.mHandler.post()`向`Handler`发消息
+* 在`ViewRootImpl`构造函数里创建`AttachInfo`实例
+* `AttachInfo.mHandler`是`ViewRootImpl.ViewRootHandler`
+* 通过`View.dispatchAttachedToWindow()`，将`AttachInfo`对象传给`View`
+* 如果在`ViewRootImpl.performTraversal()`前调用`View.post()`，先把`Runnable`保存在数组里，等`View.dispatchAttachedToWindow()`时再遍历`Runnable`数组，调用`Handler.post()`

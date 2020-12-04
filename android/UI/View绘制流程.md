@@ -10,6 +10,7 @@
 * measureChild()：测量指定View
 * getWidth()：在`layout()`后，设置了`mRight`、`mLeft`才有值的
 * getMeasureWidth()：在`measure()`后，调用了`setMeasuredDimension()`，也就是设置了`mMeasuredWidth`，才值了
+* 从子View的Params转化为MeasureSpec开始说起
 
 ### MeasureSpecs
 模式 | 二进制 | 描述
@@ -19,10 +20,17 @@ EXACTLY | 01 | 父容器已经检测出view所需的精确大小，相当于matc
 AT_MOST | 10 | 表示子View不超过父View大小，相当于wrap_parent 
 
 ### ViewGroup.getChildMeasureSpec()
-* 根据父View来确定子View尺寸
-* 如果子View设置为`WRAP_CONTENT`，子View尺寸：父View尺寸+AT_MOST
-* 如果父View为`WRAP_CONTENT`，子View为`MATCH_PARENT`，子View尺寸：父View尺寸+AT_MOST
+* 对于`DecorView`而言，它的`MeasureSpec`由窗口尺寸和其自身的`LayoutParams`共同决定
+* 对于普通的`View`，它的`MeasureSpec`由父视图的`MeasureSpec`和其自身的`LayoutParams`共同决定
+* 如果父View是EXACTLY，子View是WRAP_CONTENT，则子View为AT_MOST
+* 如果父View是AT_MOST，子View是MATCH_PARENT，则子View为AT_MOST
+* 如果子View的Params不是具体值，子View的size都为父View的size
 * 但子View如果是ImageView这样，有内容可包裹的(src图片)，情况又会不一样
+
+### 准确获取View宽高的时机
+* `onWindowFocusChanged()`
+* `View.post()`：因为`View.dispatchAttachToWindow()`后才发送消息
+* `ViewTreeObserver`：
 
 ## Layout
 * 摆放View，通常由ViewGroup实现，View不需要

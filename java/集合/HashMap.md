@@ -30,7 +30,7 @@
 其实是重新计算`key`在数组中的位置，因为位置计算公式为`key.hashCode & table.length - 1`，数组容量改变后之前key在新数组中的位置`index`也改变了
 
 ### 为什么重写了equals()后一定要重写hashCode()
-重写了equals()则表示不再以内存地址判断两个对象是否相等，此时如果不重写hashCode()，会出现存入两个hashCode相同，但内存地址不同的key，如果此时两个key的equals返回true，则存入第二个时就会覆盖第一个key。
+重写了equals()则表示不再以内存地址判断两个对象是否相等，此时如果不重写hashCode()，导致equal为true时，hashCode不同的两个对象，会因为先判断hashCode为不同，当成两个元素放入hashMap。
 
 ### 为什么loaderFactor默认是0.75
 当数组元素个数超过 `数组容量`\*`loaderFactor`时，就会扩容为原来的2倍。如果`loaderFactor`太接近1，扩容速度慢，碰撞情况更多，查询性能下降。

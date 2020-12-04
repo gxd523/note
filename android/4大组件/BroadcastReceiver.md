@@ -3,7 +3,11 @@
 ## 注册方式
 ### 静态注册
 * 即使按返回键退出App，变成空进程，也依然能接收广播
-* 注意Android8.0(26)开始，需要发送广播时指定静态接收者，`intent.setComponent()`
+* 注意Android8.0(26)开始，无法静态注册广播接收者，除了以下必要广播：
+	* ACTION_BOOT_COMPLETED
+	* ACTION_TIME_SET
+	* ACTION_LOCALE_CHANGED
+* Android8.0(26)开始，需要发送广播时指定静态接收者，`intent.setComponent()`，才能静态接收到
 
 ### 动态注册
 * 需要在`onDestroy()`中注销

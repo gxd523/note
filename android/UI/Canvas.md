@@ -41,7 +41,7 @@ Alpha8 | 仅有透明通道(8位)
 混合模式 | 计算公式
 :---: | :---: 
 ADD | Saturate(S + D)
-CLEAR | 所绘制不会提交到画布上 
+CLEAR | 清空画布 
 DARKEN | - 
 DST | 显示下层绘制图片 
 DST_ATOP | 取上层非交集部分与下层交集部分 
@@ -103,10 +103,12 @@ Matrix(矩阵) | getMatrix, setMatrix, concat | 实际上画布的位移，缩�
 ### Canvas变换
 * 所有的画布操作都只影响后续的绘制，对之前已经绘制过的内容没有影响
 
-#### clip(重要)
+#### clipXXX(重要)
 * 确定画布范围
+* clip范围内被背景不变，不会挖空
 * 至少需要2次`canvas.clip`才有结果
 * Clip无法抗锯齿
+* clipXXX在开启硬件加速的情况下只有在 API 18 以上的系统才会生效
 
 #### translate
 * translate是坐标系的移动，可以为图形绘制选择一个合适的坐标系。
@@ -125,7 +127,13 @@ Matrix(矩阵) | getMatrix, setMatrix, concat | 实际上画布的位移，缩�
 
 #### rotate
 
-### save&restore
+### 画布的保存&恢复
+* 画布的平移、缩放、裁剪等操作是不可逆的
+* 应该先保存画布，再对画布操作
+* 保存画布：把当前画布复制一份保存起来
+* `save()`返回画布在栈中的index(0开始算起)
+
+
 相关API | 简介
 --- | ---
 save() | 把当前的画布的状态(`translate`、`scale`、`rotate`、`clip`)进行保存，然后放入特定的栈中 
