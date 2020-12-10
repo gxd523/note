@@ -28,9 +28,9 @@ AT_MOST | 10 | 表示子View不超过父View大小，相当于wrap_parent
 * 但子View如果是ImageView这样，有内容可包裹的(src图片)，情况又会不一样
 
 ### 准确获取View宽高的时机
-* `onWindowFocusChanged()`
-* `View.post()`：因为`View.dispatchAttachToWindow()`后才发送消息
-* `ViewTreeObserver`：
+* `onWindowFocusChanged()`：
+* `View.post()`：`attachInfo.mHandler`是在处理绘制`Message`里通过`View.dispatchAttachedToWindow()`传递给`View`的
+* `ViewTreeObserver`：`dispatchOnGlobalLayout()`是在处理绘制`Message`里面调用的
 
 ## Layout
 * 摆放View，通常由ViewGroup实现，View不需要

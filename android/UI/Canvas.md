@@ -133,7 +133,6 @@ Matrix(矩阵) | getMatrix, setMatrix, concat | 实际上画布的位移，缩�
 * 保存画布：把当前画布复制一份保存起来
 * `save()`返回画布在栈中的index(0开始算起)
 
-
 相关API | 简介
 --- | ---
 save() | 把当前的画布的状态(`translate`、`scale`、`rotate`、`clip`)进行保存，然后放入特定的栈中 
@@ -141,6 +140,13 @@ saveLayer() | 新建一个图层，并放入特定的栈中
 restore() | 把栈中最顶层的画布状态取出来，并按照这个状态恢复当前的画布
 restoreToCount | 弹出指定位置及其以上所有的状态，并按照指定位置的状态进行恢复
 getSaveCount | 获取栈中内容的数量(即保存次数)
+
+#### saveLayer()
+* 地图等多层绘制
+* `saveLayer()`会创建新的图层，放入栈中
+* `saveLayer()`=`clip()`+`save()`
+* 之后的绘制都在新图层中，和下面的图层叠加在一起显示
+* 会增加内存使用
 
 ### 其他
 * drawPicture()：使用Picture前请关闭硬件加速，以免引起不必要的问题！

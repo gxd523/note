@@ -23,13 +23,6 @@
 * SharedPreferences 可靠性下降
 * Application 被创建多次
 
-## Binder IPC原理
-> Binder通信采用c/s架构，从组件视角来说，包含Client、Server、ServiceManager以及binder驱动，其中ServiceManager用于管理系统中的各种服务。
-
-![](https://gitee.com/hysbtr/pic/raw/master/IPC-Binder.jpg)
-* 用户空间进程间不能共享，内核空间可以
-* 
-
 ### AIDL(Android Interface Definition Language)
 ##### AIDL支持的数据类型
 * 8种基本数据类型：byte、char、short、int、long、float、double、boolean

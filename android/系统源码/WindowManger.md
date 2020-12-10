@@ -29,6 +29,13 @@ windowManager.removeView(view, params);
 	* FLAG_NOT_TOUCH_MODAL：
 	* FLAG_NOT_TOUCHABLE：
 
+### Window分类
+Window 类型 | 说明 | 层级
+:---: | :---: | :---:
+Application Window | 对应着一个 Activity | 1~99
+Sub Window | 不能单独存在，只能附属在父 Window 中，如 Dialog 等 | 1000~1999
+System Window | 需要权限声明，如 Toast 和 系统状态栏等 | 2000~2999
+
 ### 控制显示层级
 设置params的type：
 	* TYPE_TOAST（Andorid 5.0及以下系统版本可规避权限问题）

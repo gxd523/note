@@ -27,7 +27,8 @@
 * 查看wifi密码(需root)：`adb shell`、`su`、`cat /data/misc/wifi`
 * 重启Recovery：`adb reboot recovery`
 * 重启到Fastboot：`adb reboot bootloader`
-* 查看进程：`adb shell ps`
+* 查看进程：`adb shell ps | grep <packageName>`
+	* 用户名	进程ID	父进程ID	虚拟内存大小	实际内存大小	进程名
 * 查看像素密度：`adb shell getprop ro.sf.lcd_density`
 * 查看实时资源占用情况：`adb shell top`
 列名 | 含义
