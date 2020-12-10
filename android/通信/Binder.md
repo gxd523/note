@@ -5,8 +5,7 @@
 ![](https://gitee.com/hysbtr/pic/raw/master/ipc_other.jpg)
 
 * 进程间的`用户空间`是相互隔离的
-* 进程的`内核空间`与`用户空间`也是相互隔离的
-* 进程间的`内核空间`是共享的
+* `内核空间`与`用户空间`也是相互隔离的
 * 传统IPC需要先调用`copy_from_user()`，把数据从`用户空间`拷贝到`内核空间`
 * 再调用`copy_to_user()`，把`内核空间`的数据拷贝到接收方的`用户空间`
 
@@ -15,6 +14,7 @@
 ![](https://gitee.com/hysbtr/pic/raw/master/ipc_binder.jpg)
 
 * `Binder`基于`内存映射(mmap)`，减少了一次数据拷贝
+* `内存映射(mmap)`是指不同的虚拟内存(`内核空间`、`用户空间`都是指虚拟内存)，指向相同的物理内存
 * `Binder`先在内核空间创建一个`数据接收缓存区`
 * 接着创建`内核缓存区`，并建立`内核缓存`、`数据接收缓存`、接收进程`用户空间`的内存地址映射关系
 * 发送方只需要调用`copy_from_user()`，把数据拷贝到`内核缓存区`，通过映射即可响应到接收方的`用户空间`
@@ -35,8 +35,8 @@
 3. `client`通过获得一个`server`的代理接口，对`server`进行调用
 4. 代理接口中定义的方法与`server`中定义的方法时一一对应的
 5. `client`调用某个代理接口中的方法时，代理接口的方法会通过`IBinder.transact()`将`client`传递的参数打包成`Parcel`对象
-6. 代理接口将系列化的`Parcel`发送给内核中的`binder driver`
-7. `server`会读取`binder driver`中的请求数据，如果是发送给自己的，通过`IBinder.onTransact()`解包`Parcel`对象，处理并将结果返回
+6. 代理接口将系列化的`Parcel`通过`Binder驱动`拷贝到`内核空间`，在映射到服务端的`用户空间`
+7. `server`会读取`Binder驱动`中的请求数据，如果是发送给自己的，通过`IBinder.onTransact()`反序列化`Parcel`对象，处理并将结果返回
 8. 整个的调用过程是一个同步过程，在`server`处理的时候，`client`会block住。因此`client`调用过程不应在主线程
 
 ## Binder优点
