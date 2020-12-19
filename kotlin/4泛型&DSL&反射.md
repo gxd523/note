@@ -23,10 +23,10 @@ in | 逆变 | 下限 | set() | 取下限，只能为Nothing | super
 * 强转可以加泛型，`as Function<Int, Any>`，实际是为了骗过编译器
 * `is Function<Int, Any>`不可以加泛型，因为运行时泛型已经擦除了
 * `Nothing`：所有类型的子类
-* 星投影`*`：表示不告诉类型，在协变中为`Any?`，在逆变中为`Nothing`
+* 星投影`*`：表示不告诉类型，在协变中为`Any?`，在逆变中为`Nothing`，对应Java的?
 * 星投影只能用在泛型形参中
 * `HashCode<String,List<*>>`，此时的value：`List<*>`，可以使用星投影
-* 
+* 确定上界：\<T : TextView>，多个\<T> where T : TextView, T : Viewer
 
 ### 实践
 * `func(a:T,b:T)`，如果a、b类型不一样，以a、b的父类型作为T的实参
