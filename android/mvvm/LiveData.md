@@ -1,6 +1,8 @@
 ## 主要类
 ### LiveData
 * 可添加多个Observer观察LifecycleOwner，Observer的Map集合
+* `ObserverWrapper`集合，也就是`LifecycleBoundObserver`集合
+* `dispatchingValue()`：根据version，`Lifecycle.State`判断是否回调`Observer.onChanged()`
 
 ### LifecycleOwner
 * 实现类持有被观察者`LifecycleRegistry`
@@ -8,6 +10,10 @@
 ### LifecycleRegistry
 * 被观察者，`Lifecycle`的实现类
 * 拥有`LifecycleObserver`集合
+* `handleLifecycleEvent()`：处理生命周期事件
+* `State`：将生命周期转换为`CREATE`、`START`、`RESUME`、`DESTROY`
+* `dispatchEvent()`：回调`LifecycleObserver.onStateChanged()`
+* 
 
 ### LifecycleBoundObserver
 * 观察者，`LifecycleObserver`的实现类
@@ -34,6 +40,11 @@
 * 再调用`detachObserver()`，`owner.getLifecycle().removeObserver()`删除`LifecycleObserver`
 
 ## LiveDataBus
+* LiveData会跟随Activity销毁，不用显示注销，避免忘记注销导致内存泄漏
+* LiveData感知生命周期，只有在界面可见时才发送数据
+* LiveData粘性特性，导致订阅者会收到订阅之前未发出的消息
+* 解决方式是：把LifecycleBoundObserver继承的ObserverWrapper里的mLastVersion的值设为LiveData的mVersion
+
 ```java
 public enum LiveDataBus {
     INSTANCE;

@@ -21,11 +21,13 @@ AT_MOST | 10 | 表示子View不超过父View大小，相当于wrap_parent
 
 ### ViewGroup.getChildMeasureSpec()
 * 对于`DecorView`而言，它的`MeasureSpec`由窗口尺寸和其自身的`LayoutParams`共同决定
-* 对于普通的`View`，它的`MeasureSpec`由父视图的`MeasureSpec`和其自身的`LayoutParams`共同决定
-* 如果父View是EXACTLY，子View是WRAP_CONTENT，则子View为AT_MOST
-* 如果父View是AT_MOST，子View是MATCH_PARENT，则子View为AT_MOST
-* 如果子View的Params不是具体值，子View的size都为父View的size
+* 对于普通的`View`，它的`MeasureSpec`由父View的`MeasureSpec`的Mode和其自身的`LayoutParams`共同决定
 * 但子View如果是ImageView这样，有内容可包裹的(src图片)，情况又会不一样
+子View\父Vie     | EXACTLY | AT_MOST | UNSPECIFIED
+:---: | :---: | :---: | ----- 
+具体数值(px) | EXACTLY + childSize | EXACTLY + childSize | EXACTLY + childSize
+match_parent | EXACTLY + parentSize | AT_MOST + parentSize | UNSPECIFIED + 0
+wrap_content | AT_MOST +parentSize | AT_MOST + parentSize | UNSPECIFIED + 0
 
 ### 准确获取View宽高的时机
 * `onWindowFocusChanged()`：
