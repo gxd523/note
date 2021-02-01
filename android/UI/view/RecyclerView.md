@@ -14,13 +14,18 @@ https://blog.csdn.net/weixin_43130724/article/details/90068112
 屏幕内的ViewHolder
 
 ### Recycler.mCachedViews
-刚移出屏幕的ViewHolder，`mViewCacheMax`默认2个，向上滑动后`mViewCacheMax`改为3个，上边2个，下边1个，向下滑动反过来，根据position获取，复用时不用走`onBindViewHolder`
+* 刚移出屏幕的ViewHolder
+* `mViewCacheMax`默认2个，向上滑动后`mViewCacheMax`改为3个，上边2个，下边1个，向下滑动反过来
+* 根据position获取，复用相同位置的ViewHolder，所以不用走`onBindViewHolder`
+* 新版本增加预取机制：滑动过程中吧将要展示的一个item提前缓存到`mCachedViews`
 
 ### Recycler.mViewCacheExtension
 留给开发者自定义缓存
 
 ### Recycler.mRecyclerPool.mScrap.mScrapHeap
-Cache满了后，根据FIFO，移入`RecycledViewPool`，默认5个，ViewHolder数据会被重置，根据`itemType`获取，复用时要走`onBindViewHolder`，对应源码`Recycler.mRecyclerPool`
+* Cache满了后，根据FIFO，移入`RecycledViewPool`
+* 默认5个，ViewHolder数据会被重置，根据`itemType`获取，复用时要走`onBindViewHolder`
+* 对应源码`Recycler.mRecyclerPool`
 
 ## Recyclerview使用优化
 * 滚动过程中，在下一个ViewHolder还未显示时就要从`RecyclerPool`或者创建一个放入`Cache`中，当显示下一个ViewHolder时，再从`Cache`中拿到屏幕显示

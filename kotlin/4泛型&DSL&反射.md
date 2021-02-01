@@ -27,6 +27,7 @@ in | 逆变 | 下限 | set() | 取下限，只能为Nothing | super
 * 星投影只能用在泛型形参中
 * `HashCode<String,List<*>>`，此时的value：`List<*>`，可以使用星投影
 * 确定上界：\<T : TextView>，多个\<T> where T : TextView, T : Viewer
+* `@UnsafeVariance`：协变的泛型想要作为函数的参数，或者逆变的泛型想要作为函数的返回值
 
 ### 实践
 * `func(a:T,b:T)`，如果a、b类型不一样，以a、b的父类型作为T的实参
@@ -66,3 +67,9 @@ fun <E> func(a: E, b: Out<E>){}
 * `memberExtensionFunctions`是定义在类里面的扩展方法(可以是别的类的扩展方法)
 * kotlin目前没法反射包级函数(包括包级扩展方法)
 * kotlin注解`Target`中的`FIELD`是`backing field`，java反射才能拿到，`PROPERTY`才是属性
+
+#### 获取Kclass&Class
+- | KClass | Class
+:---: | :---: | :---:
+对象 | a::class<br/>a.javaClass.kotlin | a::class.java<br/>a.javaClass 
+类 | A::class | A::class.java

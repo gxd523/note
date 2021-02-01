@@ -10,6 +10,8 @@
 ![](https://gitee.com/hysbtr/pic/raw/master/okhttp_request_flow_chart.png)
 
 ## 类
+![](https://gitee.com/hysbtr/pic/raw/master/OkHttpCall.png)
+
 ### OkHttpClient
 * 统一管理发起请求与解析响应
 
