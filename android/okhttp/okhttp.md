@@ -60,18 +60,6 @@
 * 把用户构造的请求转换为发送给服务器的请求：给`Request`添加`Header`
 * 把服务器返回的响应转换为对用户友好的响应：用`Okio`将`ResponseBody`解压为`RealResponseBody`(如果服务器支持`gzip`)
 
-#### CacheInterceptor
-* 关键类`InternalCache`、`CacheStrategy`
-* 具体流程：
-	1. 通过`InternalCache`获取cacheCandidateResponse
-	2. 创建缓存策略：`CacheStrategy`，得到`networkRequest`、`cacheResponse`
-	3. networkRequest | cacheResponse | 说明
-	:---: | :---: | ---
-	null | null | 不进行网络请求，且缓存不存在或者过期，返回错误码504的response 
-	null | non-null | 不进行网络请求，且缓存可以使用，直接返回缓存 
-	non-null | null | 需要进行网络请求，且缓存不存在或者过期，直接访问网络，即继续`ConnectInterceptor` 
-	non-null | non-null | Header中含有ETag/Last-Modified标签，code为304，则使用缓存，否则使用网络请求结果的response，并放入缓存池
-
 #### ConnectInterceptor
 * 负责与服务器建立连接
 * 调用`StreamAllocation.newStream()`，里面通过获取的`RealConnection`创建`HttpCodec`实例
@@ -95,20 +83,6 @@
 ### Response
 * 取响应信息，包含：Protocol、code、message、Headers、ResponseBody，还有Request
 * ResponseBody：响应体
-
-## 缓存机制
-### CacheStrategy
-
-1. 如果缓存没有命中，就直接进行网络请求
-2. 如果TLS握手信息丢失，则返回直接进行连接
-3. 根据response状态码，Expired时间和是否有no-cache标签就行判断是否进行直接访问
-4. 如果请求header里有"no-cache"或者右条件GET请求（header里带有ETag/Since标签），则直接连接
-5. 如果缓存在过期时间内则可以直接使用，则直接返回上次缓存
-6. 如果缓存过期，且有ETag等信息，则发送If-None-Match、If-Modified-Since、If-Modified-Since等条件请求交给服务端判断处理
-
-### InternalCache
-
-
 
 ### 简单异步请求过程
 * 创建realCall：client.newCall(request)

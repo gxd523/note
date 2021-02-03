@@ -83,34 +83,6 @@ multipart/form-data | POST专用：用以支持向服务器发送二进制数据
 ### 响应体
 * 返回数据
 
-## 缓存
-![](https://gitee.com/hysbtr/pic/raw/master/http_cache.png)
-
-### 强制缓存
-* 需要服务端参与判断是否继续使用缓存，当客户端第一次请求数据时，服务端返回了缓存的过期时间(Expires与Cache-Control)，下次请求时，没有过期就可以继续使用缓存，否则则不适用，无需再向服务端询问。
-* Expires：Expires的值为服务端返回的到期时间，即下一次请求时，请求时间小于服务端返回的到期时间，直接使用缓存数据。到期时间是服务端生成的，客户端和服务端的时间可能有误差。
-* Cache-Control：Expires有个时间校验的问题，所有HTTP1.1采用Cache-Control替代Expires
-* Cache-Control的取值有以下几种：
-	* private：客户端可以缓存
-	* public：客户端和代理服务器都可缓存
-	* max-age=xxx：缓存的内容将在 xxx 秒后失效
-	* no-cache：需要使用对比缓存来验证缓存数据
-	* no-store：所有内容都不会缓存，强制缓存，对比缓存都不会触发
-* 强制缓存优先于对比缓存
-
-### 对比缓存
-
-* 需要服务端参与判断是否继续使用缓存，当客户端第一次请求数据时，服务端会将缓存标识（Last-Modified/If-Modified-Since与Etag/If-None-Match）与数据一起返回给客户端，客户端将两者都备份到缓存中 ，再次请求数据时，客户端将上次备份的缓存 标识发送给服务端，服务端根据缓存标识进行判断，如果返回304，则表示通知客户端可以继续使用缓存。
-* Last-Modified/If-Modified-Since：
-	* 当客户端发送第一次请求时，服务端返回资源上次修改的时间，Last-Modified: Tue, 12 Jan 2016 09:31:27 GMT
-	* 客户端再次发送，会在header里携带If-Modified-Since。将上次服务端返回的资源时间上传给服务端，If-Modified-Since: Tue, 12 Jan 2016 09:31:27 GMT
-	* 服务端接收到客户端发来的资源修改时间，与自己当前的资源修改时间进行对比，如果自己的资源修改时间大于客户端发来的资源修改时间，则说明资源做过修改， 则返回200表示需要重新请求资源，否则返回304表示资源没有被修改，可以继续使用缓存
-* Etag/If-None-Match：
-	* ETag是资源文件的一种标识码，当客户端发送第一次请求时，服务端会返回当前资源的标识码，ETag: "5694c7ef-24dc"
-	* 客户端再次发送，会在header里携带上次服务端返回的资源标识码，If-None-Match:"5694c7ef-24dc"
-	* 服务端接收到客户端发来的资源标识码，则会与自己当前的资源吗进行比较，如果不同，则说明资源已经被修改，则返回200，如果相同则说明资源没有被修改，返回 304，客户端可以继续使用缓存
-	* ETag优先级高于Last-Modified
-
 ## Https
 ![](https://gitee.com/hysbtr/pic/raw/master/https_chart.png)
 
