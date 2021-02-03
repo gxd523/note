@@ -1,7 +1,7 @@
 [TOC]
 
 ## 生命周期
-![](https://gitee.com/hysbtr/pic/raw/master/fragment_lifecycle.png)
+![](https://raw.githubusercontent.com/gxd523/PictureBed/master/fragment_lifecycle.png)
 
 ## 其他
 https://www.jianshu.com/p/a4c51309bc19

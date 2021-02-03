@@ -7,10 +7,10 @@
 * Response缓存避免重复请求(需配置)
 
 ## 请求流程
-![](https://gitee.com/hysbtr/pic/raw/master/okhttp_request_flow_chart.png)
+![](https://raw.githubusercontent.com/gxd523/PictureBed/master/okhttp_request_flow_chart.png)
 
 ## 类
-![](https://gitee.com/hysbtr/pic/raw/master/OkHttpCall.png)
+![](https://raw.githubusercontent.com/gxd523/PictureBed/master/OkHttpCall.png)
 
 ### OkHttpClient
 * 统一管理发起请求与解析响应
@@ -31,7 +31,7 @@
 * `maxRequestsPerHost`：每个host最多同时有5个请求
 
 ### Interceptor
-![](https://gitee.com/hysbtr/pic/raw/master/okhttp_interceptor.jpg)
+![](https://raw.githubusercontent.com/gxd523/PictureBed/master/okhttp_interceptor.jpg)
 * 请求拦截器，拦截并处理请求
 * 每个功能都是一个Interceptor，例如：请求、缓存、透明压缩等
 

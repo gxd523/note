@@ -224,7 +224,7 @@ PATH=$PATH:$GOPATH/bin
 * 表格驱动测试文件与被测文件放在一起：`测试功能_test.go`
 * 测试方法：`func TestAdd(t *testing.T) {`
 * 测试覆盖率、性能测试：
-![](https://gitee.com/hysbtr/pic/raw/master/go_test.png)
+![](https://raw.githubusercontent.com/gxd523/PictureBed/master/go_test.png)
 	* `go test demos/test/ -coverprofile=c.out`
 	* 查看文件：`less c.out`
 	* ``go tool cover -html=c.out`目录下要有`c.out`
@@ -273,5 +273,5 @@ func ExampleQueue_PoP() {
 * 右下角显示`You Copy is Licensed to guoxiaodong`，表示激活成功！
 
 ### import、const、var、init()执行顺序
-![](https://gitee.com/hysbtr/pic/raw/master/go_execute_order.png)
+![](https://raw.githubusercontent.com/gxd523/PictureBed/master/go_execute_order.png)
 

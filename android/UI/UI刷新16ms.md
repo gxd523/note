@@ -1,6 +1,6 @@
 [TOC]
 
-![](https://gitee.com/hysbtr/pic/raw/master/ui_refresh.png)
+![](https://raw.githubusercontent.com/gxd523/PictureBed/master/ui_refresh.png)
 
 ## 前言
 * 一个典型的显示系统包括CPU、GPU、Display三部分

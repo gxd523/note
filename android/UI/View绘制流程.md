@@ -1,7 +1,7 @@
 [TOC]
 
 ## 绘制流程
-![](https://gitee.com/hysbtr/pic/raw/master/view_flow_chat.png)
+![](https://raw.githubusercontent.com/gxd523/PictureBed/master/view_flow_chat.png)
 
 ## Measure
 * 测量View大小，最终需调用`setMeasuredDimension()`设置宽高

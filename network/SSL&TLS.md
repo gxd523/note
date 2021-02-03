@@ -1,6 +1,6 @@
 [TOC]
 
-![](https://gitee.com/hysbtr/pic/raw/master/ssl&tls.png)
+![](https://raw.githubusercontent.com/gxd523/PictureBed/master/ssl&tls.png)
 
 ## SSL
 * Secure Socket Layer，安全套接字层

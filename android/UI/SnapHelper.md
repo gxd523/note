@@ -23,7 +23,7 @@
 #### calculateDistanceToFinalSnap()
 > 这个方法会计算第二个参数对应的ItemView当前的坐标与需要对齐的坐标之间的距离。
 
-![](https://gitee.com/hysbtr/pic/raw/master/calculateDistanceToFinalSnap.png)
+![](https://raw.githubusercontent.com/gxd523/PictureBed/master/calculateDistanceToFinalSnap.png)
 
 #### snapToTargetExistingView()
 

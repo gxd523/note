@@ -18,7 +18,7 @@
 #### 从编译到生成APK的详细步骤
 > 图中的矩形表示用到或者生成的文件，椭圆表示工具。
 
-![](https://gitee.com/hysbtr/pic/raw/master/gradle_build_process.png)
+![](https://raw.githubusercontent.com/gxd523/PictureBed/master/gradle_build_process.png)
 
 1. 通过aapt打包res资源文件，生成R.java、resources.arsc和res文件
 2. 处理.aidl文件，生成对应的Java接口文件

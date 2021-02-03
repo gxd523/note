@@ -1,8 +1,8 @@
 > WindowManger是普通App进程用来与系统服务（WindowMangerService）通信的一个接口。
 
 ### 获取WindowManger实例
-![](https://gitee.com/hysbtr/pic/raw/master/WindowManagerService.png)
-![](https://gitee.com/hysbtr/pic/raw/master/WindowManager.png)
+![](https://raw.githubusercontent.com/gxd523/PictureBed/master/WindowManagerService.png)
+![](https://raw.githubusercontent.com/gxd523/PictureBed/master/WindowManager.png)
 
 ```java
 WindowManager windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
