@@ -8,7 +8,7 @@
 
 * **蓝色**:假如想通过玄学曲线来判断流畅度的话，其实蓝色的参考意义是较大的。蓝色代表了视图绘制所花费的时间，表示视图在界面发生变化（更新）的用时情况。当它越短时，即便是体验上更接近“丝滑”，当他越长时，说明当前视图较复杂或者无效需要重绘，即我们通常说的“卡了”。
 
-![](https://raw.githubusercontent.com/gxd523/PictureBed/master/gpu_profile.jpg)
+![](https://gitee.com/hysbtr/pic/raw/master/gpu_profile.jpg)
 
 * Swap Buffers：表示处理任务的时间，也可以说是CPU等待GPU完成任务的时间，线条越高，表示GPU做的事情越多；
 

@@ -3,7 +3,7 @@
 ## JVM内存结构
 > 与Java虚拟机的运行时区域有关(3室2厅)
 
-![](https://raw.githubusercontent.com/gxd523/PictureBed/master/JMS.png)
+![](https://gitee.com/hysbtr/pic/raw/master/JMS.png)
 
 区域 | 存储内容 | 特点
 :---: | :---: | :---:

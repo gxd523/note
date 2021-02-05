@@ -1,4 +1,4 @@
-![](https://raw.githubusercontent.com/gxd523/PictureBed/master/http_cache.png)
+![](https://gitee.com/hysbtr/pic/raw/master/http_cache.png)
 
 ## 强制缓存
 * 需要服务端参与判断是否继续使用缓存，当客户端第一次请求数据时，服务端返回了缓存的过期时间(`Expires`或`Cache-Control`)，下次请求时，没有过期就可以继续使用缓存，否则则不适用，无需再向服务端询问。

@@ -7,10 +7,10 @@
 * `无状态`：每次请求之间相互独立，不能交互数据
 
 ### Http通信过程
-![](https://raw.githubusercontent.com/gxd523/PictureBed/master/http.png)
+![](https://gitee.com/hysbtr/pic/raw/master/http.png)
 
 ## 请求报文
-![](https://raw.githubusercontent.com/gxd523/PictureBed/master/request_message.png)
+![](https://gitee.com/hysbtr/pic/raw/master/request_message.png)
 
 ### 请求行
 #### 请求方式
@@ -65,7 +65,7 @@ multipart/form-data | POST专用：用以支持向服务器发送二进制数据
 * `POST`请求才有貌似
 
 ## 响应报文
-![](https://raw.githubusercontent.com/gxd523/PictureBed/master/response_message.png)
+![](https://gitee.com/hysbtr/pic/raw/master/response_message.png)
 
 ### 响应行
 #### 状态码
@@ -84,7 +84,7 @@ multipart/form-data | POST专用：用以支持向服务器发送二进制数据
 * 返回数据
 
 ## Https
-![](https://raw.githubusercontent.com/gxd523/PictureBed/master/https_chart.png)
+![](https://gitee.com/hysbtr/pic/raw/master/https_chart.png)
 
 1. 客户端发起HTTPS请求，请求信息包含客户端支持的加密算法
 2. 服务端的配置

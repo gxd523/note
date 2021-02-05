@@ -22,7 +22,7 @@
 * JVM不用寄存器架构是为了跨平台，而`Dalvik`只需支持`ARM`架构的寄存器就行了
 * 基于堆栈的机器必须使用指令才能从堆栈上的加载和操作数据，它们需要更多的指令才能实现相同的性能。
 * 基于寄存器机器上的指令必须经过编码,因此,它们的指令往往更大。
-![](https://raw.githubusercontent.com/gxd523/PictureBed/master/register_stack.png)
+![](https://gitee.com/hysbtr/pic/raw/master/register_stack.png)
 
 #### ART(Android Runtime Tool)
 * ART 环境中，应用在第一次安装的时候，字节码就会预先编译成机器码，使其成为真正的本地应用，这个过程叫做预编译（`AOT,Ahead-Of-Time`）

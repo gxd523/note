@@ -8,7 +8,7 @@
 
 ## 传统IPC
 
-![](https://raw.githubusercontent.com/gxd523/PictureBed/master/ipc_other.jpg)
+![](https://gitee.com/hysbtr/pic/raw/master/ipc_other.jpg)
 
 * 进程间的`用户空间`是相互隔离的
 * `内核空间`与`用户空间`也是相互隔离的
@@ -17,7 +17,7 @@
 
 ## Binder的IPC
 
-![](https://raw.githubusercontent.com/gxd523/PictureBed/master/ipc_binder.jpg)
+![](https://gitee.com/hysbtr/pic/raw/master/ipc_binder.jpg)
 
 * `Binder`基于`内存映射(mmap)`，减少了一次数据拷贝
 * `内存映射(mmap)`是指不同的虚拟内存(`内核空间`、`用户空间`都是指虚拟内存)，指向相同的物理内存
@@ -27,14 +27,14 @@
 
 ## Binder的C/S架构
 
-![](https://raw.githubusercontent.com/gxd523/PictureBed/master/binder_cs.jpg)
+![](https://gitee.com/hysbtr/pic/raw/master/binder_cs.jpg)
 
 * `Binder`框架定义了4个角色：`Server`、`Client`、`ServiceManager`、`Binder驱动`
 * `Server`、`Client`、`ServiceManager`运行在`用户空间`，`Binder驱动`运行在`内核空间`
 
 ## Binder通信过程
 
-![](https://raw.githubusercontent.com/gxd523/PictureBed/master/binder_abstract.jpg)
+![](https://gitee.com/hysbtr/pic/raw/master/binder_abstract.jpg)
 
 1. `Server`在`ServiceManager`中注册：`Server`进程在创建的时候，也会创建对应的`Binder`实体，如果要提供服务给`Client`，就必须为`Binder`实体注册一个名字
 2. `Client`通过`ServiceManager`获取服务：`Client`知道服务中`Binder`实体的名字后，通过名字从`ServiceManager`获取`Binder`实体的引用

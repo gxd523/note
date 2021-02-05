@@ -2,7 +2,7 @@
 ### 坐标
 > 由于移动设备一般定义屏幕左上角为坐标原点，向右为x轴增大方向，向下为y轴增大方向， 所以在手机屏幕上的坐标系与数学中常见的坐标系是稍微有点差别的
 
-![coordinate](https://raw.githubusercontent.com/gxd523/PictureBed/master/coordinate.jpeg)
+![coordinate](https://gitee.com/hysbtr/pic/raw/master/coordinate.jpeg)
 
 * View相对于父控件的坐标getLeft()、getTop()、getRight()、getBottom()
 * MotionEvent中，getX()表示以父控件为坐标系，getRawX()表示以屏幕为坐标系
@@ -59,7 +59,7 @@ SRC_OVER | 正常绘制显示，上下层绘制叠盖。
 XOR | 现实非交集部分 
 
 用示例图来查看使用不同模式时的混合效果如下（src表示输入的图，dst表示原Canvas上的内容）：
-![](https://raw.githubusercontent.com/gxd523/PictureBed/master/mix_effect.jpeg)
+![](https://gitee.com/hysbtr/pic/raw/master/mix_effect.jpeg)
 
 ### 使用实例
 * Bitmap转圆角
@@ -156,7 +156,7 @@ getSaveCount | 获取栈中内容的数量(即保存次数)
 ```canvas.drawRoundRect(rectF,30,30,mPaint);```
 > 这里圆角矩形的角实际上不是一个正圆的圆弧，而是椭圆的圆弧，这里的两个参数实际上是椭圆的两个半径
 
-![](https://raw.githubusercontent.com/gxd523/PictureBed/master/round_rect.jpeg)
+![](https://gitee.com/hysbtr/pic/raw/master/round_rect.jpeg)
 
 ## Path
 > Path封装了由直线和曲线(二次，三次贝塞尔曲线)构成的几何路径。你能用Canvas中的drawPath来把这条路径画出来(同样支持Paint的不同绘制模式)，也可以用于剪裁画布和根据路径绘制文字。
@@ -183,11 +183,11 @@ getSaveCount | 获取栈中内容的数量(即保存次数)
 
 | 逻辑名称           | 类比 | 说明                                   | 示意图                                                       |
 | ------------------ | ---- | -------------------------------------- | ------------------------------------------------------------ |
-| DIFFERENCE         | 差集 | Path1中减去Path2后剩下的部分           | ![img](https://raw.githubusercontent.com/gxd523/PictureBed/master/DIFFERENCE.jpeg) |
-| REVERSE_DIFFERENCE | 差集 | Path2中减去Path1后剩下的部分           | ![img](https://raw.githubusercontent.com/gxd523/PictureBed/master/REVERSE_DIFFERENCE.jpeg) |
-| INTERSECT          | 交集 | Path1与Path2相交的部分                 |![img](https://raw.githubusercontent.com/gxd523/PictureBed/master/INTERSECT.jpeg) |
-| UNION              | 并集 | 包含全部Path1和Path2                   |![img](https://raw.githubusercontent.com/gxd523/PictureBed/master/UNION.jpeg) |
-| XOR                | 异或 | 包含Path1与Path2但不包括两者相交的部分 |![img](https://raw.githubusercontent.com/gxd523/PictureBed/master/XOR.jpeg) |
+| DIFFERENCE         | 差集 | Path1中减去Path2后剩下的部分           | ![img](https://gitee.com/hysbtr/pic/raw/master/DIFFERENCE.jpeg) |
+| REVERSE_DIFFERENCE | 差集 | Path2中减去Path1后剩下的部分           | ![img](https://gitee.com/hysbtr/pic/raw/master/REVERSE_DIFFERENCE.jpeg) |
+| INTERSECT          | 交集 | Path1与Path2相交的部分                 |![img](https://gitee.com/hysbtr/pic/raw/master/INTERSECT.jpeg) |
+| UNION              | 并集 | 包含全部Path1和Path2                   |![img](https://gitee.com/hysbtr/pic/raw/master/UNION.jpeg) |
+| XOR                | 异或 | 包含Path1与Path2但不包括两者相交的部分 |![img](https://gitee.com/hysbtr/pic/raw/master/XOR.jpeg) |
 
 ## Paint
 

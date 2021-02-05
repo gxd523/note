@@ -1,7 +1,7 @@
 [TOC]
 
 ## 生命周期
-![](https://raw.githubusercontent.com/gxd523/PictureBed/master/activity_lifecycle.png)
+![](https://gitee.com/hysbtr/pic/raw/master/activity_lifecycle.png)
 
 * A跳转B时的执行顺序：`A.onPause()`、`B.onCreate()`、`B.onStart()`、`B.onResume()`、`A.onStop()`、`A.onSaveInstanceState()`
 * A跳转B，B返回时的执行顺序：`B.onPause()`、`A.onRestart()`、`A.onStart()`、`A.onResume()`、`B.onStop()`、`B.onDestroy()`

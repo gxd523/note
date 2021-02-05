@@ -22,7 +22,7 @@
 > 界面的根View，PhoneWindow的内部类。
 
 ### 启动app过程
-![](https://raw.githubusercontent.com/gxd523/PictureBed/master/launch_app.png)
+![](https://gitee.com/hysbtr/pic/raw/master/launch_app.png)
 
 1. 从`ActivityManagerProxy.startActivity()`以`Binder`通信的方式，调用到`SystemServer`进程的`ActivityManagerSerice.startActivity()`
 2. `SystemServer`进程通过`Socket`方式与`Zygote`进程通信，`Zygote`进程fork出App进程
@@ -34,7 +34,7 @@
 * 主线程在收到Message后，创建Application并调用onCreate方法，再通过反射机制创建目标Activity，并回调Activity.onCreate()等方法
 * 到此，App便正式启动，开始进入Activity生命周期，执行完onCreate/onStart/onResume方法，UI渲染后显示APP主界面
 
-![](https://raw.githubusercontent.com/gxd523/PictureBed/master/ActivityLaunchProcess.png)
+![](https://gitee.com/hysbtr/pic/raw/master/ActivityLaunchProcess.png)
 
 ### ActivityThread
 > 代表UI线程/主线程，但没有继承或实现任何类或接口，它的main()方法是APP的真正入口

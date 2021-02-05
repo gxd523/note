@@ -1,7 +1,7 @@
 * `layout_constrainedWidth`：当控件宽度被约束且使用`wrap_content`时，如果控件内容超过了约束的最大宽度，约束将失效。此属性设置为true将使约束仍然生效，但会导致渲染变慢一丢丢。
 
 ##### Chains
-![](https://raw.githubusercontent.com/gxd523/PictureBed/master/constraint_chains.png)
+![](https://gitee.com/hysbtr/pic/raw/master/constraint_chains.png)
 * `layout_constraintHorizontal_chainStyle`：链上的控件必须设置了双向约束
 * `layout_constraintHorizontal_bias`：设置水平偏移比例
 * 在约束布局中宽高的维度`match_parent`被`0dp`代替，默认生成的大小占所有的可用空间。
