@@ -45,8 +45,6 @@
 
 ![](https://raw.githubusercontent.com/gxd523/PictureBed/master/aidl.png)
 
-![](https://raw.githubusercontent.com/gxd523/PictureBed/master/ipc-aidl.jpg)
-
 #### AIDL的经典实现：Messenger
 > Messenger可以翻译为信使，顾名思义，通过它可以在不同进程中传递Message对象，在Message中放入我们需要传递的数据，就可以轻松地实现数据的进程间传递了。Messenger是一种轻量级的IPC方案，它是AIDL在Android中的一种经典实践。
 

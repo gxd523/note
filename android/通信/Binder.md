@@ -37,7 +37,7 @@
 ![](https://raw.githubusercontent.com/gxd523/PictureBed/master/binder_abstract.jpg)
 
 1. `Server`在`ServiceManager`中注册：`Server`进程在创建的时候，也会创建对应的`Binder`实体，如果要提供服务给`Client`，就必须为`Binder`实体注册一个名字
-2. `Client`通过`Service Manager`获取服务：`Client`知道服务中`Binder`实体的名字后，通过名字从`Service Manager`获取`Binder`实体的引用
+2. `Client`通过`ServiceManager`获取服务：`Client`知道服务中`Binder`实体的名字后，通过名字从`ServiceManager`获取`Binder`实体的引用
 3. `client`通过获得一个`server`的代理接口，对`server`进行调用
 4. 代理接口中定义的方法与`server`中定义的方法时一一对应的
 5. `client`调用某个代理接口中的方法时，代理接口的方法会通过`IBinder.transact()`将`client`传递的参数打包成`Parcel`对象

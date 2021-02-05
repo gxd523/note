@@ -1,8 +1,20 @@
+
+[TOC]
+
+## WindowManager
+* `WindowManager`时AIDL接口
+* `WindowManagerImpl`：
+	* 实现`WindowManager`接口的客户端代理
+	* 存在多个实例，每个`Window`对应一个
+* `WindowManagerService`：实现`WindowManager`接口的服务端
+* `WindowManagerGlobal`：
+	* `WindowManagerImpl`功能的具体实现
+	* 进程中单一实例
+
+
 > WindowManger是普通App进程用来与系统服务（WindowMangerService）通信的一个接口。
 
 ### 获取WindowManger实例
-![](https://raw.githubusercontent.com/gxd523/PictureBed/master/WindowManagerService.png)
-![](https://raw.githubusercontent.com/gxd523/PictureBed/master/WindowManager.png)
 
 ```java
 WindowManager windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
@@ -15,8 +27,17 @@ WindowManager windowManager = (WindowManager) getSystemService(Context.WINDOW_SE
 
 ### WindowManger添加view
 > 注意 同一个window，只能添加一个View,添加多个View会报出以下异常
-```java
-windowManager.addView(view, params);
+```kotlin
+windowManager.addView(
+    ImageView(this).also {
+        Glide.with(it).load(R.mipmap.ic_launcher).into(it)
+    },
+    WindowManager.LayoutParams().apply {
+        width = 300
+        height = 300
+        type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
+    }
+)
 ```
 
 ### WindowManger移除view

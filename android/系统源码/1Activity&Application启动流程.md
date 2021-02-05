@@ -24,10 +24,11 @@
 ### 启动app过程
 ![](https://raw.githubusercontent.com/gxd523/PictureBed/master/launch_app.png)
 
-* 点击桌面APP图标时，Launcher的startActivity()方法，通过Binder通信，调用`system_server`进程中AMS服务的`startActivity()`，发起启动请求
-* `system_server`进程接收到请求后，通过Socket通信，向Zygote进程发送创建进程的请求
-* Zygote进程fork出App进程，并执行`ActivityThread.main()`，创建ActivityThread线程，初始化MainLooper，主线程Handler，同时初始化ApplicationThread用于和AMS通信交互
-* App进程，通过Binder向`sytem_server`进程发起attachApplication请求，这里实际上就是APP进程通过Binder调用`sytem_server`进程中AMS的`attachApplication()`，将ApplicationThread对象与AMS绑定
+1. 从`ActivityManagerProxy.startActivity()`以`Binder`通信的方式，调用到`SystemServer`进程的`ActivityManagerSerice.startActivity()`
+2. `SystemServer`进程通过`Socket`方式与`Zygote`进程通信，`Zygote`进程fork出App进程
+3. 从`ActivityThread.main()`开始创建主线程，调用`ActivityManagerProxy.attachApplication()`，通过`Binder`方式调用到`SystemServer`进程的`ActivityManagerService.attachApplication()`
+4. 
+
 * `system_server`进程在收到attachApplication的请求，进行一些准备工作后，再通过binder IPC向App进程发送`ApplicationThread.bindApplication()`请求（初始化Application并调用onCreate方法）和`ApplicationThread.scheduleLaunchActivity()`请求（创建启动Activity）
 * App进程的binder线程（ApplicationThread）在收到请求后，通过handler向主线程发送`BIND_APPLICATION`和`LAUNCH_ACTIVITY`消息，这里注意的是AMS和主线程并不直接通信，而是AMS和主线程的内部类ApplicationThread通过Binder通信，ApplicationThread再和主线程通过Handler消息交互。 
 * 主线程在收到Message后，创建Application并调用onCreate方法，再通过反射机制创建目标Activity，并回调Activity.onCreate()等方法

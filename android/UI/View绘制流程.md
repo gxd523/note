@@ -39,7 +39,8 @@ wrap_content | AT_MOST +parentSize | AT_MOST + parentSize | UNSPECIFIED + 0
 * onSizeChanged()：在`layout()`中调用`setFrame()`在调用`sizeChange()`
 
 ## Draw
-* dispatchDraw()：`onDraw()`后调用，里面调用了子View的`draw()`
+* `onDraw()`：绘制当前View的内容
+* dispatchDraw()：`onDraw()`后调用，里面调用子View的`draw()`
 * ViewGroup默认不执行`onDraw()`，如果复写，需调用`setWillNotDraw(false)`清楚不需要绘制的标记
 
 ### 绘制过程
