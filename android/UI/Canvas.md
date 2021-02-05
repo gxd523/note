@@ -34,57 +34,6 @@ Alpha8 | 仅有透明通道(8位)
 
 使用这种方式的混合，就会造成后绘制的内容以半透明的方式叠在上面的视觉效果。
 
-## 混合模式
-其实还可以有不同的混合模式供我们选择，用Paint.setXfermode，指定不同的PorterDuff.Mode。
-
-下表是各个PorterDuff模式的混合计算公式：（D指原本在Canvas上的内容dst，S指绘制输入的内容src，a指alpha通道，c指RGB各个通道）
-混合模式 | 计算公式
-:---: | :---: 
-ADD | Saturate(S + D)
-CLEAR | 清空画布 
-DARKEN | - 
-DST | 显示下层绘制图片 
-DST_ATOP | 取上层非交集部分与下层交集部分 
-DST_IN | 取两层绘制交集。显示下层。 
-DST_OUT | 取下层绘制非交集部分。 
-DST_OVER | 上下层都显示。下层居上显示。 
-LIGHTEN | - 
-MULTIPLY | - 
-SCREEN | - 
-SRC | 显示上层绘制图片 
-SRC_ATOP | 取下层非交集部分与上层交集部分 
-SRC_IN | 取两层绘制交集。显示上层。 
-SRC_OUT | 取上层绘制非交集部分。 
-SRC_OVER | 正常绘制显示，上下层绘制叠盖。 
-XOR | 现实非交集部分 
-
-用示例图来查看使用不同模式时的混合效果如下（src表示输入的图，dst表示原Canvas上的内容）：
-![](https://gitee.com/hysbtr/pic/raw/master/mix_effect.jpeg)
-
-### 使用实例
-* Bitmap转圆角
-```java
-Bitmap dst = Bitmap.createBitmap(mWidth, mHeight, Bitmap.Config.ARGB_8888);
-Canvas canvas1 = new Canvas(dst);
-canvas1.drawRoundRect(0, 0, mWidth, mHeight, 20, 20, mPaint);
-mPaint.setAntiAlias(true);
-mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-Bitmap src = BitmapFactory.decodeResource(getResources(), R.drawable.a);
-canvas1.drawBitmap(src, new Rect(0, 0, src.getWidth(), src.getHeight()), new Rect(0, 0, mWidth, mHeight), mPaint);
-
-mPaint.setXfermode(null);
-canvas.drawBitmap(dst, 0, 0, mPaint);
-```
-
-* 控件圆角
-```java
-canvas.saveLayer(rect, null, Canvas.ALL_SAVE_FLAG);
-super.draw(canvas);
-mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
-path.addRoundRect(rect, 125, 125, Path.Direction.CCW);
-canvas.drawPath(path, mPaint);
-```
-
 ## Canvas
 Canvas的常用操作速查表
 操作类型 | 相关API | 备注
@@ -142,11 +91,9 @@ restoreToCount | 弹出指定位置及其以上所有的状态，并按照指定
 getSaveCount | 获取栈中内容的数量(即保存次数)
 
 #### saveLayer()
-* 地图等多层绘制
-* `saveLayer()`会创建新的图层，放入栈中
-* `saveLayer()`=`clip()`+`save()`
-* 之后的绘制都在新图层中，和下面的图层叠加在一起显示
-* 会增加内存使用
+* `save()`和`saveLayer()`都会保存`状态`放入同一个栈中，只是`saveLayer()`保存的是`状态`+`layer`，`layer`即`offscreen bitmap`
+* 任何时候都在栈顶的`layer`上绘图
+* 调用`restoreToCount()`后，`layer`出栈，对应的`offscreen bitmap`合并(argb混合)到底下的`layer`
 
 ### 其他
 * drawPicture()：使用Picture前请关闭硬件加速，以免引起不必要的问题！

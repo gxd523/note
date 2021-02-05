@@ -52,12 +52,27 @@ wrap_content | AT_MOST +parentSize | AT_MOST + parentSize | UNSPECIFIED + 0
 6. 绘制View的装饰（例如：滚动条）
 
 ## invalidate()
-* 调用`parent.invalidateChild()`逐级向上传递
-* 接着调用`parent.invalidateChildInParent()`逐级向上直到`ViewRootImpl.invalidateChildInParent()`，并计算出自身需要重绘的区域
-* 最后执行`performTraversals()`，`mLayoutRequestede`为false，所以不会触发`measure`与`layout`，只会触发`draw`
+* 关闭硬件加速的情况：
+	* `parent.invalidateChild()`
+	* `parent.invalidateChildInParent()`计算出`dirtyRect`(控件区域)逐级向上
+	* 最后到`ViewRootImpl.invalidateChildInParent()`
+	* `ViewRootImpl.scheduleTraversals()`
+	* 再到`Choreographer.postCallback()`
+	* `ViewRootImpl.performTraversals()`
+	* `ViewRootImpl.drawSoftware()`
+* 开启硬件加速的情况：
+	* `parent.invalidateChild()`
+	* `parent.onDescendantInvalidated()`
+	* `viewRootImpl.onDescendantInvalidated()`
+	* `dirtyRect`(全屏区域)`ViewRootImpl.scheduleTraversals()`
+	* 再到`Choreographer.postCallback()`
+	* `ViewRootImpl.performTraversals()`
+	* `mAttachInfo.mThreadedRenderer.draw(mView)`
+* 之前做完测量、绘制`mLayoutRequested`置为`false`，所以一定不会走测量、绘制
 * postInvalidate()：一般在非UI线程调用，用Handler发送异步消息，`handleMessage()`中调用`invalidate()`
 
 ## requestLayout()
-* 责任链模式逐级向上传递直到`ViewRootImpl.performTraversals()`
-* `mLayoutRequestede`为true，会触发`measure`与`layout`，不一定
-会触发`draw`
+* `mParent.requestLayout()`
+* `viewRootImpl.requestLayout()`，`mLayoutRequested`置为`true`
+* 所以一定触发测量、绘制
+* 也执行到了`viewRootImpl.draw()`，但`dirtyRect`没有区域，所以没有走进绘制里面
