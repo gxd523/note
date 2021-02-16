@@ -1,24 +1,31 @@
+[TOC]
+
 ![](https://gitee.com/hysbtr/pic/raw/master/service_lifecycle.png)
 
 ## Service两种启动方式
+* 同时使用`starService()`和`bindService()`，需要`stopService()`、`unbindService()`都调用才能销毁
+
 ### starService()启动方式
 * 生命周期独立于启动它的组件
 * service内部通过stopSelf()停止服务，外部用启动service的组件的stopService()停止服务
 * 生命周期方法：`onCreate()`-->`onStartCommand()`-->`onDestroy()`
+* 多次`startService()`会多次回调`onStartCommand()`，可用于`IntentService`添加任务
 
 ### bindService()启动方式
 * 组件调用`unbindService()`停止服务
 * 多个组件绑定服务时，当所有组件都销毁时，服务才会停止
 * 多个组件绑定服务时，只有第一个组件绑定后会回调`onCreate()`、`onBind()`
 * 生命周期方法：`onCreate()`-->`onBind()`-->`onUnbind()`-->`onDestroy()`
+* 多次`bindservice()`，`onBind()`只会回调一次
 
 ## IntentService
 > IntentService 是Service 的子类，它使用工作线程逐一处理所有启动请求，如果不要求服务同时处理多个请求，这是最好的选择。
 
-* 执行一些高优先级的后台任务。由于属于Service，若以比单纯的线程优先级更高。
+* 执行一些高优先级的后台任务。由于属于Service，所以比单纯的线程优先级更高。
 * 任务一个一个执行
 
-## 服务保活
+## 前台Service
+### 服务保活
 * 提高Service优先级：`android:priority="1000"`
 * 把Service写成系统服务，在清单文件设置：`android:persistent="true"`，不建议
 * 将Service设置为前台Service

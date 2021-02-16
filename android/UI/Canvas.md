@@ -35,6 +35,10 @@ Alpha8 | 仅有透明通道(8位)
 使用这种方式的混合，就会造成后绘制的内容以半透明的方式叠在上面的视觉效果。
 
 ## Canvas
+
+### 构造函数
+* `Bitmap`可作为参数传入`Canvas`构造函数，`Bitmap`相当于`画纸`
+
 Canvas的常用操作速查表
 操作类型 | 相关API | 备注
 --- | --- | ---
@@ -94,6 +98,7 @@ getSaveCount | 获取栈中内容的数量(即保存次数)
 * `save()`和`saveLayer()`都会保存`状态`放入同一个栈中，只是`saveLayer()`保存的是`状态`+`layer`，`layer`即`offscreen bitmap`
 * 任何时候都在栈顶的`layer`上绘图
 * 调用`restoreToCount()`后，`layer`出栈，对应的`offscreen bitmap`合并(argb混合)到底下的`layer`
+* `saveLayer()`较为消耗内存，可使用硬件加速代替：`setLayerType(LAYER_TYPE_HARDWARE, paint)`
 
 ### 其他
 * drawPicture()：使用Picture前请关闭硬件加速，以免引起不必要的问题！

@@ -1,3 +1,5 @@
+[TOC]
+
 ## 泛型
 * 为了兼容1.5之前的Java，所以才用伪泛型
 * 伪泛型：编译后泛型会被上限类型替代，默认为Any?
@@ -9,24 +11,88 @@
 * 内联特化：使用`inline`与`reified`，在函数调用处织入代码，泛型被替换为具体类型
 * `inline fun <reified T> Gson.fromJson(json: String): T = fromJson(json, T::class.java)`
 
+### Java泛型
+```java
+public class Plate<T> {
+    private T t;
+
+    public Plate(T t) {
+        this.t = t;
+    }
+
+    void set(T t) {
+    }
+
+    T get() {
+        return t;
+    }
+}
+```
+
+#### extends
+```java
+Plate<? extends Apple> plate = new Plate<RedApple>(redApp);// 赋值取上限及以下
+plate.set();// 无法设置
+Apple apple = plate.get();// 结果为Apple类型
+```
+
+#### super
+```java
+Plate<? super Apple> plate = new Plate<Fruit>(fruit);// 赋值取下限及以上
+plate.set(redApple);// 设置Apple及其子类
+Object result = plate.get();// 结果取Object
+```
+* Java的`super`有
+
 ### 型变&星投影
 * 型变、星投影都用于类，不能用于函数
+* `协变点`：函数返回值类型为泛型参数，包括`val`、`var`的`getter`
+* `逆变点`：函数参数类型为泛型参数，包括`var`的`setter`
 
-A| B | D | E | *含义 | 类比Java
+#### 协变out
+```kotlin
+class Plate<out T>(val t: T) {
+    fun get(): T {
+        return t
+    }
+}
+
+val plate: PlateKt<Apple>
+plate = PlateKt<RedApple>()
+```
+* 和Java的`extends`一样，`协变`具有2重含义：
+	* 不允许`逆变点`，只允许`协变点`
+	* 赋值取可取上限及其以下
+* 上限默认为`Any?`，也可指定上限：`<out T : A>`
+
+#### 逆变in
+```kotlin
+open class PlateKt<in T> {
+    fun set(t: T) {
+    }
+}
+
+val plate: PlateKt<Apple>
+plate = PlateKt<Fruit>()
+```
+
+* 和Java的`super`一样，`逆变`具有2重含义：
+	* 不允许`协变点`，只允许`逆变点`
+	* 赋值可取上限及其以上
+* 下限默认为`Nothing`，也可指定下限：`<in T : A>`
+
+
+关键字| 型变 | D | E | *含义 | 类比Java
 :---: | :---: | :---: | :---: | :---: | :---:
 out | 协变 | 上限 | get() | 取上限，默认为Any? | extends
 in | 逆变 | 下限 | set() | 取下限，只能为Nothing | super
 
-* 协变点：函数返回值类型为泛型参数，包括val、var的getter
-* 逆变点：函数参数类型为泛型参数，包括var的setter
-* `out A : Number`：表示上限为`Nummber`类型，下限则无法定义
 * 强转可以加泛型，`as Function<Int, Any>`，实际是为了骗过编译器
 * `is Function<Int, Any>`不可以加泛型，因为运行时泛型已经擦除了
 * `Nothing`：所有类型的子类
 * 星投影`*`：表示不告诉类型，在协变中为`Any?`，在逆变中为`Nothing`，对应Java的?
 * 星投影只能用在泛型形参中
 * `HashCode<String,List<*>>`，此时的value：`List<*>`，可以使用星投影
-* 确定上界：\<T : TextView>，多个\<T> where T : TextView, T : Viewer
 * `@UnsafeVariance`：协变的泛型想要作为函数的参数，或者逆变的泛型想要作为函数的返回值
 
 ### 实践

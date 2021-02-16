@@ -2,15 +2,23 @@
 
 ## 注册方式
 ### 静态注册
+* 无法注销
+* 未启动也可接收广播，可用于唤醒app
 * 即使按返回键退出App，变成空进程，也依然能接收广播
-* 注意Android8.0(26)开始，无法静态注册广播接收者，除了以下必要广播：
+
+#### Android8.0(API 26)
+* 注意`Android8.0(API 26)`开始，大部分广播无法静态注册
+* 除了以下必要广播：
 	* ACTION_BOOT_COMPLETED
 	* ACTION_TIME_SET
 	* ACTION_LOCALE_CHANGED
-* Android8.0(26)开始，需要发送广播时指定静态接收者，`intent.setComponent()`，才能静态接收到
+* 或者发送时`intent`添加条件：
+	* 设置标志：`Intent.FLAG_RECEIVER_INCLUDE_BACKGROUND`，`addFlags(0x01000000)`
+	* 指定包名：`setPackage("允许静态注册应用包名")`
+	* 指定包名、类名：`ComponentName("允许静态注册应用包名", "Receiver全类名")`
 
 ### 动态注册
-* 需要在`onDestroy()`中注销
+* 变成空进程也能收到广播，但可以注销
 
 ## 广播类型
 ### 普通广播（Normal Broadcast）

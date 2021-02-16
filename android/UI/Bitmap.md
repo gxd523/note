@@ -68,9 +68,11 @@ byteCount = scaleWidth * scaleHeight * 颜色格式
 
 ### API10开始
 * 像素也放在Dalvik Heap中
+* 可调用`recycle()`回收`Bitmap`内存
 
 ### API19之前
-* Bitmap复用的图片格式必须是png或jpg，且size、inSampleSize、inPreferConfig都要相同
+* `API11`到`API18`，Bitmap复用的图片格式必须是png或jpg，且size、inSampleSize、inPreferConfig都要相同
+* `API19`及之后，被复用的`Bitmap`只要大小>=图片大小即可
 
 ### API26开始
 * 像素放回在Native中，因为解决了Java层Bitmap回收后及时同步Native层回收像素的问题
@@ -84,31 +86,6 @@ byteCount = scaleWidth * scaleHeight * 颜色格式
 
 ### byte[]转Bitmap
 `BitmapFactory.decodeByteArray(btyes, 0, b.length)`
-
-### Bitmap转Drawable
-`new BitmapDrawable(getResources(), bitmap)`
-
-### Drawable转Bitmap
-```java
-BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
-Bitmap bitmap = bitmapDrawable.getBitmap();
-```
-* Drawable转Bitmap(另一种)：
-```java
-// 获取drawable长宽
-int width = drawable.getIntrinsicWidth();
-int height = drawable.getIntrinsicHeight();
-drawable.setBounds(0, 0, width, height);
-
-// 获取drawable的颜色格式
-Bitmap.Config config = drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888 : Bitmap.Config.RGB_565;
-// 创建bitmap
-Bitmap bitmap = Bitmap.createBitmap(width, height, config);
-// 创建bitmap画布
-Canvas canvas = new Canvas(bitmap);
-// 将drawable 内容画到画布中
-drawable.draw(canvas);
-```
 
 ## Bitmap&Drawable区别
 > Drawable作为Android平下通用的图形对象，它可以装载常用格式的图像，比如GIF、PNG、JPG，当然也支持Bitmap，当然还提供一些高级的可视化对象，比如渐变、图形等。Bitmap是Drawable的子集。
@@ -176,26 +153,6 @@ Bitmap dstBitmap = srcBitmap.copy(Config.RGB_565, false);
     }
 ```
 
-### 圆角
-```java
-int roundPx = 0;
-int width = bitmap.getWidth();
-int heigh = bitmap.getHeight();
-// 创建输出bitmap对象
-Bitmap outmap = Bitmap.createBitmap(width, heigh, Bitmap.Config.ARGB_8888);
-Canvas canvas = new Canvas(outmap);
-final int color = 0xff424242;
-final Paint paint = new Paint();
-final Rect rect = new Rect(0, 0, width, heigh);
-final RectF rectf = new RectF(rect);
-paint.setAntiAlias(true);
-canvas.drawARGB(0, 0, 0, 0);
-paint.setColor(color);
-canvas.drawRoundRect(rectf, roundPx, roundPx, paint);
-paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-canvas.drawBitmap(bitmap, rect, rect, paint);
-```
-
 ### 大图小用用采样，小图大用用矩阵
 ```java
 Matrix matrix = new Matrix();
@@ -225,6 +182,8 @@ imageView.setImageBitmap(scaleBitmap);
 ```
 
 ### 大图加载
+> 官方建议先用`inSampleSize`以2的倍数缩放，然后再用`density`及`targetDensity`缩放到精确大小
+
 ```java
 BitmapFactory.Options options = new BitmapFactory.Options();
 options.inJustDecodeBounds = true;
@@ -245,5 +204,12 @@ private int calculateInSampleSize(BitmapFactory.Options justDecodeBoundsOptions,
     }
     return inSampleSize;
 }
+```
+```java
+options.inScaled = true;
+options.inSampleSize = 8;
+options.inDensity = srcWidth;
+options.inTargetDensity = dstWidth * options.inSampleSize;
+bitmap = BitmapFactory.decodeFile(fileName, options);
 ```
 

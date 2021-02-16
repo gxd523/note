@@ -3,20 +3,20 @@
 ## 查看任务栈命令
 `adb shell dumpsys activity | grep 'Running activities' -A 5`
 
-## 重点
-* `任务视图`是根据所有应用的页面所在`任务栈`的`taskAffinity`进行划分的
-* 任务栈的`taskAffinity`是第一个入栈的`Activity`的`taskAffinity`
-* `singleTask`的`Activity`要求放入的`Task`的`taskAffinity`与`Activity`的相同，否则新建`Task`
-* 从一个任务栈启动页面进到另一个任务栈，任务栈之间会产生关联，按Home键、多任务键，又会取消关联
+## 任务视图
+* `任务视图`：手机任务列表的每一个`视图`
+* 相同`taskAffinity`的一个或多个`任务栈`组成一个`任务视图`
+
+## 任务栈
+* `任务栈`的`taskAffinity`是第一个入栈的`Activity`的`taskAffinity`
+* 当前应用打开页面(无论其他应用还是`taskAffinity`不同)，都会放入当前应用`任务栈`(如果有)
+* 每个`Activity`的`taskAffinity`，默认为`Application`的`taskAffinity`，而`Application`的`taskAffinity`默认为包名
+* 从一个`任务栈`启动另一个`任务栈`的页面，`任务栈`之间会产生关联，返回当前`任务栈`会展示上一个`任务栈`，按Home键、多任务键，又会取消关联
+* `singleTask`的`Activity`要求放入的`任务栈`的`taskAffinity`与`Activity`的相同，否则`Activity`放入新建的`任务栈`，新建的`任务栈`放入新建的`任务视图`，但是`startActivityForResult()`会失效
 
 ## taskAffinity
-* `taskAffinity`对应手机任务列表的一个`任务视图`
-* 一个`任务视图`包含一个或多个`Task`
-* 每个`Activity`都有`taskAffinity`，默认为`Application`的`taskAffinity`，而`Application`的默认为包名
-* 每一个`Task`的`taskAffinity`，取栈底的`Activity`的`taskAffinity`
 * 一个`任务视图`包含多个`Task`情况是包含一个`singleInstance`的`Activity`的`Task`的`taskAffinity`与另一个包含非`singleInstance`的`Activity`的`Task`的`taskAffinity`相同
 * 一个应用对应多个`任务视图`情况是，两个`Activity`的`taskAffinity`不同，且其中一个`Activity`是`singleTask`
-* `singleTask`的`Activity`要求放入的`Task`的`taskAffinity`与`Activity`的相同，否则新建`Task`
 
 ## Standard跨应用
 * 页面b为standard时，A应用打开B应用的页面b，b会被放到A的任务栈中，此时在桌面启动B应用，会在B的任务栈中创建页面b，也就是A、B的任务栈中各有一个页面b的实例
