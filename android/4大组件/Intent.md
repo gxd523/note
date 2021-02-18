@@ -65,13 +65,17 @@ WIFI的IP设置 | ACTION_WIFI_IP_SETTINGS
 </intent-filter>
 ```
 * 通过`Data`方式，注意`Action`、`Category`也一定要指定，虽然跳转时不用设置：
+* `setDataAndType(Uri.parse("http://www.baidu.com:1234/picture"), "a/b")`
 ```xml
 <intent-filter>
     <action android:name="abc" />
     <category android:name="android.intent.category.DEFAULT" />
     <data
         android:host="www.baidu.com"
+        android:mimeType="a/b"
         android:path="/picture"
+        android:port="1234"
         android:scheme="http" />
 </intent-filter>
 ```
+
