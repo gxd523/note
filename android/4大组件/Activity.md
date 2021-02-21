@@ -12,13 +12,6 @@
 #### A跳转B生命周期执行顺序
 * 
 
-### 启动方式
-#### 显示调用
-#### 隐式调用
-* action
-* packageName + activityName
-* uri
-
 ### 主要方法
 #### onResume()
 > 进入前台，可以响应交互操作

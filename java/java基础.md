@@ -2,6 +2,21 @@ a | byte | short | int | long | float | double | char | boolean | 引用 | 空�
 :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---:
 占用字节 | 1 | 2 | 4 | 8 | 4 | 8 | 2 | 1 | 4 | 8
 
+## 创建对象的5中方式
+* new
+* 反射newInstance()
+* 序列化
+* clone
+* `Unsafe.allocateInstance()`
+```kotlin
+val unsafeClass = Class.forName("sun.misc.Unsafe")
+val f = unsafeClass.getDeclaredField("theUnsafe")
+f.isAccessible = true
+val unsafe = f.get(null)
+val allocateInstance = unsafeClass.getMethod("allocateInstance", Class::class.java)
+val person = allocateInstance.invoke(unsafe, Person::class.java)
+```
+
 ## 位运算符
 > 注意：负数要先转成补码
 
