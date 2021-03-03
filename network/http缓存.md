@@ -9,8 +9,8 @@
 ### Cache-Control
 字段 | 说明
 :---: | :---:
-no-cache | 需要使用对比缓存来验证缓存数据
-no-store | 所有内容都不会缓存，强制缓存，对比缓存都不会触发 
+no-cache | 不读取缓存 
+no-store | 既不读取缓存，也不对响应进行缓存 
 only-if-cached | 不进行网络请求，只使用缓存
 max-age | 缓存的内容将在 xxx 秒后失效
 private | 客户端可以缓存

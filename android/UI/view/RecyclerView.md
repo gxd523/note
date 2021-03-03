@@ -1,3 +1,5 @@
+[TOC]
+
 类名 | 作用
 --- | ---
 RecyclerView.LayoutManager | 负责Item视图的布局的显示管理
@@ -9,38 +11,53 @@ RecyclerView.Recycler | 负责处理View的缓存
 
 https://blog.csdn.net/weixin_43130724/article/details/90068112
 
-## 缓存
-### Recycler.mAttachedScrap
-屏幕内的ViewHolder
 
-### Recycler.mCachedViews
-* 刚移出屏幕的ViewHolder
-* `mViewCacheMax`默认2个，向上滑动后`mViewCacheMax`改为3个，上边2个，下边1个，向下滑动反过来
-* 根据position获取，复用相同位置的ViewHolder，所以不用走`onBindViewHolder`
-* 新版本增加预取机制：滑动过程中吧将要展示的一个item提前缓存到`mCachedViews`
+* tryGetViewHolderForPositionByDeadline
+* 
 
-### Recycler.mViewCacheExtension
-留给开发者自定义缓存
+## 预取机制
+* CPU处理完绘制数据后就处于空闲状态，直到下一帧，预取机制会将接下来可能要显示的Item在这一帧就用CPU处理，然后将数据保存到ViewHolder
+* `LinearLayoutManager.setInitialItemPrefetchCount()`：默认2个
 
-### Recycler.mRecyclerPool.mScrap.mScrapHeap
-* Cache满了后，根据FIFO，移入`RecycledViewPool`
-* 默认5个，ViewHolder数据会被重置，根据`itemType`获取，复用时要走`onBindViewHolder`
-* 对应源码`Recycler.mRecyclerPool`
+
+## 缓存优先级
+* `tryGetViewHolderForPositionByDeadline()`：依次从缓存中寻找`ViewHolder`，都没找到再创建`ViewHolder`
+
+### 复用性能排序
+* 最好情况：复用`ViewHolder`，且无需重新`bindViewHolder()`
+	* 包括以下缓存：`mChangedScrap`、`mAttachedScrap`、`mCachedViews`
+* 次好情况：复用`ViewHolder`，重新`bindViewHolder()``
+	* 包括以下缓存：`mRecyclerPool`
+* 最坏情况：创建新的`ViewHolder`，并`bindViewHolder()`
+
+### mChangedScrap
+### mAttachedScrap
+* 用于布局过程中屏幕可见`Item`的回收和复用
+* mAttachedScrap生命周期起始于RecyclerView布局开始，终止于RecyclerView布局结束
+* 每次向`RecyclerView`填充`Item`之前都会：
+	* 先清空屏幕上的`Item`，将他们`detachFromParent()`，并放入`mAttachedScrap`集合
+	* 紧接着从`mAttachedScrap`集合取出`ViewHolder`重新`attachToParent*()`
+* 紧接着
+
+### mCachedViews
+* 用于移出屏幕`Item`的回收和复用，且只能用于指定位置的`Item`
+* 有点像`回收池预备队列`，即总是先回收到`mCachedViews`，当它放不下的时候，按照FIFO原则将最先进入的`ViewHolder`存入`mRecyclerPool`
+
+### mViewCacheExtension
+### mRecyclerPool
+* 用于移出屏幕`Item`的回收和复用，且只能用于指定viewType的表项
 
 ## Recyclerview使用优化
-* 滚动过程中，在下一个ViewHolder还未显示时就要从`RecyclerPool`或者创建一个放入`Cache`中，当显示下一个ViewHolder时，再从`Cache`中拿到屏幕显示
-* 当屏幕已显示最多能显示的ViewHolder时，当滚动显示下一个ViewHolder时，会优先从`RecyclerPool`中拿一个ViewHolder放入`Cache`缓存中，`RecyclerPool`没有，则创建一个ViewHolder，并执行`onBindViewHolder()`
-* `onBindViewHolder`在`UI线程`执行，耗时太多会影响流畅性
-1. 降低Item的布局复杂度，只对`onCreateViewHolder`有点用
+1. 降低Item的布局深度，减少绘制计算时间
 2. 不要在`onBindViewHolder()`中创建实例，避免频繁GC，占用绘制时间
 3. 不要在`onBindViewHolder()`中执行耗时操作，占用绘制时间
 4. 懒加载，在滑动过程中不执行`onBindViewHolder`中的代码，避免2、3
 5. 共用缓存View：`RecyclerView.setRecycledViewPool(pool)`，如果LayoutManager是LinearLayoutManager或其子类，需要手动开启这个特性：layout.setRecycleChildrenOnDetach(true)
-6. 加大RecyclerView的缓存，空间换时间
-	* `setItemViewCacheSize()`：设置cache缓存个数
-	* `setDrawingCacheEnabled()`：将View显示内容缓存为Bitmap
-7. 如果Item高度固定，使用`RecyclerView.setHasFixedSize(true)`减少`RecyclerView.requestLayout()`：
+6. 使用`RecyclerView.setHasFixedSize(true)`固定`RecyclerView`高度，Item数量变化时也不会触发`RecyclerView.requestLayout()`：
 	* `onItemRangeChanged()`
 	* `onItemRangeInserted()`
 	* `onItemRangeRemoved()`
 	* `onItemRangeMoved()`
+7. 空间换时间，修改缓存大小：
+	* `setItemViewCacheSize()`：设置`mCachedViews`缓存数量
+	* `setMaxRecycledViews()`：设置`mRecyclerPool`缓存数量

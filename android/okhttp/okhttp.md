@@ -93,60 +93,7 @@
 * executeOn()中将asyncCall执行，也就是执行了asyncCall的run()调用的execute()
 * execute()中：调用了realCall的getResponseWithInterceptorChain()方法获取response
 
-## WebSocket
-* Http是半双工的，同一时刻只能是请求、接收中的一个，且服务端必须等待客户端请求才能返回数据，不能主动向客户端发送数据
-* WebSocket 是真正意义上的全双工模式
-* WebSocket是基于TCP的应用层协议
-* WebSocket的scheme：`ws`、`wss`对用`http`、`https`
-* 
-
 ## Https
-### X509TrustManager
-* 默认非安全实现：
-```java
-X509TrustManager x509TrustManager = new X509TrustManager() {
-    @Override
-    public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-    }
-
-    @Override
-    public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-    }
-
-    @Override
-    public X509Certificate[] getAcceptedIssuers() {
-        return new X509Certificate[0];
-    }
-};
-```
-### SSLSocketFactory
-* 安全套接层工厂，用于创建SSLSocket
-* 默认非安全实现：
-```java
-SSLSocketFactory sslSocketFactory = null;
-try {
-    SSLContext sslContext = SSLContext.getInstance("TLS");
-    sslContext.init(null, new TrustManager[]{x509TrustManager}, new SecureRandom());
-    sslSocketFactory = sslContext.getSocketFactory();
-} catch (Exception e) {
-    e.printStackTrace();
-}
-```
-* 安全实现：
-```java
-// certificateInputStream = new Buffer().writeUtf8("").inputStream()
-KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
-keyStore.load(null);
-CertificateFactory certificateFactory = CertificateFactory.getInstance("X.509");
-keyStore.setCertificateEntry("certificateAlias", certificateFactory.generateCertificate(certificateInputStream));
-
-SSLContext sslContext = SSLContext.getInstance("TLS");
-TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
-trustManagerFactory.init(keyStore);
-sslContext.init(null, trustManagerFactory.getTrustManagers(), new SecureRandom());
-sslSocketFactory = sslContext.getSocketFactory();
-```
-
 ### HostnameVerifier
 * 默认非安全实现：
 ```java

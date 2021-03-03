@@ -22,3 +22,8 @@
 
 * Binder驱动类似路由器，负责将Client的请求转发到具体的Server中执行，并将Server返回的数据传回给Client。
 * 类似网络通信中的DNS服务器，负责将Client请求的Binder描述符转化为具体的Server地址，以便Binder驱动能够转发给具体的Server。Server如需提供Binder服务，需要向ServiceManager注册。
+
+## Zygote为什么不用Binder通信
+* 因为Zygote通过fork创建应用进程，fork不能再多线程中使用，而Binder是多线程的
+* 不能再多线程中使用fork是一条设计准则
+* 
