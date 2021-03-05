@@ -11,6 +11,26 @@
 * 生命周期方法：`onCreate()`-->`onStartCommand()`-->`onDestroy()`
 * 多次`startService()`会多次回调`onStartCommand()`，可用于`IntentService`添加任务
 
+#### onStartCommand()的返回值
+##### START_STICKY
+* 如果此服务的进程在启动时(onStartCommand()之后)被终止
+* 保持started状态，但不保留Intent
+* 稍后系统将尝试重新创建服务
+* 由于处于started状态，所以一定调用onStartCommand()，Intent为null
+
+##### START_NOT_STICKY
+* 如果此服务的进程在启动时(onStartCommand()之后)被终止
+* 系统不会重新创建服务
+
+ ##### START_REDELIVER_INTENT
+* 如果此服务的进程在启动时(onStartCommand()之后)被终止
+* 保持started状态，保留Intent
+* 稍后系统将尝试重新创建服务
+* 由于处于started状态，所以一定调用onStartCommand()，Intent不为null
+
+ ##### START_STICKY_COMPATIBILITY
+* START_STICKY的兼容版本，但是不能保证被清理后onStartCommand方法一定会被重新调用
+
 ### bindService()启动方式
 * 组件调用`unbindService()`停止服务
 * 多个组件绑定服务时，当所有组件都销毁时，服务才会停止
@@ -21,8 +41,10 @@
 ## IntentService
 > IntentService 是Service 的子类，它使用工作线程逐一处理所有启动请求，如果不要求服务同时处理多个请求，这是最好的选择。
 
-* 执行一些高优先级的后台任务。由于属于Service，所以比单纯的线程优先级更高。
-* 任务一个一个执行
+* 优先级高
+* 串行执行异步任务
+* 全部任务完成后自我销毁
+* 注意stopSelf(startId)里传入的startId对应最后一次调用onStartCommand的startId才会销毁service
 
 ## 前台Service
 ### 服务保活
