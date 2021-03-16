@@ -26,7 +26,7 @@ https://blog.csdn.net/weixin_43130724/article/details/90068112
 ### 复用性能排序
 * 最好情况：复用`ViewHolder`，且无需重新`bindViewHolder()`
 	* 包括以下缓存：`mChangedScrap`、`mAttachedScrap`、`mCachedViews`
-* 次好情况：复用`ViewHolder`，重新`bindViewHolder()``
+* 次好情况：复用`ViewHolder`，重新`bindViewHolder()`
 	* 包括以下缓存：`mRecyclerPool`
 * 最坏情况：创建新的`ViewHolder`，并`bindViewHolder()`
 

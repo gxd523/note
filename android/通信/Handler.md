@@ -24,6 +24,12 @@
 * 不要在里面执行耗时操作，因为在主线程
 * 在`OnResume()`里面调用获取到MainActivity的绘制完成的时机
 
+#### IdleHandler注意点
+* 只有`mMessages`为空，或者`now < mMessages.when`，才会给`pendingIdleHandlerCount`赋值IdleHandler的数量
+* 所以当消息中存在`同步屏障`时，`同步屏障`导致`mMessages`不为空，且`同步屏障`的when一定 \< now，所以IdleHandler也一定不会执行
+* 所以避免在`onDraw()`中执行类似`setImageDrawable()`之类的间接执行`invalidate()`重绘流程的方法
+* 包括无限循环的补间动画，也会间接执行`invalidate()`重绘流程的方法
+
 ### 同步屏障(SyncBarrier)
 * 通过`postSyncBarrier()`插入`MessageQueue`的消息
 * `同步屏障`和普通消息的区别是`target`为空，`同步屏障`不需要被`Handler`处理
@@ -96,7 +102,7 @@ public void sendAsyncMessage(View view) {
 * `loop()`：死循环中从`MessageQueue.next()`拿`Message`，调用`msg.target.dispatchMessage()`分发消息
 * 注意：没有消息了，`MessageQueue.next()`会阻塞，`MessageQueue.quit()`才会返回null，退出`loop()`死循环
 
-#### Looper.loop()
+### Looper.loop()
 ```java
 public static void loop() {
     final Looper me = myLooper();
@@ -116,6 +122,14 @@ public static void loop() {
     // ....
 }
 ```
+
+### 打印日志
+```kotlin
+Looper.getMainLooper()?.setMessageLogging {
+    Log.d("gxd", it)
+}
+```
+
 ## Handler
 * `dispatchMessage()`：在`Looper.loop()`中拿到消息后分发消息
 * `sendMessageAtTime()`：延迟、空或者普通消息发送时都会走到这

@@ -25,7 +25,14 @@
 * `layout_collapseMode`：子布局Toolbar的3种折叠模式：
 	* none：默认属性，布局将正常显示，无折叠行为
 	* pin：CollapsingToolbarLayout折叠后，此布局将固定在顶部
-	* parallax：CollapsingToolbarLayout折叠时，此布局也会有视差折叠效果。当CollapsingToolbarLayout的子布局设置了parallax模式时，我们还可以通过app:layout_collapseParallaxMultiplier设置视差滚动因子，值为：0~1
+	* parallax：CollapsingToolbarLayout折叠时，此布局也会有视差折叠效果
+
+### layout_collapseParallaxMultiplier
+* 在滑动折叠时，将要被折叠的视图会被看做两个部分：
+	* 下半部分会隐藏在内容视图的下方
+	* 上半部分会向上滑出屏幕的上边缘
+* layout_collapseParallaxMultiplier：下半部分高度/折叠视图总高度
+* 取值范围：0~1.0
 
 ## FloatingActionButton
 * 在Z轴方向的最上面，没有View能覆盖它
