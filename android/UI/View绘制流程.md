@@ -41,7 +41,11 @@ wrap_content | AT_MOST +parentSize | AT_MOST + parentSize | UNSPECIFIED + 0
 ## Draw
 * `onDraw()`：绘制当前View的内容
 * dispatchDraw()：`onDraw()`后调用，里面调用子View的`draw()`
-* ViewGroup默认不执行`onDraw()`，如果复写，需调用`setWillNotDraw(false)`清楚不需要绘制的标记
+* 若要`ViewGroup.onDraw()`执行，只需要以下4个选项其中一项满足即可：
+	* `setWillNotDraw(false)`
+	* 设置背景
+	* 设置前景
+	* 设置焦点高亮
 
 ### 绘制过程
 1. 对View的背景进行绘制：`drawBackground(canvas)`

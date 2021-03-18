@@ -9,7 +9,7 @@
 * `泛型形参`：泛型声明，`泛型实参`：泛型实例化(具体类型)
 * 泛型约束：`T : Comparable<T>`，多个约束：函数返回值之后加`where T : A, T : ()->T`
 * 内联特化：使用`inline`与`reified`，在函数调用处织入代码，泛型被替换为具体类型
-* `inline fun <reified T> Gson.fromJson(json: String): T = fromJson(json, T::class.java)`
+	* `inline fun <reified T> Gson.fromJson(json: String): T = fromJson(json, T::class.java)`
 
 ### Java泛型
 ```java
@@ -90,7 +90,7 @@ in | 逆变 | 下限 | set() | 取下限，只能为Nothing | super
 * 强转可以加泛型，`as Function<Int, Any>`，实际是为了骗过编译器
 * `is Function<Int, Any>`不可以加泛型，因为运行时泛型已经擦除了
 * `Nothing`：所有类型的子类
-* 星投影`*`：表示不告诉类型，在协变中为`Any?`，在逆变中为`Nothing`，对应Java的?
+* 星投影`*`：表示不告诉类型，在协变中为`Any?`，在逆变中为`Nothing`，对应Java的`?`
 * 星投影只能用在泛型形参中
 * `HashCode<String,List<*>>`，此时的value：`List<*>`，可以使用星投影
 * `@UnsafeVariance`：协变的泛型想要作为函数的参数，或者逆变的泛型想要作为函数的返回值

@@ -9,6 +9,8 @@
 * sp文件会整个加载进内存
 * 只更新一条数据，也会将内存中SP文件的全部数据写入磁盘
 * 数据量大时容易引发ANR
+	* SP 调用 apply 方法，会创建一个等待锁放到 QueuedWork 中，并将真正数据持久化封装成一个任务放到异步队列中执行，任务执行结束会释放锁
+	* Activity onStop 以及 Service 处理 onStop，onStartCommand 时，执行 QueuedWork.waitToFinish() 等待所有的等待锁释放
 
 ### SP推荐实践
 * 在工作线程中写入sp时，直接调用commit就可以，不必调用apply,这种情况下，commit的开销更小

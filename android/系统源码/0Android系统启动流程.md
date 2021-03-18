@@ -26,4 +26,3 @@
 ## Zygote为什么不用Binder通信
 * 因为Zygote通过fork创建应用进程，fork不能再多线程中使用，而Binder是多线程的
 * 不能再多线程中使用fork是一条设计准则
-* 
