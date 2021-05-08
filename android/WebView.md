@@ -108,7 +108,7 @@ String imgurl = result.getExtra();
 ## WebSetttings
 * javaScriptEnabled：允许与Js交互
 * javaScriptCanOpenWindowsAutomatically：允许Js弹窗
-* useWideViewPort：将图片调整到适合webview的大小
+* useWideViewPort：支持并优先使用viewport meta，将图片调整到适合webview的大小
 * loadWithOverviewMode：缩放至屏幕的大小
 * setSupportZoom：支持缩放，默认为true。是下面那个的前提。
 * builtInZoomControls：设置内置的缩放控件。若为false，则该WebView不可缩放

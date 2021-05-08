@@ -1,26 +1,15 @@
-## 删除studio相关配置文件
-```
-rm -Rf /Applications/Android\ Studio.app
-rm -Rf ~/Library/Preferences/AndroidStudio*
-rm ~/Library/Preferences/com.google.android.studio.plist
-rm -Rf ~/Library/Application\ Support/AndroidStudio*
-rm -Rf ~/Library/Logs/AndroidStudio*
-rm -Rf ~/Library/Caches/AndroidStudio*
-```
+## 目录
+* Studio目录：/Applications/Android\ Studio.app
+* Android Sdk：~/Library/Android/sdk
+* Studio缓存：~/Library/Caches/Google/AndroidStudio4.2
+* gradle相关：~/.gradle
+	* 远程依赖缓存：~/.gradle/caches/modules-2/files-2.1
+* 模拟器：~/.android
+* Studio日志：~/Library/Logs/Google/AndroidStudio4.2
+* Studio相关配置：~/Library/Application\ Support/Google/AndroidStudio4.2
+* IntelliJ相关配置：~/Library/Preferences/IdeaIC2019.3
+* 不知道这是啥：~/Library/Preferences/com.google.android.studio.plist
 
-## 删除gradle相关文件
-```
-rm -Rf ~/.gradle
-```
-
-## 删除模拟器相关文件
-```
-rm -Rf ~/.android
-```
-
-## 删除SDK
-```
-rm -Rf ~/Users/guoxiaodong/Library/Android
-```
-
+## 命令删除
+* `rm -Rf ~/Library/Caches/Google/AndroidStudio4.2`
 

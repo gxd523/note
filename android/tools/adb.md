@@ -31,6 +31,7 @@
 	* 用户名	进程ID	父进程ID	虚拟内存大小	实际内存大小	进程名
 * 查看像素密度：`adb shell getprop ro.sf.lcd_density`
 * 查看实时资源占用情况：`adb shell top`
+* 查看任务栈命令：`adb shell dumpsys activity | grep 'Running activities' -A 5`
 列名 | 含义
 --- | ---
 PID | 进程ID
@@ -152,4 +153,3 @@ protocol failure | 设备已断开连接 | 先将设备与 adb 连接成功
 Unknown option: -s | Android 2.2 以下不支持安装到 sdcard | 不使用 -s 参数
 No space left on devicerm | 空间不足 | 清理空间
 Permission denied ... sdcard ... | sdcard 不可用
-
