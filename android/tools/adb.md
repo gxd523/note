@@ -1,12 +1,12 @@
 [TOC]
 
-### ADB(Android Debug Bridge)
+## ADB(Android Debug Bridge)
 > adb就是连接Android手机与PC端的桥梁，可以让用户在电脑上对手机进行全面的操作。
 
 * 查看前台Activity：`adb shell dumpsys activity activities | grep mFocusedActivity`
 * 启动adb server：`adb -P <端口> start-server`
 * 停止adb server：`adb kill-server`
-* 重启：`adb restart-server`
+* 重启adb server：`adb restart-server`
 * adb版本：`adb version`
 * Root：`adb root`
 * 卸载：`adb shell pm uninstall --user 0 <包名>`
@@ -27,11 +27,19 @@
 * 查看wifi密码(需root)：`adb shell`、`su`、`cat /data/misc/wifi`
 * 重启Recovery：`adb reboot recovery`
 * 重启到Fastboot：`adb reboot bootloader`
-* 查看进程：`adb shell ps | grep <packageName>`
-	* 用户名	进程ID	父进程ID	虚拟内存大小	实际内存大小	进程名
 * 查看像素密度：`adb shell getprop ro.sf.lcd_density`
 * 查看实时资源占用情况：`adb shell top`
 * 查看任务栈命令：`adb shell dumpsys activity | grep 'Running activities' -A 5`
+
+## 进程
+* 杀进程：`adb shell kill [PID]`
+* 查看进程：`adb shell ps | grep <packageName>`
+USER | PID | PPID(父进程ID) | VSIZE(虚拟内存) | RSS(实际内存) | WCHAN | PC | NAME
+:---: | :---: | :---: | :---: | :---: | :---: | :---: | :---:
+u0_a189 | 16518 | 383 | 1247192 | 36912 | ffffffff | 00000000 | com.netease.urs.eee 
+* 查看进程状态：`adb shell ps -x [PID]`
+* 实时监听进程变化：`adb shell top|grep <package_name>`
+
 列名 | 含义
 --- | ---
 PID | 进程ID
@@ -44,6 +52,8 @@ RSS | Resident Set Size实际使用物理内存(包含共享库占用的内存)
 PCY | 调度策略优先级, SP_ BACKGROUND/SPFOREGROUND
 UID | 进程所有者的用户ID
 NAME | 进程名
+
+## 模拟输入
 
 * 模拟按键输入：`adb shell input keyevent <keycode>`
 keycode | 含义
