@@ -101,7 +101,8 @@ Structral Equality | 内容相等 | ==/equals() | equals()
 Referential Equality | 引用地址相等 | === | ==
 
 ## Modifier
-> Modifer的函数调用顺序是有区别的
+* Modifer的函数调用顺序是有区别的
+* `Modifier`函数从右往左执行，从左到右依次往里，从右往左依次往外
 
 Android | Modifier
 :---: | :---:
@@ -114,9 +115,42 @@ onClickListener | clickable
 textSize | fontSize函数参数 
 textColor | color函数参数 
 
-方法 | 含义
-:---: | :---
+类名 | 方法 | 含义
+:---: | :---: | :---
+ComposedModifier | composed() | 创建Modifier工厂
+SizeAnimationModifier | animateContentSize() | 标记控件尺寸变化时带有动画过度
+AlignmentLineOffsetTextUnit | paddingFromBaseline() | 例如以文字基准线设置padding
+AspectRatioModifier | aspectRatio() | 设置控件宽高比
+Min/MaxIntrinsicSizeModifier | with/height() | 让内部尽量小/大
+OffsetModifier | (absolute)Offset() | 控件偏移
+FillModifier | fillMaxSize/Width/Height() | 控件大小填满父控件(match_parent)
+SizeModifier | width/height()... | 控件宽高
+WrapContentModifier | wrapContentSize/Width/Height() | 忽略父控件对自己的最小值限制
+UnspecifiedConstraintsModifier | defaultMinSize() | 优先使用别人设置最小值，其次使用我的
+ScrollingLayoutModifier | scroll() | 让控件具有滚动功能
+ZindexModifier | zIndex() | 改变绘制顺序
+BlockGraphicsLayerModifier | alpha()/clip()/rotate()/scale()/shadow() | 离屏缓冲
+SimpleGraphicsLayerModifier | scaleX/alpha/translationX/rotationX/shape/clip | BlockGraphicsLayerModifier的综合版
+LayoutModifierImpl | layout() | 测量&布局
+PainterModifier | paint() | Image()、Icon()
+BackgroundModifier | background() | 背景
+IndicationModifier | indication() | 控件做标记显示波纹效果(Material)
+DrawaBackgroundModifier | drawBehind() | 自定义绘制背景
+DrawContentCacheModifier | drawWithCache() | 往上面画东西
+OnResumeasuredModifier | onSizeChanged() | 好
+LazyListStateModifier | lazyColumn()/LazyRow()| d
+OnGloballyPositionedModifier | onGloballyPositioned() | 相对于window位置的回调
+ParentDataModifier ｜ .. | 为父控件提供数据|
+LayoutWeightImpl | weight() | d
+HorizontalAlignModifier | align() | 对齐
+
 clip() | 切边
+requiredSize() | 不听外面的
+
+
+### Element的子接口
+* 除了`companion object Modifier`、`CombinedModifier`之外都继承了`Element`
+* 
 
 为了能更原生控件交互，所以没有像Flutter一样采用NDK的方式去调用更底层的渲染引擎，而是使用Canvas去绘制
 
