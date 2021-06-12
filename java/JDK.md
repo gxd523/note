@@ -32,3 +32,6 @@ export CLASSPATH
 export PATH
 ```
 3. 按`Esc`，退出编辑模式，`:wq`保存
+
+## 查看Mac已安装版本及默认版本
+* `/usr/libexec/java_home -V`

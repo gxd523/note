@@ -54,41 +54,19 @@ UID | 进程所有者的用户ID
 NAME | 进程名
 
 ## 模拟输入
-
 * 模拟按键输入：`adb shell input keyevent <keycode>`
 keycode | 含义
 :--- | :---:
-3 | HOME 键
-4 | 返回键
-5 | 打开拨号应用
-6 | 挂断电话
-24 | 增加音量
-25 | 降低音量
-26 | 电源键
-27 | 拍照（需要在相机应用里）
-64 | 打开浏览器
-82 | 菜单键
-85 | 播放/暂停
-86 | 停止播放
-87 | 播放下一首
-88 | 播放上一首
-122 | 移动光标到行首或列表顶部
-123 | 移动光标到行末或列表底部
-126 | 恢复播放
-127 | 暂停播放
-164 | 静音
-176 | 打开系统设置
-187 | 切换应用
-207 | 打开联系人
-208 | 打开日历
-209 | 打开音乐
-210 | 打开计算器
-220 | 降低屏幕亮度
-221 | 提高屏幕亮度
-223 | 系统休眠
-224 | 点亮屏幕
-231 | 打开语音助手
-276 | 如果没有 wakelock 则让系统休眠
+KEYCODE_DPAD_UP | 19
+KEYCODE_DPAD_DOWN | 20
+KEYCODE_DPAD_LEFT | 21
+KEYCODE_DPAD_RIGHT | 22
+KEYCODE_DPAD_CENTER | 23
+KEYCODE_BACK | 4
+KEYCODE_ENTER | 66
+
+## 模拟点击
+* 模拟点击：`adb shell input tap <x坐标> <y坐标>`
 
 ### dumpsys
 > 获得连接设备的所有系统服务的诊断输出
@@ -108,6 +86,7 @@ keycode | 含义
 * `-r`：覆盖安装、保留数据和缓存文件
 * `-s`：指定安装位置
 * `-k`：保留配置和缓存文件
+* `-d`：允许安装debug
 
 ### adb常见错误
 输出 | 含义 | 解决办法
@@ -163,3 +142,10 @@ protocol failure | 设备已断开连接 | 先将设备与 adb 连接成功
 Unknown option: -s | Android 2.2 以下不支持安装到 sdcard | 不使用 -s 参数
 No space left on devicerm | 空间不足 | 清理空间
 Permission denied ... sdcard ... | sdcard 不可用
+
+## 实用
+* 截图保存桌面：`adb shell screencap -p /sdcard/sc.png && adb pull /sdcard/sc.png Desktop/a.png`
+* 重启应用：`adb shell am force-stop <包名> && adb shell am start -n <包名>/<页面名>`
+
+## adb连接失败
+* `unauthorized`：第一次连接设备需要在设备上授权确认
