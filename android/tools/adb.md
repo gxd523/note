@@ -149,3 +149,11 @@ Permission denied ... sdcard ... | sdcard 不可用
 
 ## adb连接失败
 * `unauthorized`：第一次连接设备需要在设备上授权确认
+
+## 无线调试
+* 电脑手机连接同一个wifi
+* 手机电脑先用数据线连接adb，执行`adb tcpip 5555`
+* `adb connect <ip>:5555`，连接成功即可拔掉数据线
+* 如果提示：`unable to connect to <ip>:5555: Connection refused`
+* 则执行`adb tcpip 5555`，再次：`adb connect <ip>:5555`
+

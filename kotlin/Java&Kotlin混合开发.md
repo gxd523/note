@@ -1,7 +1,9 @@
 [TOC]
 
 ## Java&Kotlin混合开发
-* `@JvmField`：去除getter、setter，变成静态属性
+* `@JvmField`：
+	* 属性由private+getter&setter变成public
+	* 变成静态属性
 * `@JvmStatic`：将`object`、`companion object`中函数变成Java中的静态函数
 * `@JvmName`：
 	* 作用在文件上：指定包级函数在java中的类名：@file:JvmName("TextUtil")

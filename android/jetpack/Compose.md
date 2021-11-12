@@ -152,5 +152,21 @@ requiredSize() | 不听外面的
 * 除了`companion object Modifier`、`CombinedModifier`之外都继承了`Element`
 * 
 
+## 动画
+* `animateDpAsState()`：内部包了`mutableStateOf{}`和`remembler{}`
+* `State`、`MutableState`之间的区别：前者不能手动修改变量，后者可以
+
+## 绘制
+
+## 布局
+* 原生控件可能会多次测量，当界面层级加深的时候，会对性能产生很大影响
+* 比如父控件为wrap_content，子控件为match_parent和固定值，父控件需要先测量所有子控件，选出最大的值作为自己的尺寸，然后再次测量子控件将match_parent尺寸的子控件设置为父控件的尺寸
+
+## 触摸
+* 传统控件一般重写onTouchEvent()、onInterceptorTouchEvent()
+
+## 和传统控件的交互
+* 
+
 为了能更原生控件交互，所以没有像Flutter一样采用NDK的方式去调用更底层的渲染引擎，而是使用Canvas去绘制
 

@@ -37,12 +37,11 @@ open Library/Android/sdk/
 4. 粘贴一下:
 
 ```
-JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home
-CLASSPAHT=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
-PATH=$JAVA_HOME/bin:$PATH:
-export JAVA_HOME
-export CLASSPATH
-export PATH
+export JAVA_HOME=/Applications/Android\ Studio.app/Contents/jre/Contents/Home
+
+export ANDROID_SDK_HOME=/Users/guoxiaodong/Library/Android/sdk
+
+export PATH=$PATH:$ANDROID_SDK_HOME/platform-tools
 ```
 5. wq(保存退出)
 6. source .bash_profile
