@@ -9,7 +9,7 @@
 ## 安装证书
 ### PC端安装证书
 * 打开`Help`里的`SSL Proxying`，选择`Install Charles Root Certficate`
-* 打开`钥匙串访问`，在`系统`中找到`Charles Proxy CA`并打开，打开`信任`下拉框，`使用此证书时`选择`始终信任`
+* 打开`钥匙串访问`，在`系统`中找到`Charles Proxy CA`并打开，双击后在弹出的对话框，打开`信任`下拉框，`使用此证书时`选择`始终信任`
 
 ### 手机端安装证书
 * 打开`Help`里的`SSL Proxying`，选择`Save Charles Root Certficate`，保存证书
